@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>Machine Learning :linear regression | 曾经渐行远，未免心戚戚</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="机器学习中，总体来说是分为两类问题：
+1.有监督的学习方法2.无监督的学习方法
+其他是这两者的综合，比如说半监督学习方法，强化学习（这个还未接触过）。
+本文呢，先从有监督的学习方法开始讲起，主要是记载学习过程中个人认为最重要的地方。
+对于监督学习中的两类问题，或者说三类吧，分别是：回归问题，分类问题和标注问题（tagging）。后面这个很有意思，不过在这里现说一下回归和分类的区别，假如我们要做一个">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Machine Learning :linear regression">
+<meta property="og:url" content="http://aluenkinglee.com/2014/01/05/2014-01-05-machine-learning-linear-regression/index.html">
+<meta property="og:site_name" content="曾经渐行远，未免心戚戚">
+<meta property="og:description" content="机器学习中，总体来说是分为两类问题：
+1.有监督的学习方法2.无监督的学习方法
+其他是这两者的综合，比如说半监督学习方法，强化学习（这个还未接触过）。
+本文呢，先从有监督的学习方法开始讲起，主要是记载学习过程中个人认为最重要的地方。
+对于监督学习中的两类问题，或者说三类吧，分别是：回归问题，分类问题和标注问题（tagging）。后面这个很有意思，不过在这里现说一下回归和分类的区别，假如我们要做一个">
+<meta property="og:image" content="https://github.com/aluenkinglee/aluenkinglee.github.io/blob/source/source/images/2014-01-05-machine-learning-linear-regression/linear_regression_f1.png?raw=true">
+<meta property="og:image" content="https://github.com/aluenkinglee/aluenkinglee.github.io/blob/source/source/images/2014-01-05-machine-learning-linear-regression/linear_regression_f4.png?raw=true">
+<meta property="og:image" content="https://github.com/aluenkinglee/aluenkinglee.github.io/blob/source/source/images/2014-01-05-machine-learning-linear-regression/linear_regression_f5.png?raw=true">
+<meta property="og:updated_time" content="2015-07-26T12:33:50.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Machine Learning :linear regression">
+<meta name="twitter:description" content="机器学习中，总体来说是分为两类问题：
+1.有监督的学习方法2.无监督的学习方法
+其他是这两者的综合，比如说半监督学习方法，强化学习（这个还未接触过）。
+本文呢，先从有监督的学习方法开始讲起，主要是记载学习过程中个人认为最重要的地方。
+对于监督学习中的两类问题，或者说三类吧，分别是：回归问题，分类问题和标注问题（tagging）。后面这个很有意思，不过在这里现说一下回归和分类的区别，假如我们要做一个">
+<meta name="twitter:image" content="https://github.com/aluenkinglee/aluenkinglee.github.io/blob/source/source/images/2014-01-05-machine-learning-linear-regression/linear_regression_f1.png?raw=true">
+  
+    <link rel="alternative" href="/atom.xml" title="曾经渐行远，未免心戚戚" type="application/atom+xml">
+  
+  
+    <link href="/favicon.ico" rel="icon" type="image/x-ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="null" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">Aluen King Lee</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">A blogging framework for hackers.</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>Menu</li>
+						<li>Tags</li>
+						
+						
+						<li>About</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/tags/随笔">随笔</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="#" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="#" title="rss">rss</a>
+					        
+								<a class="zhihu" target="_blank" href="#" title="zhihu">zhihu</a>
+					        
+								<a class="douban" target="_blank" href="#" title="douban">douban</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/java-线程池-ThreadPool-线程/" style="font-size: 10px;">java 线程池 ThreadPool 线程</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">我是谁，我从哪里来，我到哪里去？我就是我，是颜色不一样的吃货…</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Aluen King Lee</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="null" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">Aluen King Lee</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">A blogging framework for hackers.</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/tags/随笔">随笔</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="#" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="#" title="rss">rss</a>
+			        
+						<a class="zhihu" target="_blank" href="#" title="zhihu">zhihu</a>
+			        
+						<a class="douban" target="_blank" href="#" title="douban">douban</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-2014-01-05-machine-learning-linear-regression" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2014/01/05/2014-01-05-machine-learning-linear-regression/" class="article-date">
+  	<time datetime="2014-01-05T04:00:00.000Z" itemprop="datePublished">2014-01-05</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Machine Learning :linear regression
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/C-Armadillo-Machine-Learning-octave-linear-regression/">C++ Armadillo Machine-Learning octave linear-regression</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>机器学习中，总体来说是分为两类问题：</p>
+<p>1.有监督的学习方法<br>2.无监督的学习方法</p>
+<p>其他是这两者的综合，比如说半监督学习方法，强化学习（这个还未接触过）。</p>
+<p>本文呢，先从有监督的学习方法开始讲起，主要是记载学习过程中个人认为最重要的地方。</p>
+<p>对于监督学习中的两类问题，或者说三类吧，分别是：回归问题，分类问题和标注问题（tagging）。后面这个很有意思，不过在这里现说一下回归和分类的区别，假如我们要<br>做一个连续变量的预测，比如说房价的预测，或者明日气温的预测，都是属于回归问题；而对于离散变量的预测，比如判断一个病人是否得了癌症，良性还是恶心，则是一个明显的分<br>类问题。</p>
+<p>接下来的文章，大概是对Andrew Ng视频的一个简单的总结，会结合变成实例（octave和C++）来插叙。<br><a id="more"></a></p>
+<p>###线性回归</p>
+<p>好吧，先从一个简单的例子讲起，假设我们要为一个房子售价做个数学模型，价格和什么有关系？当然因素很多，比如房间的大小，离商业区的距离，嗯，房子几坪，奥，看起来不是<br>个简单事儿～，那好吧，遵循我们先从最简单做起的原则，现假设相同尺寸的房子价格和城市人口多少有关系，其他的先抛到一边去，我喜欢做甩手掌柜==<br>，你看这很合理！北京上海的房子价格能和三四线城市的比么=。=</p>
+<p>那么好，我们会看到下面这个图！图先不上！！！假设你装了octave，并执行ex1的话就会看到它的！！</p>
+<p><img src="https://github.com/aluenkinglee/aluenkinglee.github.io/blob/source/source/images/2014-01-05-machine-learning-linear-regression/linear_regression_f1.png?raw=true" alt="价格-人口关系图" title="价格-人口关系图"></p>
+<p>在那之前，先让我们约定几个问题，恩恩：</p>
+<p>#####注释</p>
+<ul>
+<li>$m$ ：是训练实例的个数</li>
+<li>$x$ ：是输入的特征向量,很有可能是这样子：$x=(x_1,…,x_k)$</li>
+<li>$y$ ：是输出结果</li>
+<li>$(x,y)$ ：是一个训练实例</li>
+<li>$(x^{(i)},y^{(i)})$ ：表示第i个训练样例</li>
+</ul>
+<p>好了，让我们接着开始吧。那我们应该如何表示我们的假设（hypothesis）呢？既然只有一个变量，这样表示好了：</p>
+<p>$$<br>h_\theta(x) = \theta_0 + \theta_1x_1 ， \Theta={ (\theta_0,\theta_1) }<br>$$</p>
+<p>那应该如何选择参数$\theta$呢？机器学习不就是干这活的么=。=</p>
+<p>直观的感受就是：“嘿，干嘛不用LMS最小二乘法？无脑流，简单又实惠！统计课上的入门案例。。”就他了。。。</p>
+<p>所以，总结如下：</p>
+<p>假设：</p>
+<p>$$<br>h_\theta(x) = \theta_0 x_0 + \theta_1 x_1 ，<br>\Theta = \left( \begin{array}{c}<br>        \theta_0 \<br>        \theta_1<br>        \end{array} \right),<br>x = (x_0,x_1),<br>x<em>0 \equiv 1 \<br>h</em>\theta(x) = x \cdot \Theta<br>$$</p>
+<p>费用函数：</p>
+<p>$$<br>J{(\Theta)}=\frac{1}{2m} \sum\limits<em>{i=1}^m \left(h</em>\theta(x^{(i)})-y^{(i)}<br>\right)^2<br>$$</p>
+<p>目标：</p>
+<p>$$<br>\min\limits_{\Theta} J{(\Theta)}<br>$$</p>
+<p>回想下我们学过的数学知识吧，给定一个函数，求函数的最值，导数？梯度？那一套东西想起来了吧，OK。那好办了。要是还不是很清楚，那看一下<a href="http://zh
+.wikipedia.org/wiki/%E6%A2%AF%E5%BA%A6" target="_blank" rel="external">梯度</a>以及<a href="http://zh.wikipedia.org/wiki/%
+E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95" target="_blank" rel="external">梯度下降法</a>在此就不罗嗦了。Andrew<br>Ng在视频中讲的很形象，只要我们沿着山最陡的方向向下走，就会有可能找到最小值，翻译成数学语言就是沿着梯度相反的方向$- \nabla F(x)$,<br>就可以下降最快。（我们不是要找最小值么，当然是水往低处流！所以就是负值了）</p>
+<p>####梯度下降法</p>
+<p>选定了回归模型，那就要确定参数$\Theta$了，$\Theta$只有在$J{(\Theta)}<br>$最小的情况下才能确定，所以问题归结为了求极小值的问题，梯度下降法是个不错的选择。当然，它会遇到找到的值只是个局部最小值。</p>
+<p>这是示意图：</p>
+<p><img src="https://github.com/aluenkinglee/aluenkinglee.github.io/blob/source/source/images/2014-01-05-machine-learning-linear-regression/linear_regression_f4.png?raw=true" alt="最小值"></p>
+<p><img src="https://github.com/aluenkinglee/aluenkinglee.github.io/blob/source/source/images/2014-01-05-machine-learning-linear-regression/linear_regression_f5.png?raw=true" alt="局部极小值"></p>
+<p>流程如下：</p>
+<ol>
+<li>对$\Theta$赋予初始值，可随机，可为零向量。</li>
+<li>同步改变$\Theta$值，使得$J{(\Theta)}$沿着梯度下降的方向走，直到学习曲线平滑，也就是收敛。</li>
+</ol>
+<p>用公式来描述就是,对于$j=1$和$j=0$，同时重复以下操作，直到$J{(\Theta)}$收敛。</p>
+<p>$$<br>\theta_j := \theta_j - \alpha \frac{\partial}{\partial \theta_j}<br>J{(\theta_0,\theta_1) } \<br>\theta_j := \theta<em>j - \alpha \frac{1}{m} \sum\limits</em>{i=1}^m<br>\left(h_\theta(x^{(i)})-y^{(i)}<br>\right) \cdot x_j^{(i)}<br>$$</p>
+<p>这是octave实现，向量形式,代码<a href="https://github.com/aluenkinglee/mlclass/blob/master/
+mlclass-ex1/gradientDescent.m" target="_blank" rel="external">详见</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">function [theta, J_history] = gradientDescent(X, y, theta, alpha, num_iters)</span><br><span class="line">%GRADIENTDESCENT Performs gradient descent to learn theta</span><br><span class="line">%   theta = GRADIENTDESENT(X, y, theta, alpha, num_iters) updates theta by </span><br><span class="line">%   taking num_iters gradient steps with learning rate alpha</span><br><span class="line"></span><br><span class="line">% Initialize some useful values</span><br><span class="line">m = length(y); % number of training examples</span><br><span class="line">J_history = zeros(num_iters, 1);</span><br><span class="line">for iter = 1:num_iters</span><br><span class="line">    %theta1 = theta(1) - alpha * X(:,1)&apos; *(X * theta - y) / m;</span><br><span class="line">    %theta2 = theta(2) - alpha * X(:,2)&apos; *(X * theta - y) / m;</span><br><span class="line">    %theta = [theta1; theta2]</span><br><span class="line">    theta = theta - alpha / m * (X&apos; * (X * theta - y));</span><br><span class="line">    % Save the cost J in every iteration    </span><br><span class="line">    J_history(iter) = computeCost(X, y, theta);</span><br><span class="line">end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p>对应的C++实现，向量形式，代码<a href="https://github.com/aluenkinglee/mlclass/blob/master/mlclass
+-ex1/gradientDescent.cpp" target="_blank" rel="external">详见</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="string">"gradientDescent.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="string">"computeCost.h"</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> mlclass::ex1;</span><br><span class="line"><span class="keyword">namespace</span> mlclass&#123;</span><br><span class="line"><span class="keyword">namespace</span> ex1&#123;</span><br><span class="line">    <span class="comment">//Performs gradient descent to learn theta</span></span><br><span class="line">    <span class="function">mat <span class="title">gradientDescent</span><span class="params">(mat X, vec y, mat&amp; theta, <span class="keyword">double</span> alpah,<span class="keyword">long</span> num_inters)</span></span>&#123;</span><br><span class="line">        <span class="comment">//number of training examples</span></span><br><span class="line">        <span class="keyword">long</span> m = y.n_rows;</span><br><span class="line">        </span><br><span class="line">        mat J_history = zeros&lt;mat&gt;(num_inters,<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">long</span> i = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (;i &lt; num_inters; i++)&#123;</span><br><span class="line">            theta = theta - alpah/m* (X.t()* (X*theta - y));</span><br><span class="line">            J_history(i) = computeCost(X, y, theta);    </span><br><span class="line">        &#125;</span><br><span class="line">        return J_history;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>有一个事情需要说明一下</strong></p>
+<p>梯度下降发的收敛速度比较慢，相比于直接用公式求解$\theta$来说，尤其是当m较小的时候，比如说$m&lt;10000$,<br>这个时候用公式求解$\theta$比较快，但是大于这个值之后，计算矩阵的逆是花费较大的，此时使用梯度下降法比较理想，而且可以做到分布式计算值，加快求解速度。</p>
+<p>$$<br>\Theta=(X^TX)^-1X^Ty<br>$$</p>
+<p>关于线性回归就先到这，接下来会记述关于logistic回归等的文章。</p>
+<blockquote>
+<p>reference</p>
+</blockquote>
+<p>1.<a href="https://class.coursera.org/ml-004/lecture" target="_blank" rel="external">Machine Learning by Andrew Ng(1-2)</a></p>
+<p>2.<a href="http://mohu.org/info/symbols/symbols.htm" target="_blank" rel="external">常用数学符号的 LaTeX 表示方法</a></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/02/24/2014-02-24-c-plus-plus-de-hashtablena-xie-shi/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          C++的hashtable那些事
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2013/12/31/2013-12-31-ke-ai-de-armadillo/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">可爱的Armadillo</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2014-01-05-machine-learning-linear-regression" data-title="Machine Learning :linear regression" data-url="http://aluenkinglee.com/2014/01/05/2014-01-05-machine-learning-linear-regression/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 Aluen King Lee
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+
+<!--统计Aluenkinglee.github.io-->
+<!--<script type="text/javascript" id="clustrmaps" src="//cdn.clustrmaps.com/map_v2.js?u=Ak87&d=RfrOeulSXrf1uWSg4T_1STgF7iU2vDrBtJLdE3MJdQY"></script>-->
+<!--统计Aluenkinglee.com-->
+<!--<script type="text/javascript" id="clustrmaps" src="//cdn.clustrmaps.com/map_v2.js?u=Ak87&d=fWyzUb5ADRAwJb5b2EdCj25FWOlzy8vwVQmK9vxSAYY"></script>-->
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+<!--
+-->
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
+          MathJax.InputJax.TeX.prefilterHooks.Add(function (data) {
+                  data.math = data.math.replace(/^\s*<!\[CDATA\[\s*((?:\n|.)*)\s*\]\]>\s*$/m,"$1");
+                    });
+          });
+
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+
+</script>
+
+<script type="text/javascript"
+        src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

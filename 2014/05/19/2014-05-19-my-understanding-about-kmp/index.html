@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>我对KMP算法的理解 | 曾经渐行远，未免心戚戚</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="和朴素的字符串匹配算法相比，KMP加快匹配的关键在于当某个位置不匹配了，不在模版不再是向右滑动一个位置，而是跟匹配处相关的一个值。这样，在字符串的匹配时间就是和搜索串长度相关的一个值$$O(n)$$。
+至于相关的资料，参阅了六之再续：KMP算法之总结篇（12.09修订，必懂KMP，只是这个个人感觉有点凌乱。
+定义要搜索的字符串模式是$$P$$,搜索的源是文本$$T$$.那让我们看看next数组怎么">
+<meta property="og:type" content="article">
+<meta property="og:title" content="我对KMP算法的理解">
+<meta property="og:url" content="http://aluenkinglee.com/2014/05/19/2014-05-19-my-understanding-about-kmp/index.html">
+<meta property="og:site_name" content="曾经渐行远，未免心戚戚">
+<meta property="og:description" content="和朴素的字符串匹配算法相比，KMP加快匹配的关键在于当某个位置不匹配了，不在模版不再是向右滑动一个位置，而是跟匹配处相关的一个值。这样，在字符串的匹配时间就是和搜索串长度相关的一个值$$O(n)$$。
+至于相关的资料，参阅了六之再续：KMP算法之总结篇（12.09修订，必懂KMP，只是这个个人感觉有点凌乱。
+定义要搜索的字符串模式是$$P$$,搜索的源是文本$$T$$.那让我们看看next数组怎么">
+<meta property="og:image" content="https://github.com/aluenkinglee/aluenkinglee.github.io/blob/source/source/images/2014-05-19-my-understanding-about-kmp/1.png?raw=true">
+<meta property="og:image" content="https://github.com/aluenkinglee/aluenkinglee.github.io/blob/source/source/images/2014-05-19-my-understanding-about-kmp/2.png?raw=true">
+<meta property="og:updated_time" content="2015-07-26T12:33:50.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="我对KMP算法的理解">
+<meta name="twitter:description" content="和朴素的字符串匹配算法相比，KMP加快匹配的关键在于当某个位置不匹配了，不在模版不再是向右滑动一个位置，而是跟匹配处相关的一个值。这样，在字符串的匹配时间就是和搜索串长度相关的一个值$$O(n)$$。
+至于相关的资料，参阅了六之再续：KMP算法之总结篇（12.09修订，必懂KMP，只是这个个人感觉有点凌乱。
+定义要搜索的字符串模式是$$P$$,搜索的源是文本$$T$$.那让我们看看next数组怎么">
+<meta name="twitter:image" content="https://github.com/aluenkinglee/aluenkinglee.github.io/blob/source/source/images/2014-05-19-my-understanding-about-kmp/1.png?raw=true">
+  
+    <link rel="alternative" href="/atom.xml" title="曾经渐行远，未免心戚戚" type="application/atom+xml">
+  
+  
+    <link href="/favicon.ico" rel="icon" type="image/x-ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="null" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">Aluen King Lee</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">A blogging framework for hackers.</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>Menu</li>
+						<li>Tags</li>
+						
+						
+						<li>About</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/tags/随笔">随笔</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="#" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="#" title="rss">rss</a>
+					        
+								<a class="zhihu" target="_blank" href="#" title="zhihu">zhihu</a>
+					        
+								<a class="douban" target="_blank" href="#" title="douban">douban</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/java-线程池-ThreadPool-线程/" style="font-size: 10px;">java 线程池 ThreadPool 线程</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">我是谁，我从哪里来，我到哪里去？我就是我，是颜色不一样的吃货…</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Aluen King Lee</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="null" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">Aluen King Lee</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">A blogging framework for hackers.</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/tags/随笔">随笔</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="#" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="#" title="rss">rss</a>
+			        
+						<a class="zhihu" target="_blank" href="#" title="zhihu">zhihu</a>
+			        
+						<a class="douban" target="_blank" href="#" title="douban">douban</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-2014-05-19-my-understanding-about-kmp" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2014/05/19/2014-05-19-my-understanding-about-kmp/" class="article-date">
+  	<time datetime="2014-05-19T14:56:00.000Z" itemprop="datePublished">2014-05-19</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      我对KMP算法的理解
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/KMP-数据结构-动态规划/">KMP 数据结构 动态规划</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>和朴素的字符串匹配算法相比，KMP加快匹配的关键在于当某个位置不匹配了，不在模版不再是向右滑动一个位置，而是跟匹配处相关的一个值。这样，在字符串的匹配时间就是和搜索串长度相关的一个值$$O(n)$$。</p>
+<p>至于相关的资料，参阅了<a href="http://blog.csdn.net/v_july_v/article/details/7041827" target="_blank" rel="external">六之再续：KMP算法之总结篇（12.09修订，必懂KMP</a>，只是这个个人感觉有点凌乱。</p>
+<p>定义要搜索的字符串模式是$$P$$,搜索的源是文本$$T$$.那让我们看看next数组怎么诞生的。</p>
+<p>####局部匹配表</p>
+<p>理解KMP算法的关键就是<strong>局部匹配表</strong>,或者形象的称作为<strong>next数组</strong>，<br><a href="http://book.douban.com/subject/1885170/" target="_blank" rel="external">算法导论</a>p571页详细的描述了推导的过程，并给出了证明。但是仍然还是晦涩难懂的。</p>
+<p>对于这个推论：设$$P$$是长度为$$m$$的模式，next是P的前缀函数，对于$$q=2,3,…,m$$</p>
+<p>$$<br>next\left[ q \right] =\begin{Bmatrix} 0 &amp; \quad if\quad { E }<em>{ q }\quad =\quad \phi  \ 1+max{ k\in { E }</em>{ q-1 }}  &amp; \quad if\quad { E }_{ q-1 }\quad =\phi  \end{Bmatrix}<br>$$</p>
+<p>直观来说就是才用动规的方法，求$$next\left[ q \right]$$的最长前缀的长度。</p>
+<p>那么好吧，再来个直观点的手写算法吧╮(╯▽╰)╭。</p>
+<p>就以书上的例子为准，见下图。</p>
+<p><img src="https://github.com/aluenkinglee/aluenkinglee.github.io/blob/source/source/images/2014-05-19-my-understanding-about-kmp/1.png?raw=true" alt="a)" title="a)"></p>
+<p>前q=5个字符匹配，标记为绿色。</p>
+<p><img src="https://github.com/aluenkinglee/aluenkinglee.github.io/blob/source/source/images/2014-05-19-my-understanding-about-kmp/2.png?raw=true" alt="b)" title="b)"></p>
+<p>很明显，s+1的位置是无效的，但是s+2的位置很有可能是有效的，所以，可以直接向右移动2个位置。</p>
+<p>推导中的使用的有用信息可以通过模式自身的比较来预处理计算得到。在这里，可以发现P的最长前缀同时也是$$P_5$$的一个真后缀$$P_3$$.这些信息可以预先急死俺，用数组next来表示，next[5]=3. 一般化的公式为，在位移s处有q个字符成功匹配，囊而下个有可能有效的位移是$$s=s-(q-next[q])$$.</p>
+<p>上面提到了<strong>真后缀</strong>,让我们给出定义来。</p>
+<p><strong>真前缀</strong>： 字符串中去除1个至多个尾部字符的字符串集合。比如aabac的真前缀为a,aa,aab,aaba.</p>
+<p><strong>真后缀</strong>： 字符串中去除1个至多个头部字符的字符串集合。比如aabac的真后缀为c,ac,bac,abac.</p>
+<p>好了 ，有了上面的定义，我们就可以简单，最重要的是明白计算next值了：<code>某个位置的next值为，到此位置的字符串产生的真前缀和真后缀</code><strong>并集</strong><code>中的最长元素的长度</code>。</p>
+<p>就比如上面的那个例子，模式串为”ababaca”</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&quot;a&quot;的真前缀和真后缀都为空集，next[0]=0;</span><br><span class="line"></span><br><span class="line">&quot;ab&quot;的真前缀为[b],真后缀为[a], next[1]=0;</span><br><span class="line"></span><br><span class="line">&quot;aba&quot;的真前缀为[a,ab],真后缀为[a,ba],next[2]=1;</span><br><span class="line"></span><br><span class="line">&quot;abab&quot;的真前缀为[a,ab,aba],真后缀为[b,ab,bab],next[3]=2;</span><br><span class="line"></span><br><span class="line">&quot;ababa&quot;的真前缀为[a,ab,aba,abab],真后缀为[baba,aba,ba,a],next[4]=3;</span><br><span class="line"></span><br><span class="line">&quot;ababac&quot;的真前缀为[a,ab,aba,abab,ababa],真后缀为[babac,abac,bac,ac,c],next[5]=0;</span><br><span class="line"></span><br><span class="line">&quot;ababaca&quot;的真前缀为[a,ab,aba,abab,ababa,ababac],真后缀为[babaca,abaca,baca,aca,ca,a],next[5]=1;</span><br></pre></td></tr></table></figure>
+<p>####如何使用</p>
+<p>见上面的例子吧，很好理解不是。</p>
+<p>对了一下是代码。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">compute_prefix</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* p, <span class="keyword">int</span> *next)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    next[<span class="number">0</span>]=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> len = <span class="built_in">strlen</span>(p);</span><br><span class="line">    <span class="keyword">int</span> k =<span class="number">0</span>,q;</span><br><span class="line">    <span class="keyword">for</span>(q=<span class="number">1</span>; q &lt; len; q++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">///前q个字符中，前缀字符串集和后缀字符串集中最长的交集元素的长度</span></span><br><span class="line">        <span class="keyword">while</span>( (k &gt; <span class="number">0</span>) &amp;&amp; (p[k] != p[q]) )</span><br><span class="line">            k = next[k<span class="number">-1</span>];</span><br><span class="line">        <span class="comment">/// 请看前面的那个状态转移函数的公式</span></span><br><span class="line">        <span class="keyword">if</span>( p[k] == p[q] )</span><br><span class="line">            k=k+<span class="number">1</span>;</span><br><span class="line">        next[q] = k;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">kmp_match</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* T, <span class="keyword">const</span> <span class="keyword">char</span>* P)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">bool</span> flag=<span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">int</span> n=<span class="built_in">strlen</span>(T);</span><br><span class="line">    <span class="keyword">int</span> m=<span class="built_in">strlen</span>(P);</span><br><span class="line">    <span class="keyword">int</span> *next = new <span class="keyword">int</span>[m];</span><br><span class="line">    compute_prefix(P, next);</span><br><span class="line">    <span class="keyword">int</span> q=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">while</span>(q&gt;<span class="number">0</span> &amp;&amp; P[q]!=T[i])</span><br><span class="line">            q=next[q<span class="number">-1</span>];</span><br><span class="line">        <span class="keyword">if</span>(P[q]==T[i])</span><br><span class="line">            q=q+<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span>(q==m)</span><br><span class="line">        &#123;</span><br><span class="line">            flag=<span class="literal">true</span>;</span><br><span class="line">            <span class="built_in">cout</span>&lt;&lt;<span class="string">"math occurs with "</span>&lt;&lt;i-m+<span class="number">1</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">            q=next[q<span class="number">-1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(flag==<span class="literal">false</span>)</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="string">"there is no math!"</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>相对于朴素的匹配算法，这里并不是在匹配失败后直接无脑的外后移一位就可以了，而是利用了模式串本身的信息，<strong>位移的距离=已经匹配的长度-该位置next值</strong>。</p>
+<p>希望对你有用。当然要是觉得有问题直接留言好了，一起学吧。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/05/19/2014-05-19-threading-why-import-it-into-os/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          threading:why import it into os
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/05/14/2014-07-14-sort-list/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">链表排序</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="2014-05-19-my-understanding-about-kmp" data-title="我对KMP算法的理解" data-url="http://aluenkinglee.com/2014/05/19/2014-05-19-my-understanding-about-kmp/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 Aluen King Lee
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+
+<!--统计Aluenkinglee.github.io-->
+<!--<script type="text/javascript" id="clustrmaps" src="//cdn.clustrmaps.com/map_v2.js?u=Ak87&d=RfrOeulSXrf1uWSg4T_1STgF7iU2vDrBtJLdE3MJdQY"></script>-->
+<!--统计Aluenkinglee.com-->
+<!--<script type="text/javascript" id="clustrmaps" src="//cdn.clustrmaps.com/map_v2.js?u=Ak87&d=fWyzUb5ADRAwJb5b2EdCj25FWOlzy8vwVQmK9vxSAYY"></script>-->
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+<!--
+-->
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
+          MathJax.InputJax.TeX.prefilterHooks.Add(function (data) {
+                  data.math = data.math.replace(/^\s*<!\[CDATA\[\s*((?:\n|.)*)\s*\]\]>\s*$/m,"$1");
+                    });
+          });
+
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+
+</script>
+
+<script type="text/javascript"
+        src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>
