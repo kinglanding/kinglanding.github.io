@@ -1,32 +1,50 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <title>Discriminative Model Vs. Generative Model | 曾经渐行远，未免心戚戚</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="判别模型和生成模型分析在学习复习ML内容时，中文检索生成模型搜到了该这里本文主要参考该文章，并稍作整理。">
+  <meta name="description" content="判别模型和生成模型分析
+在学习复习ML内容时，中文检索生成模型搜到了该这里本文主要参考该文章，并稍作整理。
+&amp;lt;!-- more --&amp;gt;
+这两者进行预测的方式不同在于模型的处理上：
+生成模型：无穷样本 ==&amp;gt; 概率密度模型 = 产生模型 ==&amp;gt; 预测
+判别模型：有限样本 ==&amp;gt; 判别函数 = 预测模型 ==&amp;gt; 预测
+简单的说，假设$$x$$是观察值，$$y$$是模">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Discriminative Model Vs. Generative Model">
 <meta property="og:url" content="http://aluenkinglee.com/2014/04/30/2014-04-30-discriminative-model-vs-generative-model/index.html">
 <meta property="og:site_name" content="曾经渐行远，未免心戚戚">
-<meta property="og:description" content="判别模型和生成模型分析在学习复习ML内容时，中文检索生成模型搜到了该这里本文主要参考该文章，并稍作整理。">
+<meta property="og:description" content="判别模型和生成模型分析
+在学习复习ML内容时，中文检索生成模型搜到了该这里本文主要参考该文章，并稍作整理。
+&amp;lt;!-- more --&amp;gt;
+这两者进行预测的方式不同在于模型的处理上：
+生成模型：无穷样本 ==&amp;gt; 概率密度模型 = 产生模型 ==&amp;gt; 预测
+判别模型：有限样本 ==&amp;gt; 判别函数 = 预测模型 ==&amp;gt; 预测
+简单的说，假设$$x$$是观察值，$$y$$是模">
 <meta property="og:updated_time" content="2015-07-26T12:33:50.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Discriminative Model Vs. Generative Model">
-<meta name="twitter:description" content="判别模型和生成模型分析在学习复习ML内容时，中文检索生成模型搜到了该这里本文主要参考该文章，并稍作整理。">
+<meta name="twitter:description" content="判别模型和生成模型分析
+在学习复习ML内容时，中文检索生成模型搜到了该这里本文主要参考该文章，并稍作整理。
+&amp;lt;!-- more --&amp;gt;
+这两者进行预测的方式不同在于模型的处理上：
+生成模型：无穷样本 ==&amp;gt; 概率密度模型 = 产生模型 ==&amp;gt; 预测
+判别模型：有限样本 ==&amp;gt; 判别函数 = 预测模型 ==&amp;gt; 预测
+简单的说，假设$$x$$是观察值，$$y$$是模">
   
     <link rel="alternative" href="/atom.xml" title="曾经渐行远，未免心戚戚" type="application/atom+xml">
   
   
     <link href="/favicon.ico" rel="icon" type="image/x-ico">
   
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body>
-  <div id="container">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
     <div class="left-col">
     <div class="overlay"></div>
 <div class="intrude-less">
@@ -73,7 +91,7 @@
 						<li>Tags</li>
 						
 						
-						<li>About</li>
+						<li>Über</li>
 						
 					</ul>
 				</div>
@@ -114,7 +132,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/java-线程池-ThreadPool-线程/" style="font-size: 10px;">java 线程池 ThreadPool 线程</a>
+						<a href="/tags/ThreadPool/" style="font-size: 10px;">ThreadPool</a> <a href="/tags/java线程池/" style="font-size: 10px;">java线程池</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a>
 					</div>
 				</section>
 				
@@ -188,7 +206,7 @@
   
     <div class="article-meta">
       <a href="/2014/04/30/2014-04-30-discriminative-model-vs-generative-model/" class="article-date">
-  	<time datetime="2014-04-30T09:17:00.000Z" itemprop="datePublished">2014-04-30</time>
+  	<time datetime="2014-04-30T08:17:00.000Z" itemprop="datePublished">2014-04-30</time>
 </a>
     </div>
   
@@ -221,90 +239,124 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="判别模型和生成模型分析"><a href="#判别模型和生成模型分析" class="headerlink" title="判别模型和生成模型分析"></a>判别模型和生成模型分析</h2><p>在学习复习ML内容时，中文检索生成模型搜到了该<a href="http://blog.sciencenet.cn/home.php?mod=space&amp;uid=248173&amp;do=blog&amp;id=227964" target="_blank" rel="external">这里</a>本文主要参考该文章，并稍作整理。</p>
-<a id="more"></a>
+        <h2>判别模型和生成模型分析</h2>
+<p>在学习复习ML内容时，中文检索生成模型搜到了该<a href="http://blog.sciencenet.cn/home.php?mod=space&amp;uid=248173&amp;do=blog&amp;id=227964" target="_blank" rel="external">这里</a>本文主要参考该文章，并稍作整理。</p>
+<p>&lt;!-- more --&gt;</p>
 <p>这两者进行预测的方式不同在于模型的处理上：</p>
 <p><strong>生成模型</strong>：无穷样本 ==&gt; 概率密度模型 = 产生模型 ==&gt; 预测</p>
 <p><strong>判别模型</strong>：有限样本 ==&gt; 判别函数 = 预测模型 ==&gt; 预测</p>
 <p>简单的说，假设$$x$$是观察值，$$y$$是模型。</p>
-<p>如果对先验概率$$P(x|y)$$建模，就是<strong>生成模型（Generative modle）</strong>。<br>其基本思想是首先建立样本的概率密度模型，再利用模型进行推理预测。要求已知样本无穷或尽可能的大。<br>这种方法一般建立在统计力学和bayes理论的基础之上。</p>
-<p>如果对条件概率(后验概率)$$P(y|x)$$建模，就是<strong>判别模型（Discrminative modle）</strong>。基本思想是有限样本条件下建立判别函数，不考虑样本的产生模型，直接研究预测模型。代表性理论为统计学习理论。<br>这两种方法目前交叉较多。</p>
-<h3 id="判别模型Discriminative-Model"><a href="#判别模型Discriminative-Model" class="headerlink" title="判别模型Discriminative Model"></a>判别模型Discriminative Model</h3><p>又可以称为条件模型，或条件概率模型。估计的是条件概率分布(conditional distribution)，即$$ p(class|context)$$。按照上文的记法就是$$P(y|x)$$<br>利用正负例和分类标签，焦点在判别模型的边缘分布。目标函数直接对应于分类准确率。</p>
+<p>如果对先验概率$$P(x|y)$$建模，就是<strong>生成模型（Generative modle）</strong>。
+其基本思想是首先建立样本的概率密度模型，再利用模型进行推理预测。要求已知样本无穷或尽可能的大。
+这种方法一般建立在统计力学和bayes理论的基础之上。</p>
+<p>如果对条件概率(后验概率)$$P(y|x)$$建模，就是<strong>判别模型（Discrminative modle）</strong>。基本思想是有限样本条件下建立判别函数，不考虑样本的产生模型，直接研究预测模型。代表性理论为统计学习理论。
+这两种方法目前交叉较多。</p>
+<h3>判别模型Discriminative Model</h3>
+<p>又可以称为条件模型，或条件概率模型。估计的是条件概率分布(conditional distribution)，即$$ p(class|context)$$。按照上文的记法就是$$P(y|x)$$
+利用正负例和分类标签，焦点在判别模型的边缘分布。目标函数直接对应于分类准确率。</p>
 <p>######主要特点：</p>
 <p>寻找不同类别之间的最优分类面，反映的是异类数据之间的差异。</p>
 <p>######优点:</p>
 <ol>
-<li><p>分类边界更灵活，比使用纯概率方法或生产模型得到的更高级。</p>
+<li>
+<p>分类边界更灵活，比使用纯概率方法或生产模型得到的更高级。</p>
 </li>
-<li><p>能清晰的分辨出多类或某一类与其他类之间的差异特征</p>
+<li>
+<p>能清晰的分辨出多类或某一类与其他类之间的差异特征</p>
 </li>
-<li><p>在聚类、viewpoint changes, partial occlusion and scale variations中的效果较好</p>
+<li>
+<p>在聚类、viewpoint changes, partial occlusion and scale variations中的效果较好</p>
 </li>
-<li><p>适用于较多类别的识别</p>
+<li>
+<p>适用于较多类别的识别</p>
 </li>
-<li><p>判别模型的性能比生成模型要简单，比较容易学习</p>
+<li>
+<p>判别模型的性能比生成模型要简单，比较容易学习</p>
 </li>
 </ol>
 <p>######缺点:</p>
 <ol>
-<li><p>不能反映训练数据本身的特性。能力有限，可以告诉你的是1还是2，但没有办法把整个场景描述出来。</p>
+<li>
+<p>不能反映训练数据本身的特性。能力有限，可以告诉你的是1还是2，但没有办法把整个场景描述出来。</p>
 </li>
-<li><p>Lack elegance of generative: Priors, 结构, 不确定性</p>
+<li>
+<p>Lack elegance of generative: Priors, 结构, 不确定性</p>
 </li>
-<li><p>Alternative notions of penalty functions, regularization, 核函数</p>
+<li>
+<p>Alternative notions of penalty functions, regularization, 核函数</p>
 </li>
-<li><p>黑盒操作: 变量间的关系不清楚，不可视</p>
+<li>
+<p>黑盒操作: 变量间的关系不清楚，不可视</p>
 </li>
 </ol>
 <p><strong>常见的机器学习方法</strong>：</p>
 <ol>
-<li><p>logistic regression</p>
+<li>
+<p>logistic regression</p>
 </li>
-<li><p>支持向量机（SVM）</p>
+<li>
+<p>支持向量机（SVM）</p>
 </li>
-<li><p>传统的神经网络（traditional neural networks）</p>
+<li>
+<p>传统的神经网络（traditional neural networks）</p>
 </li>
-<li><p>K近邻，最近邻（Nearest neighbor）</p>
+<li>
+<p>K近邻，最近邻（Nearest neighbor）</p>
 </li>
-<li><p>Conditional random fields(CRF): 目前最新提出的热门模型，从NLP领域产生的，正在向ASR和CV上发展。</p>
+<li>
+<p>Conditional random fields(CRF): 目前最新提出的热门模型，从NLP领域产生的，正在向ASR和CV上发展。</p>
 </li>
 </ol>
 <p>######主要应用：</p>
 <ol>
-<li><p>图像文本分类</p>
+<li>
+<p>图像文本分类</p>
 </li>
-<li><p>生物科学分析</p>
+<li>
+<p>生物科学分析</p>
 </li>
-<li><p>时间序列预测</p>
+<li>
+<p>时间序列预测</p>
 </li>
 </ol>
-<h3 id="生成模型Generative-Model"><a href="#生成模型Generative-Model" class="headerlink" title="生成模型Generative Model"></a>生成模型Generative Model</h3><p>估计的是联合概率分布（joint probability distribution），$$p(class, context)=p(class|context)<em>p(context)$$,换用之前的描述就是$$p(y, x)=p(y|x)</em>p(x)$$.</p>
+<h3>生成模型Generative Model</h3>
+<p>估计的是联合概率分布（joint probability distribution），$$p(class, context)=p(class|context)*p(context)$$,换用之前的描述就是$$p(y, x)=p(y|x)*p(x)$$.</p>
 <p>用于随机生成的观察值建模，特别是在给定某些隐藏参数情况下。在机器学习中，或用于直接对数据建模（用概率密度函数对观察到的draw建模），或作为生成条件概率密度函数的中间步骤。通过使用<strong>贝叶斯定律</strong>可以从生成模型中得到条件分布。</p>
 <p>如果观察到的数据是完全由生成模型所生成的，那么就可以拟合生成模型的参数，从而仅可能的增加数据相似度。但观测数据往往完全从生成模型得到，所以比较准确的方式是直接对条件密度函数建模，即使用分类或回归分析。</p>
 <p>######主要特点:</p>
 <ol>
-<li><p>一般主要是对<strong>后验概率</strong>建模，从统计的角度表示数据的分布情况，能够反映同类数据本身的相似度</p>
+<li>
+<p>一般主要是对<strong>后验概率</strong>建模，从统计的角度表示数据的分布情况，能够反映同类数据本身的相似度</p>
 </li>
-<li><p>只关注自己的inclass本身（即点左下角区域内的概率），不关心到底判别边界在哪</p>
+<li>
+<p>只关注自己的inclass本身（即点左下角区域内的概率），不关心到底判别边界在哪</p>
 </li>
 </ol>
 <p>######优点:</p>
 <ol>
-<li><p>模型可以通过增量学习得到（同意！）</p>
+<li>
+<p>模型可以通过增量学习得到（同意！）</p>
 </li>
-<li><p>研究单类问题比判别模型灵活性强(怀疑？)</p>
+<li>
+<p>研究单类问题比判别模型灵活性强(怀疑？)</p>
 </li>
-<li><p>能用于数据不完整（missing data）情况(怀疑？)</p>
+<li>
+<p>能用于数据不完整（missing data）情况(怀疑？)</p>
 </li>
-<li><p>实际上带的信息要比判别模型丰富（多太多！同意！）</p>
+<li>
+<p>实际上带的信息要比判别模型丰富（多太多！同意！）</p>
 </li>
-<li><p>prior knowledge can be easily taken into account（同意！）</p>
+<li>
+<p>prior knowledge can be easily taken into account（同意！）</p>
 </li>
-<li><p>modular construction of composed solutions to complex problems</p>
+<li>
+<p>modular construction of composed solutions to complex problems</p>
 </li>
-<li><p>robust to partial occlusion and viewpoint changes</p>
+<li>
+<p>robust to partial occlusion and viewpoint changes</p>
 </li>
-<li><p>can tolerate significant intra-class variation of object appearance</p>
+<li>
+<p>can tolerate significant intra-class variation of object appearance</p>
 </li>
 </ol>
 <p>######缺点:</p>
@@ -313,28 +365,33 @@
 </ol>
 <p><strong>常见的机器学习方法</strong>：</p>
 <ol>
-<li><p><strong>Gaussians判别分析</strong></p>
+<li>
+<p><strong>Gaussians判别分析</strong></p>
 </li>
-<li><p><strong> Naive Bayes</strong>， Bayesian networks</p>
+<li>
+<p>** Naive Bayes**， Bayesian networks</p>
 </li>
-<li><p>Mixtures of Gaussians（混合高斯模型）</p>
+<li>
+<p>Mixtures of Gaussians（混合高斯模型）</p>
 </li>
-<li><p>HMMs，Markov random fields</p>
+<li>
+<p>HMMs，Markov random fields</p>
 </li>
-<li><p>Sigmoidal belief networks</p>
+<li>
+<p>Sigmoidal belief networks</p>
 </li>
 </ol>
 <p>####两者之间的关系</p>
 <p><strong>由生成模型可以得到判别模型，但由判别模型得不到生成模型。</strong></p>
 <blockquote>
 <blockquote>
-<p> 参考</p>
+<p>参考</p>
 </blockquote>
 </blockquote>
-<p><a href="http://prfans.com/forum/viewthread.php?tid=80" target="_blank" rel="external">http://prfans.com/forum/viewthread.php?tid=80</a></p>
-<p><a href="http://hi.baidu.com/cat_ng/blog/item/5e59c3cea730270593457e1d.html" target="_blank" rel="external">http://hi.baidu.com/cat_ng/blog/item/5e59c3cea730270593457e1d.html</a></p>
-<p><a href="http://en.wikipedia.org/wiki/Generative_model" target="_blank" rel="external">http://en.wikipedia.org/wiki/Generative_model</a></p>
-<p><a href="http://blog.csdn.net/yangleecool/archive/2009/04/05/4051029.aspx" target="_blank" rel="external">http://blog.csdn.net/yangleecool/archive/2009/04/05/4051029.aspx</a></p>
+<p>http://prfans.com/forum/viewthread.php?tid=80</p>
+<p>http://hi.baidu.com/cat_ng/blog/item/5e59c3cea730270593457e1d.html</p>
+<p>http://en.wikipedia.org/wiki/Generative_model</p>
+<p>http://blog.csdn.net/yangleecool/archive/2009/04/05/4051029.aspx</p>
 
       
     </div>
@@ -499,6 +556,23 @@ MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
 </script>
 
 
-  </div>
+  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
 </body>
 </html>

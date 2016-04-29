@@ -1,41 +1,50 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <title>Python处理带有时区的的字符串 | 曾经渐行远，未免心戚戚</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="最近在处理一些微博的数据，其中从服务器返回来的json串最后转换成了python中的字典，只是可惜时间也被变成了字符串格式，好在python文档足够全且简单，可以使用datetime中的strptime来解决，尽管如此还是在时区那卡了会
+  <meta name="description" content="最近在处理一些微博的数据，其中从服务器返回来的json串最后转换成了python中的字典，
+只是可惜时间也被变成了字符串格式，好在python文档足够全且简单，可以使用datetime
+中的strptime来解决，尽管如此还是在时区那卡了会
 微博返回的时间数据格式如下：
-“Fri Aug 12 14:09:31 +0800 2011″然后我这样处理的
-1time.strptime(&amp;apos;Fri">
+“Fri Aug 12 14:09:31 +0800 2011″
+然后我这样处理的
+1time.strptime(&amp;apos;F">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python处理带有时区的的字符串">
 <meta property="og:url" content="http://aluenkinglee.com/2013/04/16/2013-04-16-pythonchu-li-dai-you-shi-qu-de-de-zi-fu-chuan/index.html">
 <meta property="og:site_name" content="曾经渐行远，未免心戚戚">
-<meta property="og:description" content="最近在处理一些微博的数据，其中从服务器返回来的json串最后转换成了python中的字典，只是可惜时间也被变成了字符串格式，好在python文档足够全且简单，可以使用datetime中的strptime来解决，尽管如此还是在时区那卡了会
+<meta property="og:description" content="最近在处理一些微博的数据，其中从服务器返回来的json串最后转换成了python中的字典，
+只是可惜时间也被变成了字符串格式，好在python文档足够全且简单，可以使用datetime
+中的strptime来解决，尽管如此还是在时区那卡了会
 微博返回的时间数据格式如下：
-“Fri Aug 12 14:09:31 +0800 2011″然后我这样处理的
-1time.strptime(&amp;apos;Fri">
+“Fri Aug 12 14:09:31 +0800 2011″
+然后我这样处理的
+1time.strptime(&amp;apos;F">
 <meta property="og:updated_time" content="2015-07-26T12:33:50.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python处理带有时区的的字符串">
-<meta name="twitter:description" content="最近在处理一些微博的数据，其中从服务器返回来的json串最后转换成了python中的字典，只是可惜时间也被变成了字符串格式，好在python文档足够全且简单，可以使用datetime中的strptime来解决，尽管如此还是在时区那卡了会
+<meta name="twitter:description" content="最近在处理一些微博的数据，其中从服务器返回来的json串最后转换成了python中的字典，
+只是可惜时间也被变成了字符串格式，好在python文档足够全且简单，可以使用datetime
+中的strptime来解决，尽管如此还是在时区那卡了会
 微博返回的时间数据格式如下：
-“Fri Aug 12 14:09:31 +0800 2011″然后我这样处理的
-1time.strptime(&amp;apos;Fri">
+“Fri Aug 12 14:09:31 +0800 2011″
+然后我这样处理的
+1time.strptime(&amp;apos;F">
   
     <link rel="alternative" href="/atom.xml" title="曾经渐行远，未免心戚戚" type="application/atom+xml">
   
   
     <link href="/favicon.ico" rel="icon" type="image/x-ico">
   
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body>
-  <div id="container">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
     <div class="left-col">
     <div class="overlay"></div>
 <div class="intrude-less">
@@ -82,7 +91,7 @@
 						<li>Tags</li>
 						
 						
-						<li>About</li>
+						<li>Über</li>
 						
 					</ul>
 				</div>
@@ -123,7 +132,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/java-线程池-ThreadPool-线程/" style="font-size: 10px;">java 线程池 ThreadPool 线程</a>
+						<a href="/tags/ThreadPool/" style="font-size: 10px;">ThreadPool</a> <a href="/tags/java线程池/" style="font-size: 10px;">java线程池</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a>
 					</div>
 				</section>
 				
@@ -197,7 +206,7 @@
   
     <div class="article-meta">
       <a href="/2013/04/16/2013-04-16-pythonchu-li-dai-you-shi-qu-de-de-zi-fu-chuan/" class="article-date">
-  	<time datetime="2013-04-16T07:54:00.000Z" itemprop="datePublished">2013-04-16</time>
+  	<time datetime="2013-04-16T06:54:00.000Z" itemprop="datePublished">2013-04-16</time>
 </a>
     </div>
   
@@ -230,32 +239,44 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>最近在处理一些微博的数据，其中从服务器返回来的json串最后转换成了python中的字典，<br>只是可惜时间也被变成了字符串格式，好在python文档足够全且简单，可以使用datetime<br>中的strptime来解决，尽管如此还是在时区那卡了会</p>
+        <p>最近在处理一些微博的数据，其中从服务器返回来的json串最后转换成了python中的字典，
+只是可惜时间也被变成了字符串格式，好在python文档足够全且简单，可以使用datetime
+中的strptime来解决，尽管如此还是在时区那卡了会</p>
 <p>微博返回的时间数据格式如下：</p>
-<h5 id="“Fri-Aug-12-14-09-31-0800-2011″"><a href="#“Fri-Aug-12-14-09-31-0800-2011″" class="headerlink" title="“Fri Aug 12 14:09:31 +0800 2011″"></a>“Fri Aug 12 14:09:31 +0800 2011″</h5><p>然后我这样处理的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">time.strptime(&apos;Fri Aug 12 14:09:31 +0800 2011&apos;, &apos;%a %b %d %H:%M:%S %z %Y&apos;)</span><br></pre></td></tr></table></figure>
-<a id="more"></a>
-<p>当然也可以这样，只是试验下而已</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dt2 = datetime.strptime(&apos;Fri Aug 12 14:09:31 +0800 2011&apos;, &apos;%a %b %d %H:%M:%S %Z %Y&apos;)</span><br></pre></td></tr></table></figure>
+<h5>“Fri Aug 12 14:09:31 +0800 2011″</h5>
+<p>然后我这样处理的</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">time.strptime(&apos;Fri Aug 12 14:09:31 +0800 2011&apos;, &apos;%a %b %d %H:%M:%S %z %Y&apos;)</span><br></pre></td></tr></table></figure></p>
+<p>&lt;!--more--&gt;
+当然也可以这样，只是试验下而已</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dt2 = datetime.strptime(&apos;Fri Aug 12 14:09:31 +0800 2011&apos;, &apos;%a %b %d %H:%M:%S %Z %Y&apos;)</span><br></pre></td></tr></table></figure></p>
 <p>然而却出现了如下的错误：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ValueError: time data &apos;Fri Aug 12 14:09:31 +0800 2011&apos; does not match format &apos;%a %b %d %H:%M:%S %Z %Y&apos;</span><br></pre></td></tr></table></figure>
-<p>查了下<a href="http://stackoverflow.com/questions/10540399/strftime-does-not-return-abbreviated-time-zone" target="_blank" rel="external">资料</a><br>发现这个跟系统有关系，而且这个是bug，（虽然开发者不承认，但是我觉得还有有点关系….虽然它又跟locals有关系。。。识别起来<br>确实很繁琐）比如现在我是在windows上处理的结果就是</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; print time.strftime(&quot;%a, %d %b %Y %I:%M:%S %p %Z&quot;, time.localtime(10.5))</span><br><span class="line">Thu, 01 Jan 1970 08:00:10 AM 中国标准时间</span><br><span class="line">&gt;&gt;&gt; print time.strftime(&quot;%a, %d %b %Y %I:%M %p %Z&quot;, time.gmtime())</span><br><span class="line">Tue, 16 Apr 2013 08:33 AM 中国标准时间</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ValueError: time data &apos;Fri Aug 12 14:09:31 +0800 2011&apos; does not match format &apos;%a %b %d %H:%M:%S %Z %Y&apos;</span><br></pre></td></tr></table></figure></p>
+<p>查了下<a href="http://stackoverflow.com/questions/10540399/strftime-does-not-return-abbreviated-time-zone" target="_blank" rel="external">资料</a>
+发现这个跟系统有关系，而且这个是bug，（虽然开发者不承认，但是我觉得还有有点关系….虽然它又跟locals有关系。。。识别起来
+确实很繁琐）比如现在我是在windows上处理的结果就是</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; print time.strftime(&quot;%a, %d %b %Y %I:%M:%S %p %Z&quot;, time.localtime(10.5))</span><br><span class="line">Thu, 01 Jan 1970 08:00:10 AM 中国标准时间</span><br><span class="line">&gt;&gt;&gt; print time.strftime(&quot;%a, %d %b %Y %I:%M %p %Z&quot;, time.gmtime())</span><br><span class="line">Tue, 16 Apr 2013 08:33 AM 中国标准时间</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure></p>
 <p>和那个+8000格格不入，好吧 反正数据的处理设计不到时区，那么可以这样子做</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; dt2 = datetime.strptime(&apos;Fri Aug 12 14:09:31 +0800 2011&apos;, &apos;%a %b %d %H:%M:%S +0800 %Y&apos;)</span><br><span class="line">&gt;&gt;&gt; print dt2</span><br><span class="line">2011-08-12 14:09:31</span><br></pre></td></tr></table></figure>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; dt2 = datetime.strptime(&apos;Fri Aug 12 14:09:31 +0800 2011&apos;, &apos;%a %b %d %H:%M:%S +0800 %Y&apos;)</span><br><span class="line">&gt;&gt;&gt; print dt2</span><br><span class="line">2011-08-12 14:09:31</span><br></pre></td></tr></table></figure></p>
 <p>对现在的需求来说,反而更好.</p>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ol>
-<li><p><a href="http://bugs.python.org/issue6641" target="_blank" rel="external">issue6641</a></p>
+<h3>参考</h3>
+<ol>
+<li>
+<p><a href="http://bugs.python.org/issue6641" target="_blank" rel="external">issue6641</a></p>
 </li>
-<li><p><a href="http://stackoverflow.com/questions/4788533/python-strftime-gmtime-not-respecting-timezone" target="_blank" rel="external">python-strftime-gmtime-not-respecting-timezone</a></p>
+<li>
+<p><a href="http://stackoverflow.com/questions/4788533/python-strftime-gmtime-not-respecting-timezone" target="_blank" rel="external">python-strftime-gmtime-not-respecting-timezone</a></p>
 </li>
-<li><p><a href="http://stackoverflow.com/questions/10540399/strftime-does-not-return-abbreviated-time-zone" target="_blank" rel="external">strftime-does-not-return-abbreviated-time-zone</a></p>
+<li>
+<p><a href="http://stackoverflow.com/questions/10540399/strftime-does-not-return-abbreviated-time-zone" target="_blank" rel="external">strftime-does-not-return-abbreviated-time-zone</a></p>
 </li>
-<li><p><a href="http://forum.open.weibo.com/read.php?tid=11780" target="_blank" rel="external">微博使用</a></p>
+<li>
+<p><a href="http://forum.open.weibo.com/read.php?tid=11780" target="_blank" rel="external">微博使用</a></p>
 </li>
-<li><p><a href="http://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior" target="_blank" rel="external">strftime-and-strptime-behavior</a></p>
+<li>
+<p><a href="http://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior" target="_blank" rel="external">strftime-and-strptime-behavior</a></p>
 </li>
-<li><p><a href="http://stackoverflow.com/questions/466345/converting-string-into-datetime" target="_blank" rel="external">converting-string-into-datetime</a></p>
+<li>
+<p><a href="http://stackoverflow.com/questions/466345/converting-string-into-datetime" target="_blank" rel="external">converting-string-into-datetime</a></p>
 </li>
 </ol>
 
@@ -422,6 +443,23 @@ MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
 </script>
 
 
-  </div>
+  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
 </body>
 </html>

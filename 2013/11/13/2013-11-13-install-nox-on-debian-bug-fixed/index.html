@@ -1,32 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <title>install nox on debian-bug fixed | 曾经渐行远，未免心戚戚</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="首先需要声明的一点是，到目前（2013/11）Nox在所有SDN控制器中不是最火的（相比Pox，floodlight），但是作为最先开发的一个SDN而言，还是有研究意义的。">
+  <meta name="description" content="首先需要声明的一点是，到目前（2013/11）Nox在所有SDN控制器中不是最火的（相比Pox，floodlight），但是作为最先开发的一个SDN而言，还是有研究意义的。
+&amp;lt;!--more--&amp;gt;
+安装提示
+123456cd /etc/apt/sources.list.d/sudo wget http://openflowswitch.org/downloads/debian/nox.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="install nox on debian-bug fixed">
 <meta property="og:url" content="http://aluenkinglee.com/2013/11/13/2013-11-13-install-nox-on-debian-bug-fixed/index.html">
 <meta property="og:site_name" content="曾经渐行远，未免心戚戚">
-<meta property="og:description" content="首先需要声明的一点是，到目前（2013/11）Nox在所有SDN控制器中不是最火的（相比Pox，floodlight），但是作为最先开发的一个SDN而言，还是有研究意义的。">
+<meta property="og:description" content="首先需要声明的一点是，到目前（2013/11）Nox在所有SDN控制器中不是最火的（相比Pox，floodlight），但是作为最先开发的一个SDN而言，还是有研究意义的。
+&amp;lt;!--more--&amp;gt;
+安装提示
+123456cd /etc/apt/sources.list.d/sudo wget http://openflowswitch.org/downloads/debian/nox.">
 <meta property="og:updated_time" content="2015-07-26T12:33:50.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="install nox on debian-bug fixed">
-<meta name="twitter:description" content="首先需要声明的一点是，到目前（2013/11）Nox在所有SDN控制器中不是最火的（相比Pox，floodlight），但是作为最先开发的一个SDN而言，还是有研究意义的。">
+<meta name="twitter:description" content="首先需要声明的一点是，到目前（2013/11）Nox在所有SDN控制器中不是最火的（相比Pox，floodlight），但是作为最先开发的一个SDN而言，还是有研究意义的。
+&amp;lt;!--more--&amp;gt;
+安装提示
+123456cd /etc/apt/sources.list.d/sudo wget http://openflowswitch.org/downloads/debian/nox.">
   
     <link rel="alternative" href="/atom.xml" title="曾经渐行远，未免心戚戚" type="application/atom+xml">
   
   
     <link href="/favicon.ico" rel="icon" type="image/x-ico">
   
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body>
-  <div id="container">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
     <div class="left-col">
     <div class="overlay"></div>
 <div class="intrude-less">
@@ -73,7 +82,7 @@
 						<li>Tags</li>
 						
 						
-						<li>About</li>
+						<li>Über</li>
 						
 					</ul>
 				</div>
@@ -114,7 +123,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/java-线程池-ThreadPool-线程/" style="font-size: 10px;">java 线程池 ThreadPool 线程</a>
+						<a href="/tags/ThreadPool/" style="font-size: 10px;">ThreadPool</a> <a href="/tags/java线程池/" style="font-size: 10px;">java线程池</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a>
 					</div>
 				</section>
 				
@@ -188,7 +197,7 @@
   
     <div class="article-meta">
       <a href="/2013/11/13/2013-11-13-install-nox-on-debian-bug-fixed/" class="article-date">
-  	<time datetime="2013-11-13T14:44:00.000Z" itemprop="datePublished">2013-11-13</time>
+  	<time datetime="2013-11-13T13:44:00.000Z" itemprop="datePublished">2013-11-13</time>
 </a>
     </div>
   
@@ -222,24 +231,28 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>首先需要声明的一点是，到目前（2013/11）Nox在所有SDN控制器中不是最火的（相比Pox，floodlight），但是作为最先开发的一个SDN而言，还是有研究意义的。</p>
-<a id="more"></a>
-<h5 id="安装提示"><a href="#安装提示" class="headerlink" title="安装提示"></a>安装提示</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cd /etc/apt/sources.list.d/</span><br><span class="line">sudo wget http://openflowswitch.org/downloads/debian/nox.list</span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install nox-dependencies</span><br><span class="line">sudo apt-get install libtbb-dev</span><br><span class="line">sudo apt-get install libboost-serialization-dev libboost-all-dev</span><br></pre></td></tr></table></figure>
+<p>&lt;!--more--&gt;</p>
+<h5>安装提示</h5>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cd /etc/apt/sources.list.d/</span><br><span class="line">sudo wget http://openflowswitch.org/downloads/debian/nox.list</span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install nox-dependencies</span><br><span class="line">sudo apt-get install libtbb-dev</span><br><span class="line">sudo apt-get install libboost-serialization-dev libboost-all-dev</span><br></pre></td></tr></table></figure></p>
 <p>然后在你想放置Nox源码的地方做如下操作：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">git clone git://github.com/noxrepo/nox</span><br><span class="line">cd nox</span><br><span class="line">./boot.sh</span><br><span class="line">mkdir build</span><br><span class="line">cd build</span><br><span class="line">../configure</span><br><span class="line">make -j 5</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">git clone git://github.com/noxrepo/nox</span><br><span class="line">cd nox</span><br><span class="line">./boot.sh</span><br><span class="line">mkdir build</span><br><span class="line">cd build</span><br><span class="line">../configure</span><br><span class="line">make -j 5</span><br><span class="line">make install</span><br></pre></td></tr></table></figure></p>
 <p>很不幸，遇到了如下的错误：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">../../src/builtin/component.cc:414:1: required from here</span><br><span class="line">/usr/include/boost/property_tree/detail/json_parser_read.hpp:105:17: error:</span><br><span class="line">no matching function for call to ‘boost::property_tree::basic_ptree</span><br><span class="line">std::basic_string&lt;char, std::basic_string &gt;::push_back(std::pair</span><br><span class="line">std::basic_string&lt;char, std::basic_string &gt;)’</span><br><span class="line">/usr/include/boost/property_tree/detail/json_parser_read.hpp:105:17: note:</span><br><span class="line">candidate is:</span><br><span class="line">In file included from /usr/include/boost/property_tree/ptree.hpp:516:0,</span><br><span class="line">from ../../src/include/component.hh:35,</span><br><span class="line">from ../../src/builtin/component.cc:18:</span><br><span class="line">/usr/include/boost/property_tree/detail/ptree_implementation.hpp:362:9:</span><br><span class="line">note: boost::property_tree::basic_ptree::iterator</span><br><span class="line">boost::property_tree::basic_ptree::push_back(const value_type&amp;) [with Key =</span><br><span class="line">std::basic_string; Data = std::basic_string; KeyCompare = std::less</span><br><span class="line">std::basic_string&lt;char &gt;; boost::property_tree::basic_ptree::value_type =</span><br><span class="line">std::pair, boost::property_tree::basic_ptreestd::basic_string&lt;char,</span><br><span class="line">std::basic_string &gt; &gt;]</span><br><span class="line">/usr/include/boost/property_tree/detail/ptree_implementation.hpp:362:9:</span><br><span class="line">note: no known conversion for argument 1 from ‘std::pair</span><br><span class="line">std::basic_string&lt;char, std::basic_string &gt;’ to ‘const value_type&amp; &#123;aka</span><br><span class="line">const std::pair, boost::property_tree::basic_ptreestd::basic_string&lt;char,</span><br><span class="line">std::basic_string &gt; &gt;&amp;&#125;’</span><br><span class="line">make[4]: *** [nox_core-component.o] Error 1</span><br></pre></td></tr></table></figure>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">../../src/builtin/component.cc:414:1: required from here</span><br><span class="line">/usr/include/boost/property_tree/detail/json_parser_read.hpp:105:17: error:</span><br><span class="line">no matching function for call to ‘boost::property_tree::basic_ptree</span><br><span class="line">std::basic_string&lt;char, std::basic_string &gt;::push_back(std::pair</span><br><span class="line">std::basic_string&lt;char, std::basic_string &gt;)’</span><br><span class="line">/usr/include/boost/property_tree/detail/json_parser_read.hpp:105:17: note:</span><br><span class="line">candidate is:</span><br><span class="line">In file included from /usr/include/boost/property_tree/ptree.hpp:516:0,</span><br><span class="line">from ../../src/include/component.hh:35,</span><br><span class="line">from ../../src/builtin/component.cc:18:</span><br><span class="line">/usr/include/boost/property_tree/detail/ptree_implementation.hpp:362:9:</span><br><span class="line">note: boost::property_tree::basic_ptree::iterator</span><br><span class="line">boost::property_tree::basic_ptree::push_back(const value_type&amp;) [with Key =</span><br><span class="line">std::basic_string; Data = std::basic_string; KeyCompare = std::less</span><br><span class="line">std::basic_string&lt;char &gt;; boost::property_tree::basic_ptree::value_type =</span><br><span class="line">std::pair, boost::property_tree::basic_ptreestd::basic_string&lt;char,</span><br><span class="line">std::basic_string &gt; &gt;]</span><br><span class="line">/usr/include/boost/property_tree/detail/ptree_implementation.hpp:362:9:</span><br><span class="line">note: no known conversion for argument 1 from ‘std::pair</span><br><span class="line">std::basic_string&lt;char, std::basic_string &gt;’ to ‘const value_type&amp; &#123;aka</span><br><span class="line">const std::pair, boost::property_tree::basic_ptreestd::basic_string&lt;char,</span><br><span class="line">std::basic_string &gt; &gt;&amp;&#125;’</span><br><span class="line">make[4]: *** [nox_core-component.o] Error 1</span><br></pre></td></tr></table></figure></p>
 <p>这个错误来源于nox依赖的boost库版本（1.49）的错误.注意错误原因是：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/usr/include/boost/property_tree/detail/json_parser_read.hpp:105</span><br><span class="line">error:</span><br><span class="line">no matching function for call to ‘boost::property_tree::basic_ptree</span><br><span class="line">std::basic_string&lt;char, std::basic_string &gt;::push_back(std::pair</span><br><span class="line">std::basic_string&lt;char, std::basic_string &gt;)’</span><br></pre></td></tr></table></figure>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/usr/include/boost/property_tree/detail/json_parser_read.hpp:105</span><br><span class="line">error:</span><br><span class="line">no matching function for call to ‘boost::property_tree::basic_ptree</span><br><span class="line">std::basic_string&lt;char, std::basic_string &gt;::push_back(std::pair</span><br><span class="line">std::basic_string&lt;char, std::basic_string &gt;)’</span><br></pre></td></tr></table></figure></p>
 <p>同样的问题点击<a href="http://lists.noxrepo.org/pipermail/nox-dev-noxrepo.org/2013-February/000668.html" title="[nox-dev] Nox build fails" target="_blank" rel="external">这里</a></p>
 <p>解决方法：<code>/usr/include/boost/property_tree/detail/json_parser_read.hpp</code>找到这个文件。定位到<code>105行，</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c.stack.back()-&gt;push_back(std::make_pair(c.name, Str(b, e)));</span><br></pre></td></tr></table></figure>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c.stack.back()-&gt;push_back(std::make_pair(c.name, Str(b, e)));</span><br></pre></td></tr></table></figure></p>
 <p>换成</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c.stack.back()-&gt;push_back(std::make_pair(c.name, Ptree(Str(b, e))));</span><br></pre></td></tr></table></figure>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c.stack.back()-&gt;push_back(std::make_pair(c.name, Ptree(Str(b, e))));</span><br></pre></td></tr></table></figure></p>
 <p>重新make&amp;&amp; make install 即可。</p>
-<h5 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h5><ol>
-<li><p><a href="https://svn.boost.org/trac/boost/ticket/6785" target="_blank" rel="external">read_json does not compile on GCC 4.7.0 with std=c++11</a></p>
+<h5>Reference</h5>
+<ol>
+<li>
+<p><a href="https://svn.boost.org/trac/boost/ticket/6785" target="_blank" rel="external">read_json does not compile on GCC 4.7.0 with std=c++11</a></p>
 </li>
-<li><p><a href="http://lists.noxrepo.org/pipermail/nox-dev-noxrepo.org/2013-February/000668.html" target="_blank" rel="external">nox-dev Nox build fails</a></p>
+<li>
+<p><a href="http://lists.noxrepo.org/pipermail/nox-dev-noxrepo.org/2013-February/000668.html" target="_blank" rel="external">nox-dev Nox build fails</a></p>
 </li>
 </ol>
 
@@ -406,6 +419,23 @@ MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
 </script>
 
 
-  </div>
+  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
 </body>
 </html>

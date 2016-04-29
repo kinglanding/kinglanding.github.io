@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <title>曾经渐行远，未免心戚戚</title>
@@ -21,11 +21,11 @@
   
     <link href="/favicon.ico" rel="icon" type="image/x-ico">
   
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body>
-  <div id="container">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
     <div class="left-col">
     <div class="overlay"></div>
 <div class="intrude-less">
@@ -72,7 +72,7 @@
 						<li>Tags</li>
 						
 						
-						<li>About</li>
+						<li>Über</li>
 						
 					</ul>
 				</div>
@@ -113,7 +113,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/java-线程池-ThreadPool-线程/" style="font-size: 10px;">java 线程池 ThreadPool 线程</a>
+						<a href="/tags/ThreadPool/" style="font-size: 10px;">ThreadPool</a> <a href="/tags/java线程池/" style="font-size: 10px;">java线程池</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a>
 					</div>
 				</section>
 				
@@ -189,7 +189,7 @@
   
     <div class="article-meta">
       <a href="/2013/06/14/2013-06-14-mysqljiao-huan-liang-lie/" class="article-date">
-  	<time datetime="2013-06-14T07:35:00.000Z" itemprop="datePublished">2013-06-14</time>
+  	<time datetime="2013-06-14T06:35:00.000Z" itemprop="datePublished">2013-06-14</time>
 </a>
     </div>
   
@@ -211,9 +211,29 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>事情的起因是这个发现数据库中出现了某两列数据正好颠倒了，大部分数据都是正常的，<br>这些错误的原因是数据源有问题，今天在进一步的做标签聚类的时候分析的时候发现这<br>些占很小比例的误差，辛亏发现了，否则做出来的结果有可能会郁闷很久。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select id,place_lat,place_lon from `nearbyinfo` where `nearbyinfo`.`place_lat`&gt;0;</span><br></pre></td></tr></table></figure>
-<p>正常的数据都是&lt; <code>39.xxx</code>, <code>160.2xxx</code> &gt;之间，如图所示:<br>
+        <p>事情的起因是这个发现数据库中出现了某两列数据正好颠倒了，大部分数据都是正常的，
+这些错误的原因是数据源有问题，今天在进一步的做标签聚类的时候分析的时候发现这
+些占很小比例的误差，辛亏发现了，否则做出来的结果有可能会郁闷很久。</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select id,place_lat,place_lon from `nearbyinfo` where `nearbyinfo`.`place_lat`&gt;0;</span><br></pre></td></tr></table></figure></p>
+<p>正常的数据都是&lt; <code>39.xxx</code>, <code>160.2xxx</code> &gt;之间，如图所示:
+&lt;!--more--&gt;</p>
+<p><img src="https://github.com/aluenkinglee/aluenkinglee.github.io/blob/source/source/images/2013-06-14-mysqljiao-huan-liang-lie/11.png?raw=true" alt="正常数据" title="正常数据"></p>
+<p>但是幸好及时发现了存在这样的数据，</p>
+<p><img src="https://github.com/aluenkinglee/aluenkinglee.github.io/blob/source/source/images/2013-06-14-mysqljiao-huan-liang-lie/12.png?raw=true" alt="异常数据" title="异常数据"></p>
+<p>一开始想的是想写sql语句试着把这两栏的数据给交换过来，可是sql太渣…然后就想着找
+到这些ID和他们的坐标值（都已经出来了），然后用python读出来写成update的语句，
+然后在执行一下就可以了，这也太…</p>
+<p>辛亏最终还是找到了，在这还是完整的说明一下吧。首先创建一个表，在Mysql中</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">CREATE DATABASE  IF NOT EXISTS `weibodata` </span><br><span class="line">USE `weibodata`;</span><br><span class="line">DROP TABLE IF EXISTS `test`;</span><br><span class="line">CREATE TABLE `test` (</span><br><span class="line">  `id` int(11) NOT NULL AUTO_INCREMENT,</span><br><span class="line">  `a` varchar(45) DEFAULT NULL,</span><br><span class="line">  `b` varchar(45) DEFAULT NULL,</span><br><span class="line">  PRIMARY KEY (`id`)</span><br><span class="line">) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;</span><br><span class="line">LOCK TABLES `test` WRITE;</span><br><span class="line">INSERT INTO `test` VALUES (1,&apos;-1&apos;,&apos;4&apos;),(2,&apos;3&apos;,&apos;2&apos;);</span><br><span class="line">UNLOCK TABLES;</span><br></pre></td></tr></table></figure></p>
+<p>所以看起来会是这个样子:</p>
+<p><img src="https://github.com/aluenkinglee/aluenkinglee.github.io/blob/source/source/images/2013-06-14-mysqljiao-huan-liang-lie/12.png?raw=true" alt="交换之前" title="交换之前"></p>
+<p>然后执行下面的语句，会发生第二行swap了</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UPDATE test t1,test t2 SET t1.a=t1.b,t2.b=t2.a where t1.id =t2.id and t1.a&gt;0;</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://github.com/aluenkinglee/aluenkinglee.github.io/blob/source/source/images/2013-06-14-mysqljiao-huan-liang-lie/12.png?raw=true" alt="交换之后" title="交换之后"></p>
+<p>在尝试一下就会变成原样。</p>
+<p>问题解决了。</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select id,place_lat,place_lon from nearbyinfo where place_lat &gt;100;</span><br><span class="line">UPDATE nearbyinfo t1,nearbyinfo t2 SET t1.place_lat=t1.place_lon,t2.place_lon=t2.place_lat where t1.id = t2.id and t1.place_lat&gt;100;</span><br><span class="line">select id,place_lat,place_lon from nearbyinfo where id in (1025,4974,4814,2685);</span><br></pre></td></tr></table></figure></p>
+
       
     </div>
     
@@ -226,10 +246,6 @@
 	</div>
 
 
-      
-        <p class="article-more-link">
-          <a  href="/2013/06/14/2013-06-14-mysqljiao-huan-liang-lie/#more">more >></a>
-        </p>
       
       <div class="clearfix"></div>
     </div>
@@ -251,7 +267,7 @@
   
     <div class="article-meta">
       <a href="/2013/04/17/2014-03-14-jin-qi-zong-jie/" class="article-date">
-  	<time datetime="2013-04-17T09:13:00.000Z" itemprop="datePublished">2013-04-17</time>
+  	<time datetime="2013-04-17T08:13:00.000Z" itemprop="datePublished">2013-04-17</time>
 </a>
     </div>
   
@@ -274,7 +290,91 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>一直以来对数据挖掘，推荐的算法比较感兴趣，可是大家也都知道如果只是看课本上的那些理论性的公式和说辞会给人一种很空泛的感觉，所以个人感觉迫切需要做这方面的实践。可惜做这些的最最最遗憾缺少的就是数据的问题。所以我的给自己整点数据。</p>
-<p>还好这学期算是有时间，相对于上个学期一周n多的课程和大作业来说算是幸福多的了。（而且那个时候还要给师兄们各种帮忙，要写android程序版本中的几个activity，呵呵，不过很有意思，师兄有一个是做LBS信息匿名处理服务的，挺有意思，对比微博，人人中的定位&gt;.&lt;就会发现这个很有必要的，获取一个人的坐标信息还是很容易的。）所以就琢磨这弄点数据自己来搞，一开始我是想获得微博的数据，具体来说是获得某个人过去说过的话，然后分析什么样的人，什么样的性格，心理怎么样。（我认为计算机和其他学科的交叉才是王道，说到底，计算机，算法毕竟只是一种计算的工具和技术，和其他学科（比如地理，心理学，生物学）的交叉才会有更多新的发现，现在数据量都很多，人工时处理不了的。机器学习和数据挖掘的应用领域啦~）<br>
+<p>还好这学期算是有时间，相对于上个学期一周n多的课程和大作业来说算是幸福多的了。（而且那个时候还要给师兄们各种帮忙，要写android程序版本中的几个activity，呵呵，不过很有意思，师兄有一个是做LBS信息匿名处理服务的，挺有意思，对比微博，人人中的定位&gt;.&lt;就会发现这个很有必要的，获取一个人的坐标信息还是很容易的。）所以就琢磨这弄点数据自己来搞，一开始我是想获得微博的数据，具体来说是获得某个人过去说过的话，然后分析什么样的人，什么样的性格，心理怎么样。（我认为计算机和其他学科的交叉才是王道，说到底，计算机，算法毕竟只是一种计算的工具和技术，和其他学科（比如地理，心理学，生物学）的交叉才会有更多新的发现，现在数据量都很多，人工时处理不了的。机器学习和数据挖掘的应用领域啦~）
+&lt;!-- more --&gt;
+不过跟老板交涉的结果是，嗯，想法是不错，可惜缺少可以定量分析心理学的依据，毕竟你不是研究过心理学的，没有话语权,论文不好发，没个几年时间你不好毕业&gt;&lt;。。好吧，从此我就踏上了LBSNs的不归路，呵呵。话说虽然Foursquare现在半死不活的，但是我个人认为不是LBS的不成功，而是Foursquare本省商业模式的问题，这个得专门写一篇文章，不在这里跑题了。</p>
+<p>在LBSN中除了可以分析用户的行为轨迹，感觉这里面没有可以继续深入的了，因为在继续做下去就是匿名，而且很多人都已经做过了。基于地理位置上的数据挖掘和推荐貌似还不是很多(资料查的少的缘故，不敢妄下定论)。</p>
+<p>通过新浪微博API调用获取地理位置信息</p>
+<p>######目的</p>
+<p>获取带地理标签的微博数据，为以后分析数据使用。</p>
+<p>######相关工作</p>
+<p><code>目前获取微博信息的方法有两种</code></p>
+<ol>
+<li>
+<p>编写网络爬虫抓取带地理标签的微博</p>
+</li>
+<li>
+<p>通过OAuth2.0认证使用微博提供的API获取微博</p>
+</li>
+</ol>
+<p><code>网络爬虫的基本工作流程如下</code></p>
+<ol>
+<li>
+<p>首先选取一部分精心挑选的种子URL；</p>
+</li>
+<li>
+<p>将这些URL放入待抓取URL队列；</p>
+</li>
+<li>
+<p>从待抓取URL队列中取出待抓取在URL，解析DNS，并且得到主机的ip，并将URL对应的网页下载下来，存储进已下载网页库中。此外，将这些URL放进已抓取URL队列。</p>
+</li>
+<li>
+<p>分析已抓取URL队列中的URL，分析其中的其他URL，并且将URL放入待抓取URL队列，从而进入下一个循环。</p>
+</li>
+</ol>
+<p><code>抓取策略</code></p>
+<p>在爬虫系统中，待抓取URL队列是很重要的一部分。待抓取URL队列中的URL以什么样的顺序排列也是一个很重要的问题，因为这涉及到先抓取那个页面，后抓取哪个页面。而决定这些URL排列顺序的方法，叫做抓取策略。下面重点介绍几种常见的抓取策略：</p>
+<ul>
+<li>
+<p>深度优先遍历策略</p>
+</li>
+<li>
+<p>宽度优先遍历策略</p>
+</li>
+<li>
+<p>反向链接数策略</p>
+</li>
+<li>
+<p>Partial PageRank策略</p>
+</li>
+</ul>
+<p>可是在使用这种方法的过程中，发现了微博在使用cookie登陆的过程中有个加密的处理，这个加密算法一时没有弄明白，我不知道具体的加密步骤所以也反解不出来。所以就使用了另外的方法。</p>
+<p><code>使用OAuth2.0认证</code></p>
+<p>OAuth（开放授权）是一个开放标准，允许用户让第三方应用访问该用户在某一网站上存储的私密的资源（如照片，视频，联系人列表），而无需将用户名和密码提供给第三方应用。</p>
+<p>OAuth允许用户提供一个令牌，而不是用户名和密码来访问他们存放在特定服务提供者的数据。每一个令牌授权一个特定的网站（例如，视频编辑网站)在特定的时段（例如，接下来的2小时内）内访问特定的资源（例如仅仅是某一相册中的视频）。这样，OAuth让用户可以授权第三方网站访问他们存储在另外服务提供者的某些特定信息，而非所有内容。</p>
+<p>######认证和授权过程</p>
+<p><code>在认证和授权的过程中涉及的三方包括</code></p>
+<ol>
+<li>
+<p>服务提供方，用户使用服务提供方来存储受保护的资源，如照片，视频，联系人列表。</p>
+</li>
+<li>
+<p>用户 ，存放在服务提供方的受保护的资源的拥有者。</p>
+</li>
+<li>
+<p>客户端 ，要访问服务提供方资源的第三方应用。在认证过程之前，客户端要向服务提供者申请客户端标识。</p>
+</li>
+</ol>
+<p><code>使用OAuth进行认证和授权的过程如下所示</code></p>
+<ol>
+<li>用户访问客户端的网站，想操作自己存放在服务提供方的资源。</li>
+<li>客户端向服务提供方请求一个临时令牌。</li>
+<li>服务提供方验证客户端的身份后，授予一个临时令牌。</li>
+<li>客户端获得临时令牌后，将用户引导至服务提供方的授权页面请求用户授权。在这个过程中将临时令牌和客户端的回调连接发送给服务提供方。</li>
+<li>用户在服务提供方的网页上输入用户名和密码，然后授权该客户端访问所请求的资源。</li>
+<li>授权成功后，服务提供方引导用户返回客户端的网页。</li>
+<li>客户端根据临时令牌从服务提供方那里获取访问令牌 。</li>
+<li>服务提供方根据临时令牌和用户的授权情况授予客户端访问令牌。</li>
+<li>客户端使用获取的访问令牌访问存放在服务提供方上的受保护的资源</li>
+</ol>
+<p>######方法</p>
+<p>前期比较了两种方案，决定优先使用网路爬虫的方案。</p>
+<p>在使用爬虫的方案时，尽管在使用cookie模拟登陆renren.com，douban.com可以成功，但还是在weibo.com这遇到了另外一个头痛加密数据的问题，之前的工作没有办法得到应用。而且短时间内数据加密的方式解决不了。放弃。</p>
+<p>使用OAuth认证调用微博API的方案可以很方便的通过认证并且得到带有地理位置标签的数据。目前获得了35000条微博的数据。</p>
+<p>对其返回的数据分析发现，该数据结构足以满足需求，用户id，发布微博时间，发布地点，微博文本内容等。</p>
+<p>这些数据的来源是源自微博中周边微博这类地理位置的API。出于实验的目的，我把海淀区划分了15个区域，取区域内的标志性地点的经纬度（可以随时增加其他点），再以一个较低的频率（为了尽量避免取到重复数据）去取这15个点的周边微博（全部含有地理标签）。</p>
+<p>对于这些数据的想法，目前是把这些数据标示在地图上，先得到直观上的点的分布，再分析为什么会再此聚集，和什么属性相关。这是基本的想法。</p>
+
       
     </div>
     
@@ -287,10 +387,6 @@
 	</div>
 
 
-      
-        <p class="article-more-link">
-          <a  href="/2013/04/17/2014-03-14-jin-qi-zong-jie/#more">more >></a>
-        </p>
       
       <div class="clearfix"></div>
     </div>
@@ -312,7 +408,7 @@
   
     <div class="article-meta">
       <a href="/2013/04/16/2013-04-16-pythonchu-li-dai-you-shi-qu-de-de-zi-fu-chuan/" class="article-date">
-  	<time datetime="2013-04-16T07:54:00.000Z" itemprop="datePublished">2013-04-16</time>
+  	<time datetime="2013-04-16T06:54:00.000Z" itemprop="datePublished">2013-04-16</time>
 </a>
     </div>
   
@@ -334,10 +430,47 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>最近在处理一些微博的数据，其中从服务器返回来的json串最后转换成了python中的字典，<br>只是可惜时间也被变成了字符串格式，好在python文档足够全且简单，可以使用datetime<br>中的strptime来解决，尽管如此还是在时区那卡了会</p>
+        <p>最近在处理一些微博的数据，其中从服务器返回来的json串最后转换成了python中的字典，
+只是可惜时间也被变成了字符串格式，好在python文档足够全且简单，可以使用datetime
+中的strptime来解决，尽管如此还是在时区那卡了会</p>
 <p>微博返回的时间数据格式如下：</p>
-<h5 id="“Fri-Aug-12-14-09-31-0800-2011″"><a href="#“Fri-Aug-12-14-09-31-0800-2011″" class="headerlink" title="“Fri Aug 12 14:09:31 +0800 2011″"></a>“Fri Aug 12 14:09:31 +0800 2011″</h5><p>然后我这样处理的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">time.strptime(&apos;Fri Aug 12 14:09:31 +0800 2011&apos;, &apos;%a %b %d %H:%M:%S %z %Y&apos;)</span><br></pre></td></tr></table></figure>
+<h5>“Fri Aug 12 14:09:31 +0800 2011″</h5>
+<p>然后我这样处理的</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">time.strptime(&apos;Fri Aug 12 14:09:31 +0800 2011&apos;, &apos;%a %b %d %H:%M:%S %z %Y&apos;)</span><br></pre></td></tr></table></figure></p>
+<p>&lt;!--more--&gt;
+当然也可以这样，只是试验下而已</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dt2 = datetime.strptime(&apos;Fri Aug 12 14:09:31 +0800 2011&apos;, &apos;%a %b %d %H:%M:%S %Z %Y&apos;)</span><br></pre></td></tr></table></figure></p>
+<p>然而却出现了如下的错误：</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ValueError: time data &apos;Fri Aug 12 14:09:31 +0800 2011&apos; does not match format &apos;%a %b %d %H:%M:%S %Z %Y&apos;</span><br></pre></td></tr></table></figure></p>
+<p>查了下<a href="http://stackoverflow.com/questions/10540399/strftime-does-not-return-abbreviated-time-zone" target="_blank" rel="external">资料</a>
+发现这个跟系统有关系，而且这个是bug，（虽然开发者不承认，但是我觉得还有有点关系….虽然它又跟locals有关系。。。识别起来
+确实很繁琐）比如现在我是在windows上处理的结果就是</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; print time.strftime(&quot;%a, %d %b %Y %I:%M:%S %p %Z&quot;, time.localtime(10.5))</span><br><span class="line">Thu, 01 Jan 1970 08:00:10 AM 中国标准时间</span><br><span class="line">&gt;&gt;&gt; print time.strftime(&quot;%a, %d %b %Y %I:%M %p %Z&quot;, time.gmtime())</span><br><span class="line">Tue, 16 Apr 2013 08:33 AM 中国标准时间</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure></p>
+<p>和那个+8000格格不入，好吧 反正数据的处理设计不到时区，那么可以这样子做</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; dt2 = datetime.strptime(&apos;Fri Aug 12 14:09:31 +0800 2011&apos;, &apos;%a %b %d %H:%M:%S +0800 %Y&apos;)</span><br><span class="line">&gt;&gt;&gt; print dt2</span><br><span class="line">2011-08-12 14:09:31</span><br></pre></td></tr></table></figure></p>
+<p>对现在的需求来说,反而更好.</p>
+<h3>参考</h3>
+<ol>
+<li>
+<p><a href="http://bugs.python.org/issue6641" target="_blank" rel="external">issue6641</a></p>
+</li>
+<li>
+<p><a href="http://stackoverflow.com/questions/4788533/python-strftime-gmtime-not-respecting-timezone" target="_blank" rel="external">python-strftime-gmtime-not-respecting-timezone</a></p>
+</li>
+<li>
+<p><a href="http://stackoverflow.com/questions/10540399/strftime-does-not-return-abbreviated-time-zone" target="_blank" rel="external">strftime-does-not-return-abbreviated-time-zone</a></p>
+</li>
+<li>
+<p><a href="http://forum.open.weibo.com/read.php?tid=11780" target="_blank" rel="external">微博使用</a></p>
+</li>
+<li>
+<p><a href="http://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior" target="_blank" rel="external">strftime-and-strptime-behavior</a></p>
+</li>
+<li>
+<p><a href="http://stackoverflow.com/questions/466345/converting-string-into-datetime" target="_blank" rel="external">converting-string-into-datetime</a></p>
+</li>
+</ol>
+
       
     </div>
     
@@ -350,10 +483,6 @@
 	</div>
 
 
-      
-        <p class="article-more-link">
-          <a  href="/2013/04/16/2013-04-16-pythonchu-li-dai-you-shi-qu-de-de-zi-fu-chuan/#more">more >></a>
-        </p>
       
       <div class="clearfix"></div>
     </div>
@@ -375,7 +504,7 @@
   
     <div class="article-meta">
       <a href="/2013/03/15/2013-03-15-puzzles-of-vars-properties-in-python/" class="article-date">
-  	<time datetime="2013-03-15T09:06:00.000Z" itemprop="datePublished">2013-03-15</time>
+  	<time datetime="2013-03-15T08:06:00.000Z" itemprop="datePublished">2013-03-15</time>
 </a>
     </div>
   
@@ -399,6 +528,26 @@
       
         <p>当初使用C++，java的时候，变量的属性（可访问性，scope这类的意思）如public，private，protected，static这类很好理解。</p>
 <p>但是Python中默认的成员函数，成员变量都是公开的(public),而且python中没有类似public,private等关键词来修饰成员函数，成员变量。</p>
+<p>&lt;!-- more --&gt;</p>
+<p>在python中定义私有变量只需要在变量名或函数名前加上 ”__“两个下划线，那么这个函数或变量就会为私有的了。对static这样的很是好奇。</p>
+<p>于是便有了这样子的实验。</p>
+<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>:</span></span><br><span class="line">    value = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">o1 = A()</span><br><span class="line">o2 = A()</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> A,o1,o2</span><br><span class="line"><span class="keyword">print</span> A.value,o1.value,o2.value</span><br><span class="line"></span><br><span class="line">o1.value += <span class="number">10</span></span><br><span class="line"><span class="keyword">print</span> A.value,o1.value,o2.value</span><br><span class="line"></span><br><span class="line">A.value += <span class="number">5</span></span><br><span class="line"><span class="keyword">print</span> A.value,o1.value,o2.value</span><br><span class="line"></span><br><span class="line">o2.value += <span class="number">5</span></span><br><span class="line"><span class="keyword">print</span> A.value,o1.value,o2.value</span><br></pre></td></tr></table></figure></p>
+<p>这是我机器上的测试结果，A没有显示地址??怎么回事，两个实例都有自己的地址:</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">__main__.A &lt;__main__.A instance at 0x01262AD0&gt; &lt;__main__.A instance at 0x013091C0&gt;</span><br><span class="line">0 0 0</span><br><span class="line">0 10 0</span><br><span class="line">5 10 5</span><br><span class="line">5 10 10</span><br></pre></td></tr></table></figure></p>
+<p>前两行的结果都很好理解，但是第三行，之前o2的值一直没有改变，o1的值改变，在A的值改变之后o2也随之改变了，这个时候….看上去，o2还是在引用A的值，但是在o2自己的值改变之后就不在去引用类的值了。</p>
+<p>#####由此可见：</p>
+<ul>
+<li>
+<p>由类派生出来的实例在未操作之前，都是简单的引用类的那些值</p>
+</li>
+<li>
+<p>公共属性的值有点类似于大家C++类中的那种静态变量啊</p>
+</li>
+<li>
+<p>只要实例稍作改变，就不会在引用类了。</p>
+</li>
+</ul>
+
       
     </div>
     
@@ -411,10 +560,6 @@
 	</div>
 
 
-      
-        <p class="article-more-link">
-          <a  href="/2013/03/15/2013-03-15-puzzles-of-vars-properties-in-python/#more">more >></a>
-        </p>
       
       <div class="clearfix"></div>
     </div>
@@ -436,7 +581,7 @@
   
     <div class="article-meta">
       <a href="/2013/03/15/2013-03-15-some-important-details-in-python-personal/" class="article-date">
-  	<time datetime="2013-03-15T08:17:00.000Z" itemprop="datePublished">2013-03-15</time>
+  	<time datetime="2013-03-15T07:17:00.000Z" itemprop="datePublished">2013-03-15</time>
 </a>
     </div>
   
@@ -461,6 +606,88 @@
         <p>字符串可以被下表索引，和C一样，第一个字符同样是0。</p>
 <p>Python中并没有单独的字符类型，一个字符就是长度为1的字符串。</p>
 <p>和C字符串不同的是，python字符串值不能更改。</p>
+<p>&lt;!-- more --&gt;</p>
+<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>word = <span class="string">'string'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>word[<span class="number">3</span>]=<span class="string">'d'</span></span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">"&lt;stdin&gt;"</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">TypeError: <span class="string">'str'</span> object does <span class="keyword">not</span> support item assignment</span><br></pre></td></tr></table></figure></p>
+<p>关于unicode的一些说明，encode(),unicode()那些往
+<a href="http://docs.python.org/2/tutorial/introduction.html#unicode-strings" target="_blank" rel="external">这里看</a></p>
+<p>python中一些iterable types（具体术语不知道怎么称呼）是分成可以<code>immutable</code>和<code>mutable</code>的：</p>
+<p>#####可更改的（<code>mutable</code>）:</p>
+<ul>
+<li>
+<p>字典型(dictionary)</p>
+</li>
+<li>
+<p>列表型(list)</p>
+</li>
+</ul>
+<p>#####不可更改（mutable）：</p>
+<ul>
+<li>
+<p>元组（tuple)</p>
+</li>
+<li>
+<p>数值型（number）</p>
+</li>
+<li>
+<p>字符串(string)</p>
+</li>
+</ul>
+<p>所有的切片操作都是返回一个新的包含请求元素的list。</p>
+<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a = [<span class="string">'spam'</span>, <span class="string">'eggs'</span>, <span class="number">100</span>, <span class="number">1234</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a[:]</span><br><span class="line">[<span class="string">'spam'</span>, <span class="string">'eggs'</span>, <span class="number">100</span>, <span class="number">1234</span>]</span><br></pre></td></tr></table></figure></p>
+<p>pass语句请看<a href="http://docs.python.org/2/reference/simple_stmts.html#pass" target="_blank" rel="external">这里</a></p>
+<p>函数中的变量，函数中得变量赋值操作都是把值存在<code>本地符号表（local symbol table）</code>中，
+变量引用时先查看本地符号表，在然后是<code>全局符号表（global symbol table）</code>，
+最后才是<code>内置表（table of built-in names）</code>，全局变量得先申明下，在使用</p>
+<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">v= <span class="number">1</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_global_vars</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">""" 测试使用global"""</span></span><br><span class="line">    <span class="comment">#global v += 1 #wrong!!</span></span><br><span class="line">    <span class="keyword">global</span> v </span><br><span class="line">    v += <span class="number">1</span></span><br><span class="line">    <span class="keyword">print</span> v</span><br></pre></td></tr></table></figure></p>
+<p>突然想到了python中得变量类型这些东西，以下是实验</p>
+<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_global_vars</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">""" 测试使用global"""</span></span><br><span class="line">    <span class="keyword">global</span> v</span><br><span class="line">    v += <span class="number">1</span></span><br><span class="line">    <span class="keyword">print</span> v,hex(id(v))</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">foo</span><span class="params">(n)</span>:</span></span><br><span class="line">    <span class="string">"""测试实参是怎么回事，by value，value总是个函数引用，不是那个</span><br><span class="line">    对象的值,实参也是跟函数内的变量一样被放入到了本地符号表"""</span></span><br><span class="line">    n += <span class="number">1</span></span><br><span class="line">    <span class="keyword">print</span> n,hex(id(n))</span><br><span class="line"> </span><br><span class="line">v= <span class="number">1</span></span><br><span class="line"><span class="keyword">print</span> v,hex(id(v))</span><br><span class="line">test_global_vars()</span><br><span class="line"><span class="keyword">print</span> v,hex(id(v))</span><br><span class="line">foo(v)</span><br><span class="line"><span class="keyword">print</span> v,hex(id(v))</span><br><span class="line">v+=<span class="number">1</span></span><br><span class="line"><span class="keyword">print</span> v,hex(id(v))</span><br></pre></td></tr></table></figure></p>
+<p>这是我机器上的一次run result</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1 0x1429168</span><br><span class="line">2 0x142915c</span><br><span class="line">2 0x142915c</span><br><span class="line">3 0x1429150</span><br><span class="line">2 0x142915c</span><br><span class="line">3 0x1429150</span><br></pre></td></tr></table></figure></p>
+<p>会发现v的值一样的时候，id值都是一样的。</p>
+<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">v = <span class="number">1</span> 			<span class="comment">#将名字 v 与内存中值为1的内存绑定在一起。</span></span><br><span class="line">test_global_vars() 	<span class="comment">#这句话之后就是把v 和 内存中为2的地址绑定在一起。所以地址会变。</span></span><br><span class="line">foo(v) 			<span class="comment">#形参n 和 内存中为 3 的地址绑定在一起。实参v还是绑定在 2 的地址。</span></span><br><span class="line">v += <span class="number">1</span> 			<span class="comment">#v的值改变为3 所以地址就绑定到了 3 在内存中得地方。所以这个时候会发现和上一句的地址一样。</span></span><br></pre></td></tr></table></figure></p>
+<p>很奇特，但是这个样子会有什么好处?</p>
+<ul>
+<li>
+<p>首先python支持函数编程，函数式编程在运算的过程中值肯定是不会变得。
+想想我们数学中得变量（怎么可能会出现x = x + 1 ！！）数学上讲不通。
+这对函数式编程是个利好消息。（但是这很明显不是函数式编程，应该是这
+个特性在lamda演算中很有用，待解决）</p>
+</li>
+<li>
+<p>这个…受C、C++的“毒害”深啊，目前还是转不过来,但是在看列表<code>可变</code>之后
+，刹那间觉得列表这玩意像指针那种东西啊</p>
+</li>
+</ul>
+<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dic = &#123;<span class="string">"value"</span>:<span class="number">3</span>&#125;</span><br><span class="line">b = dic</span><br><span class="line"><span class="keyword">print</span> dic,b,hex(id(dic)),hex(id(b))</span><br><span class="line">b[<span class="string">"value"</span>] = <span class="number">5</span></span><br><span class="line"><span class="keyword">print</span> dic,b,hex(id(dic)),hex(id(b))</span><br></pre></td></tr></table></figure></p>
+<p>但是你看结果，他们都是绑定到同一块内存的，这种字典的就直接在源地址改了</p>
+<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="string">'value'</span>: <span class="number">3</span>&#125; &#123;<span class="string">'value'</span>: <span class="number">3</span>&#125; <span class="number">0x1823d20</span> <span class="number">0x1823d20</span></span><br><span class="line">&#123;<span class="string">'value'</span>: <span class="number">5</span>&#125; &#123;<span class="string">'value'</span>: <span class="number">5</span>&#125; <span class="number">0x1823d20</span> <span class="number">0x1823d20</span></span><br></pre></td></tr></table></figure></p>
+<p>python就是这么设计的，至于为什么，不知道(待解决)</p>
+<p>在说句题外话，你看django那些代码写的，都是使用的tuple之类的。url(省略号)…为什么会这个样子，来看看实验的结果</p>
+<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="string">"""docstring for A"""</span></span><br><span class="line">    x = []</span><br><span class="line">    <span class="comment"># self.x = [] #这个是错误的语法，只能在__init__中定义</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, arg)</span>:</span></span><br><span class="line">        <span class="comment">#x和self.value有什么区别啊</span></span><br><span class="line">        <span class="comment">#x和self.x有什么区别啊</span></span><br><span class="line">        super(A, self).__init__()</span><br><span class="line">        self.arg = arg</span><br><span class="line">        self.value = []</span><br><span class="line">        self.value.append(<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">print</span> <span class="string">"in __init__"</span></span><br><span class="line">        <span class="keyword">print</span> <span class="string">"x address :\t\t\t\t"</span>, hex(id(x))</span><br><span class="line">        <span class="keyword">print</span> <span class="string">"self.x address :\t\t"</span>, hex(id(self.x))</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">set_x</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.x.append(<span class="number">1</span>)</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_x</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">print</span> <span class="string">"in get_x"</span></span><br><span class="line">        <span class="keyword">print</span> <span class="string">"x address :\t\t\t\t"</span>, hex(id(x))</span><br><span class="line">        <span class="keyword">print</span> <span class="string">"self.x address :\t\t"</span>, hex(id(self.x))</span><br><span class="line">        <span class="keyword">return</span> self.x</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_xx</span><span class="params">(self)</span>:</span><span class="comment">#很诡异的存在啊，但这个只是定义的不同啊</span></span><br><span class="line">        <span class="keyword">print</span> <span class="string">"in get_xx"</span></span><br><span class="line">        <span class="keyword">print</span> <span class="string">"x address :\t\t\t\t"</span>, hex(id(x))</span><br><span class="line">        <span class="keyword">print</span> <span class="string">"self.x address :\t\t"</span>, hex(id(self.x))</span><br><span class="line">        <span class="keyword">return</span> x   </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_value</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.value</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">3</span>):</span><br><span class="line">    a = A(<span class="string">"oj"</span>)</span><br><span class="line">    a.set_x()</span><br><span class="line">    <span class="comment">#print A.__dict__</span></span><br><span class="line">    <span class="keyword">print</span> a.get_value()</span><br><span class="line">    <span class="keyword">print</span> a.get_xx()</span><br><span class="line">    <span class="keyword">print</span> a.get_x()</span><br></pre></td></tr></table></figure></p>
+<p>自己跑下试试，在__init__()内外定义的变量是不一样的，x，self.value类似static，全局共享。而self.x就不是了，在编码的时候一定要注意这种细节。</p>
+<p>可能上面那个太复杂了些，那么看看这个。</p>
+<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">b</span>:</span></span><br><span class="line">    x = []</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.y=[]</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">set</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.y.append(<span class="number">1</span>)</span><br><span class="line">        self.x.append(<span class="number">1</span>)</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> x,self.y,self.x</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">3</span>):</span><br><span class="line">    a = b()</span><br><span class="line">    a.set()</span><br><span class="line">    <span class="keyword">print</span> a.get(),b.__dict__</span><br></pre></td></tr></table></figure></p>
+<p>接下来还是关于函数的:</p>
+<p>The default values are evaluated at the point of function definition in the defining scope, so that</p>
+<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">i = <span class="number">5</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">(arg=i)</span>:</span> <span class="comment"># 默认的初始值 只 赋值一次 ，其后初始就不会改变了。</span></span><br><span class="line">    <span class="keyword">print</span> arg</span><br><span class="line">i = <span class="number">6</span></span><br><span class="line">f()           <span class="comment"># here will print  5！！ 所以这会为5 只要没传递新的参数</span></span><br></pre></td></tr></table></figure></p>
+<p>但是当形参是个可变对象 如 :列表，字典或者一些类的实例，这个时候会共享这个可变的对象！！！</p>
+<p>虽然元组（Tuples）和列表（list）看起来很相似，但是使用的场景不同的。元组通常是不可变的，
+通常包括类型不同的元素，可以通过解包和索引来访问。列表是可变的，通常都是些同一类型的元素迭代访问。</p>
+<p>遍历技巧，可能需要下标的时候会用到 <a href="http://docs.python.org/2/tutorial/datastructures.html#looping-techniques" target="_blank" rel="external">这里</a></p>
+<hr>
+<p>_xxx      不能用’from module import *’导入</p>
+<p><strong>xxx</strong> 系统定义名字</p>
+<p>__xxx    类中的私有变量名</p>
+<p>以单下划线开头_foo 的代表不能直接访问的类属性，需通过类提供的接口进行访问，不能用“from xxx import *”而导入；</p>
+<p>以双下划线开头的__foo代表类的私有成员；以双下划线开头和结尾的__foo__代表python里特殊方法专用的标识，如__init__()代表类的构造函数。</p>
+<p>“单下划线” 开始的成员变量叫做保护变量，意思是只有类对象和子类对象自己能访问到这些变量；</p>
+<p>“双下划线” 开始的是私有成员，意思是只有类对象自己能访问，连子类对象也不能访问到这个数据。</p>
+<p>######Python中的继承：</p>
+<p>super可以避免显示的引用Base，这听起来很不错，最起码不用自己去判断使用哪个类的构造方法。
+但是最最要的用途还是多继承问题。在python2.7中，得这样解决：super(thisClass,self).<strong>init</strong>() ,python3中变成了这样：super().<strong>init</strong>()</p>
+<p>样例：仔细观察，不要忘记那个object！！</p>
+<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Point</span><span class="params">(object)</span>:</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,x=<span class="number">0</span>,y=<span class="number">0</span>)</span>:</span></span><br><span class="line">		self.x = x;</span><br><span class="line">		self.y = y;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Circle</span><span class="params">(Point)</span>:</span></span><br><span class="line">	<span class="string">"""docstring for Circle"""</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, radius=<span class="number">0</span>,x=<span class="number">0</span>,y=<span class="number">0</span>)</span>:</span></span><br><span class="line">		super(Circle,self).__init__()</span><br><span class="line">		<span class="comment"># Point.__init__(self,x,y)</span></span><br><span class="line">		self.radius = radius;</span><br><span class="line">c= Circle(<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">print</span> <span class="string">"Base created"</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ChildA</span><span class="params">(Base)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        Base.__init__(self)</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ChildB</span><span class="params">(Base)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        super(ChildB, self).__init__()</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> ChildA(),ChildB()</span><br></pre></td></tr></table></figure></p>
+
       
     </div>
     
@@ -473,10 +700,6 @@
 	</div>
 
 
-      
-        <p class="article-more-link">
-          <a  href="/2013/03/15/2013-03-15-some-important-details-in-python-personal/#more">more >></a>
-        </p>
       
       <div class="clearfix"></div>
     </div>
@@ -498,7 +721,7 @@
   
     <div class="article-meta">
       <a href="/2011/03/14/2011-03-14-gitde-an-zhuang-he-shi-yong/" class="article-date">
-  	<time datetime="2011-03-14T07:11:00.000Z" itemprop="datePublished">2011-03-14</time>
+  	<time datetime="2011-03-14T06:11:00.000Z" itemprop="datePublished">2011-03-14</time>
 </a>
     </div>
   
@@ -521,7 +744,68 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>git之前一直使用的，但是n久没用居然忘记怎么使用了。。。中途使用过程中居然还出现了</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Permission denied (publickey).</span><br><span class="line">fatal: The remote end hung up unexpectedly</span><br></pre></td></tr></table></figure>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Permission denied (publickey).</span><br><span class="line">fatal: The remote end hung up unexpectedly</span><br></pre></td></tr></table></figure></p>
+<p>&lt;!--more--&gt;</p>
+<p>的错误，真是忘记怎么使用了，连SSH keys都没添加就想push啊…好吧，
+真的是好记性不如烂笔头，老老实实的写下来已免在出这样的糗事</p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install git git-core</span><br><span class="line">ssh-keygen</span><br></pre></td></tr></table></figure></p>
+<p>然后系统提示输入文件保存位置等信息，连续敲三次回车即可，生成的SSH key文件保存在中～/.ssh/id_rsa.publickey</p>
+<p>接着拷贝.ssh/id_rsa.pub文件内的所以内容，将它粘帖到github帐号管理中的添加SSH key界面中。</p>
+<p>######打开github帐号管理中的添加SSH key界面的步骤如下</p>
+<ul>
+<li>
+<p>登录github</p>
+</li>
+<li>
+<p>点击右上方的Accounting settings图标</p>
+</li>
+<li>
+<p>选择 SSH key</p>
+</li>
+<li>
+<p>点击 Add SSH key</p>
+</li>
+</ul>
+<p>在出现的界面中填写SSH key的名称，填一个你自己喜欢的名称即可，然后将上面拷贝的~/.ssh/id_rsa.pub文件内容粘帖到key一栏，
+在点击“add key”按钮就可以了。添加过程github会提示你输入一次你的github密码。</p>
+<p>###git 配置</p>
+<p>git有三个配置文件，分别是<code>repo/.git/config</code>,<code>$HOME/.gitconfig</code>,<code>/etc/gitconfig</code>.</p>
+<ol>
+<li>
+<p>repo/.git/config 库级别的配置文件，只对当前库有效，优先级最高(git config –local)</p>
+</li>
+<li>
+<p>$HOME/.gitconfig 用户级别的配置文件，对当前用户有效，优先级次之(git config –global)</p>
+</li>
+<li>
+<p>/etc/gitconfig 系统全局配置文件，对整个系统有效，优先级最低(git config –system)</p>
+</li>
+</ol>
+<p>git config –list 可以查看当前的git配置列表</p>
+<p>如果已经配置了，则会看到user.name 和 user.email的配置信息</p>
+<p>如果没有,一般情况下在git提交时会使用机器名，诸如：unknown dev@xxx-PC.(none) 等类型的Author信息，肯定不方便了。</p>
+<p>建议都配置明确的user.name 和 user.email信息。</p>
+<p>#####可以通过下面的命令进行配置</p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config user.name xxx</span><br><span class="line">git config user.email xxx@xxx.com</span><br></pre></td></tr></table></figure></p>
+<p>配置完成后可以通过 git config –list 查看到.</p>
+<p>这个准备工作算是完成了，其他的，就参考别人写得。在这不再写了。</p>
+<blockquote>
+<blockquote>
+<p>参考</p>
+</blockquote>
+</blockquote>
+<ol>
+<li>
+<p><a href="http://blog.sina.com.cn/s/blog_55465b470100s63h.html" target="_blank" rel="external">说明很详细</a></p>
+</li>
+<li>
+<p><a href="http://simen-net.iteye.com/blog/832391" target="_blank" rel="external">这个有可能会用的着以后，搭建git server，在eclipse里集成git</a></p>
+</li>
+<li>
+<p><a href="http://www.cnblogs.com/Jerry-Chou/archive/2012/05/14/2499088.html" target="_blank" rel="external">git常用命令</a></p>
+</li>
+</ol>
+
       
     </div>
     
@@ -534,10 +818,6 @@
 	</div>
 
 
-      
-        <p class="article-more-link">
-          <a  href="/2011/03/14/2011-03-14-gitde-an-zhuang-he-shi-yong/#more">more >></a>
-        </p>
       
       <div class="clearfix"></div>
     </div>
@@ -649,6 +929,23 @@ MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
 </script>
 
 
-  </div>
+  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
 </body>
 </html>

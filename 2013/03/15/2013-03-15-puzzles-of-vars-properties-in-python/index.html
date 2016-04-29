@@ -1,35 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <title>python中关于变量属性的迷惑 | 曾经渐行远，未免心戚戚</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="当初使用C++，java的时候，变量的属性（可访问性，scope这类的意思）如public，private，protected，static这类很好理解。
-但是Python中默认的成员函数，成员变量都是公开的(public),而且python中没有类似public,private等关键词来修饰成员函数，成员变量。">
+但是Python中默认的成员函数，成员变量都是公开的(public),而且python中没有类似public,private等关键词来修饰成员函数，成员变量。
+&amp;lt;!-- more --&amp;gt;
+在python中定义私有变量只需要在变量名或">
 <meta property="og:type" content="article">
 <meta property="og:title" content="python中关于变量属性的迷惑">
 <meta property="og:url" content="http://aluenkinglee.com/2013/03/15/2013-03-15-puzzles-of-vars-properties-in-python/index.html">
 <meta property="og:site_name" content="曾经渐行远，未免心戚戚">
 <meta property="og:description" content="当初使用C++，java的时候，变量的属性（可访问性，scope这类的意思）如public，private，protected，static这类很好理解。
-但是Python中默认的成员函数，成员变量都是公开的(public),而且python中没有类似public,private等关键词来修饰成员函数，成员变量。">
+但是Python中默认的成员函数，成员变量都是公开的(public),而且python中没有类似public,private等关键词来修饰成员函数，成员变量。
+&amp;lt;!-- more --&amp;gt;
+在python中定义私有变量只需要在变量名或">
 <meta property="og:updated_time" content="2015-07-26T12:33:50.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python中关于变量属性的迷惑">
 <meta name="twitter:description" content="当初使用C++，java的时候，变量的属性（可访问性，scope这类的意思）如public，private，protected，static这类很好理解。
-但是Python中默认的成员函数，成员变量都是公开的(public),而且python中没有类似public,private等关键词来修饰成员函数，成员变量。">
+但是Python中默认的成员函数，成员变量都是公开的(public),而且python中没有类似public,private等关键词来修饰成员函数，成员变量。
+&amp;lt;!-- more --&amp;gt;
+在python中定义私有变量只需要在变量名或">
   
     <link rel="alternative" href="/atom.xml" title="曾经渐行远，未免心戚戚" type="application/atom+xml">
   
   
     <link href="/favicon.ico" rel="icon" type="image/x-ico">
   
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body>
-  <div id="container">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
     <div class="left-col">
     <div class="overlay"></div>
 <div class="intrude-less">
@@ -76,7 +82,7 @@
 						<li>Tags</li>
 						
 						
-						<li>About</li>
+						<li>Über</li>
 						
 					</ul>
 				</div>
@@ -117,7 +123,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/java-线程池-ThreadPool-线程/" style="font-size: 10px;">java 线程池 ThreadPool 线程</a>
+						<a href="/tags/ThreadPool/" style="font-size: 10px;">ThreadPool</a> <a href="/tags/java线程池/" style="font-size: 10px;">java线程池</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a>
 					</div>
 				</section>
 				
@@ -191,7 +197,7 @@
   
     <div class="article-meta">
       <a href="/2013/03/15/2013-03-15-puzzles-of-vars-properties-in-python/" class="article-date">
-  	<time datetime="2013-03-15T09:06:00.000Z" itemprop="datePublished">2013-03-15</time>
+  	<time datetime="2013-03-15T08:06:00.000Z" itemprop="datePublished">2013-03-15</time>
 </a>
     </div>
   
@@ -226,20 +232,23 @@
       
         <p>当初使用C++，java的时候，变量的属性（可访问性，scope这类的意思）如public，private，protected，static这类很好理解。</p>
 <p>但是Python中默认的成员函数，成员变量都是公开的(public),而且python中没有类似public,private等关键词来修饰成员函数，成员变量。</p>
-<a id="more"></a>
+<p>&lt;!-- more --&gt;</p>
 <p>在python中定义私有变量只需要在变量名或函数名前加上 ”__“两个下划线，那么这个函数或变量就会为私有的了。对static这样的很是好奇。</p>
 <p>于是便有了这样子的实验。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>:</span></span><br><span class="line">    value = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">o1 = A()</span><br><span class="line">o2 = A()</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> A,o1,o2</span><br><span class="line"><span class="keyword">print</span> A.value,o1.value,o2.value</span><br><span class="line"></span><br><span class="line">o1.value += <span class="number">10</span></span><br><span class="line"><span class="keyword">print</span> A.value,o1.value,o2.value</span><br><span class="line"></span><br><span class="line">A.value += <span class="number">5</span></span><br><span class="line"><span class="keyword">print</span> A.value,o1.value,o2.value</span><br><span class="line"></span><br><span class="line">o2.value += <span class="number">5</span></span><br><span class="line"><span class="keyword">print</span> A.value,o1.value,o2.value</span><br></pre></td></tr></table></figure>
+<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>:</span></span><br><span class="line">    value = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">o1 = A()</span><br><span class="line">o2 = A()</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> A,o1,o2</span><br><span class="line"><span class="keyword">print</span> A.value,o1.value,o2.value</span><br><span class="line"></span><br><span class="line">o1.value += <span class="number">10</span></span><br><span class="line"><span class="keyword">print</span> A.value,o1.value,o2.value</span><br><span class="line"></span><br><span class="line">A.value += <span class="number">5</span></span><br><span class="line"><span class="keyword">print</span> A.value,o1.value,o2.value</span><br><span class="line"></span><br><span class="line">o2.value += <span class="number">5</span></span><br><span class="line"><span class="keyword">print</span> A.value,o1.value,o2.value</span><br></pre></td></tr></table></figure></p>
 <p>这是我机器上的测试结果，A没有显示地址??怎么回事，两个实例都有自己的地址:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">__main__.A &lt;__main__.A instance at 0x01262AD0&gt; &lt;__main__.A instance at 0x013091C0&gt;</span><br><span class="line">0 0 0</span><br><span class="line">0 10 0</span><br><span class="line">5 10 5</span><br><span class="line">5 10 10</span><br></pre></td></tr></table></figure>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">__main__.A &lt;__main__.A instance at 0x01262AD0&gt; &lt;__main__.A instance at 0x013091C0&gt;</span><br><span class="line">0 0 0</span><br><span class="line">0 10 0</span><br><span class="line">5 10 5</span><br><span class="line">5 10 10</span><br></pre></td></tr></table></figure></p>
 <p>前两行的结果都很好理解，但是第三行，之前o2的值一直没有改变，o1的值改变，在A的值改变之后o2也随之改变了，这个时候….看上去，o2还是在引用A的值，但是在o2自己的值改变之后就不在去引用类的值了。</p>
 <p>#####由此可见：</p>
 <ul>
-<li><p>由类派生出来的实例在未操作之前，都是简单的引用类的那些值</p>
+<li>
+<p>由类派生出来的实例在未操作之前，都是简单的引用类的那些值</p>
 </li>
-<li><p>公共属性的值有点类似于大家C++类中的那种静态变量啊</p>
+<li>
+<p>公共属性的值有点类似于大家C++类中的那种静态变量啊</p>
 </li>
-<li><p>只要实例稍作改变，就不会在引用类了。</p>
+<li>
+<p>只要实例稍作改变，就不会在引用类了。</p>
 </li>
 </ul>
 
@@ -406,6 +415,23 @@ MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
 </script>
 
 
-  </div>
+  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
 </body>
 </html>

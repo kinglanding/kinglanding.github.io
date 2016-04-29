@@ -1,21 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <title>MySql交换两列 | 曾经渐行远，未免心戚戚</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="事情的起因是这个发现数据库中出现了某两列数据正好颠倒了，大部分数据都是正常的，这些错误的原因是数据源有问题，今天在进一步的做标签聚类的时候分析的时候发现这些占很小比例的误差，辛亏发现了，否则做出来的结果有可能会郁闷很久。
+  <meta name="description" content="事情的起因是这个发现数据库中出现了某两列数据正好颠倒了，大部分数据都是正常的，
+这些错误的原因是数据源有问题，今天在进一步的做标签聚类的时候分析的时候发现这
+些占很小比例的误差，辛亏发现了，否则做出来的结果有可能会郁闷很久。
 1select id,place_lat,place_lon from `nearbyinfo` where `nearbyinfo`.`place_lat`&amp;gt;0;
-正常的">
+正">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySql交换两列">
 <meta property="og:url" content="http://aluenkinglee.com/2013/06/14/2013-06-14-mysqljiao-huan-liang-lie/index.html">
 <meta property="og:site_name" content="曾经渐行远，未免心戚戚">
-<meta property="og:description" content="事情的起因是这个发现数据库中出现了某两列数据正好颠倒了，大部分数据都是正常的，这些错误的原因是数据源有问题，今天在进一步的做标签聚类的时候分析的时候发现这些占很小比例的误差，辛亏发现了，否则做出来的结果有可能会郁闷很久。
+<meta property="og:description" content="事情的起因是这个发现数据库中出现了某两列数据正好颠倒了，大部分数据都是正常的，
+这些错误的原因是数据源有问题，今天在进一步的做标签聚类的时候分析的时候发现这
+些占很小比例的误差，辛亏发现了，否则做出来的结果有可能会郁闷很久。
 1select id,place_lat,place_lon from `nearbyinfo` where `nearbyinfo`.`place_lat`&amp;gt;0;
-正常的">
+正">
 <meta property="og:image" content="https://github.com/aluenkinglee/aluenkinglee.github.io/blob/source/source/images/2013-06-14-mysqljiao-huan-liang-lie/11.png?raw=true">
 <meta property="og:image" content="https://github.com/aluenkinglee/aluenkinglee.github.io/blob/source/source/images/2013-06-14-mysqljiao-huan-liang-lie/12.png?raw=true">
 <meta property="og:image" content="https://github.com/aluenkinglee/aluenkinglee.github.io/blob/source/source/images/2013-06-14-mysqljiao-huan-liang-lie/12.png?raw=true">
@@ -23,9 +27,11 @@
 <meta property="og:updated_time" content="2015-07-26T12:33:50.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySql交换两列">
-<meta name="twitter:description" content="事情的起因是这个发现数据库中出现了某两列数据正好颠倒了，大部分数据都是正常的，这些错误的原因是数据源有问题，今天在进一步的做标签聚类的时候分析的时候发现这些占很小比例的误差，辛亏发现了，否则做出来的结果有可能会郁闷很久。
+<meta name="twitter:description" content="事情的起因是这个发现数据库中出现了某两列数据正好颠倒了，大部分数据都是正常的，
+这些错误的原因是数据源有问题，今天在进一步的做标签聚类的时候分析的时候发现这
+些占很小比例的误差，辛亏发现了，否则做出来的结果有可能会郁闷很久。
 1select id,place_lat,place_lon from `nearbyinfo` where `nearbyinfo`.`place_lat`&amp;gt;0;
-正常的">
+正">
 <meta name="twitter:image" content="https://github.com/aluenkinglee/aluenkinglee.github.io/blob/source/source/images/2013-06-14-mysqljiao-huan-liang-lie/11.png?raw=true">
   
     <link rel="alternative" href="/atom.xml" title="曾经渐行远，未免心戚戚" type="application/atom+xml">
@@ -33,11 +39,11 @@
   
     <link href="/favicon.ico" rel="icon" type="image/x-ico">
   
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body>
-  <div id="container">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
     <div class="left-col">
     <div class="overlay"></div>
 <div class="intrude-less">
@@ -84,7 +90,7 @@
 						<li>Tags</li>
 						
 						
-						<li>About</li>
+						<li>Über</li>
 						
 					</ul>
 				</div>
@@ -125,7 +131,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/java-线程池-ThreadPool-线程/" style="font-size: 10px;">java 线程池 ThreadPool 线程</a>
+						<a href="/tags/ThreadPool/" style="font-size: 10px;">ThreadPool</a> <a href="/tags/java线程池/" style="font-size: 10px;">java线程池</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a>
 					</div>
 				</section>
 				
@@ -199,7 +205,7 @@
   
     <div class="article-meta">
       <a href="/2013/06/14/2013-06-14-mysqljiao-huan-liang-lie/" class="article-date">
-  	<time datetime="2013-06-14T07:35:00.000Z" itemprop="datePublished">2013-06-14</time>
+  	<time datetime="2013-06-14T06:35:00.000Z" itemprop="datePublished">2013-06-14</time>
 </a>
     </div>
   
@@ -232,23 +238,29 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>事情的起因是这个发现数据库中出现了某两列数据正好颠倒了，大部分数据都是正常的，<br>这些错误的原因是数据源有问题，今天在进一步的做标签聚类的时候分析的时候发现这<br>些占很小比例的误差，辛亏发现了，否则做出来的结果有可能会郁闷很久。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select id,place_lat,place_lon from `nearbyinfo` where `nearbyinfo`.`place_lat`&gt;0;</span><br></pre></td></tr></table></figure>
-<p>正常的数据都是&lt; <code>39.xxx</code>, <code>160.2xxx</code> &gt;之间，如图所示:<br><a id="more"></a></p>
+        <p>事情的起因是这个发现数据库中出现了某两列数据正好颠倒了，大部分数据都是正常的，
+这些错误的原因是数据源有问题，今天在进一步的做标签聚类的时候分析的时候发现这
+些占很小比例的误差，辛亏发现了，否则做出来的结果有可能会郁闷很久。</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select id,place_lat,place_lon from `nearbyinfo` where `nearbyinfo`.`place_lat`&gt;0;</span><br></pre></td></tr></table></figure></p>
+<p>正常的数据都是&lt; <code>39.xxx</code>, <code>160.2xxx</code> &gt;之间，如图所示:
+&lt;!--more--&gt;</p>
 <p><img src="https://github.com/aluenkinglee/aluenkinglee.github.io/blob/source/source/images/2013-06-14-mysqljiao-huan-liang-lie/11.png?raw=true" alt="正常数据" title="正常数据"></p>
 <p>但是幸好及时发现了存在这样的数据，</p>
 <p><img src="https://github.com/aluenkinglee/aluenkinglee.github.io/blob/source/source/images/2013-06-14-mysqljiao-huan-liang-lie/12.png?raw=true" alt="异常数据" title="异常数据"></p>
-<p>一开始想的是想写sql语句试着把这两栏的数据给交换过来，可是sql太渣…然后就想着找<br>到这些ID和他们的坐标值（都已经出来了），然后用python读出来写成update的语句，<br>然后在执行一下就可以了，这也太…</p>
+<p>一开始想的是想写sql语句试着把这两栏的数据给交换过来，可是sql太渣…然后就想着找
+到这些ID和他们的坐标值（都已经出来了），然后用python读出来写成update的语句，
+然后在执行一下就可以了，这也太…</p>
 <p>辛亏最终还是找到了，在这还是完整的说明一下吧。首先创建一个表，在Mysql中</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">CREATE DATABASE  IF NOT EXISTS `weibodata` </span><br><span class="line">USE `weibodata`;</span><br><span class="line">DROP TABLE IF EXISTS `test`;</span><br><span class="line">CREATE TABLE `test` (</span><br><span class="line">  `id` int(11) NOT NULL AUTO_INCREMENT,</span><br><span class="line">  `a` varchar(45) DEFAULT NULL,</span><br><span class="line">  `b` varchar(45) DEFAULT NULL,</span><br><span class="line">  PRIMARY KEY (`id`)</span><br><span class="line">) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;</span><br><span class="line">LOCK TABLES `test` WRITE;</span><br><span class="line">INSERT INTO `test` VALUES (1,&apos;-1&apos;,&apos;4&apos;),(2,&apos;3&apos;,&apos;2&apos;);</span><br><span class="line">UNLOCK TABLES;</span><br></pre></td></tr></table></figure>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">CREATE DATABASE  IF NOT EXISTS `weibodata` </span><br><span class="line">USE `weibodata`;</span><br><span class="line">DROP TABLE IF EXISTS `test`;</span><br><span class="line">CREATE TABLE `test` (</span><br><span class="line">  `id` int(11) NOT NULL AUTO_INCREMENT,</span><br><span class="line">  `a` varchar(45) DEFAULT NULL,</span><br><span class="line">  `b` varchar(45) DEFAULT NULL,</span><br><span class="line">  PRIMARY KEY (`id`)</span><br><span class="line">) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;</span><br><span class="line">LOCK TABLES `test` WRITE;</span><br><span class="line">INSERT INTO `test` VALUES (1,&apos;-1&apos;,&apos;4&apos;),(2,&apos;3&apos;,&apos;2&apos;);</span><br><span class="line">UNLOCK TABLES;</span><br></pre></td></tr></table></figure></p>
 <p>所以看起来会是这个样子:</p>
 <p><img src="https://github.com/aluenkinglee/aluenkinglee.github.io/blob/source/source/images/2013-06-14-mysqljiao-huan-liang-lie/12.png?raw=true" alt="交换之前" title="交换之前"></p>
 <p>然后执行下面的语句，会发生第二行swap了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UPDATE test t1,test t2 SET t1.a=t1.b,t2.b=t2.a where t1.id =t2.id and t1.a&gt;0;</span><br></pre></td></tr></table></figure>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UPDATE test t1,test t2 SET t1.a=t1.b,t2.b=t2.a where t1.id =t2.id and t1.a&gt;0;</span><br></pre></td></tr></table></figure></p>
 <p><img src="https://github.com/aluenkinglee/aluenkinglee.github.io/blob/source/source/images/2013-06-14-mysqljiao-huan-liang-lie/12.png?raw=true" alt="交换之后" title="交换之后"></p>
 <p>在尝试一下就会变成原样。</p>
 <p>问题解决了。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select id,place_lat,place_lon from nearbyinfo where place_lat &gt;100;</span><br><span class="line">UPDATE nearbyinfo t1,nearbyinfo t2 SET t1.place_lat=t1.place_lon,t2.place_lon=t2.place_lat where t1.id = t2.id and t1.place_lat&gt;100;</span><br><span class="line">select id,place_lat,place_lon from nearbyinfo where id in (1025,4974,4814,2685);</span><br></pre></td></tr></table></figure>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select id,place_lat,place_lon from nearbyinfo where place_lat &gt;100;</span><br><span class="line">UPDATE nearbyinfo t1,nearbyinfo t2 SET t1.place_lat=t1.place_lon,t2.place_lon=t2.place_lat where t1.id = t2.id and t1.place_lat&gt;100;</span><br><span class="line">select id,place_lat,place_lon from nearbyinfo where id in (1025,4974,4814,2685);</span><br></pre></td></tr></table></figure></p>
+
       
     </div>
     
@@ -412,6 +424,23 @@ MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
 </script>
 
 
-  </div>
+  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
 </body>
 </html>

@@ -1,35 +1,44 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <title>generative method | 曾经渐行远，未免心戚戚</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="线性回归模型和logistic回归是判别模型，也就是根据特征值来求结果的概率。形式化表示为$$p(y|x;\theta)$$在参数$$\theta$$确定的情况下，求解条件概率$$p(y|x)$$。通俗的解释为在给定特征后预测结果出现的概率。
-就按照Andrew Ng讲的那样，确定肿瘤是良性的还是恶性的，可以使用判别模型的方法是先从历史数据中学习到模型，然后通过提取肿瘤的特征来预测出它是良性恶性的">
+  <meta name="description" content="线性回归模型和logistic回归是判别模型，也就是根据特征值来求结果的概率。形式化表
+示为$$p(y|x;\theta)$$在参数$$\theta$$确定的情况下，求解条件概率$$p(y|x)$$。
+通俗的解释为在给定特征后预测结果出现的概率。
+就按照Andrew Ng讲的那样，确定肿瘤是良性的还是恶性的，可以使用判别模型的方法是先
+从历史数据中学习到模型，然后通过提取肿瘤的特征来预测出它是良性">
 <meta property="og:type" content="article">
 <meta property="og:title" content="generative method">
 <meta property="og:url" content="http://aluenkinglee.com/2014/04/30/2014-04-30-generative-method/index.html">
 <meta property="og:site_name" content="曾经渐行远，未免心戚戚">
-<meta property="og:description" content="线性回归模型和logistic回归是判别模型，也就是根据特征值来求结果的概率。形式化表示为$$p(y|x;\theta)$$在参数$$\theta$$确定的情况下，求解条件概率$$p(y|x)$$。通俗的解释为在给定特征后预测结果出现的概率。
-就按照Andrew Ng讲的那样，确定肿瘤是良性的还是恶性的，可以使用判别模型的方法是先从历史数据中学习到模型，然后通过提取肿瘤的特征来预测出它是良性恶性的">
+<meta property="og:description" content="线性回归模型和logistic回归是判别模型，也就是根据特征值来求结果的概率。形式化表
+示为$$p(y|x;\theta)$$在参数$$\theta$$确定的情况下，求解条件概率$$p(y|x)$$。
+通俗的解释为在给定特征后预测结果出现的概率。
+就按照Andrew Ng讲的那样，确定肿瘤是良性的还是恶性的，可以使用判别模型的方法是先
+从历史数据中学习到模型，然后通过提取肿瘤的特征来预测出它是良性">
 <meta property="og:updated_time" content="2015-07-26T12:33:50.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="generative method">
-<meta name="twitter:description" content="线性回归模型和logistic回归是判别模型，也就是根据特征值来求结果的概率。形式化表示为$$p(y|x;\theta)$$在参数$$\theta$$确定的情况下，求解条件概率$$p(y|x)$$。通俗的解释为在给定特征后预测结果出现的概率。
-就按照Andrew Ng讲的那样，确定肿瘤是良性的还是恶性的，可以使用判别模型的方法是先从历史数据中学习到模型，然后通过提取肿瘤的特征来预测出它是良性恶性的">
+<meta name="twitter:description" content="线性回归模型和logistic回归是判别模型，也就是根据特征值来求结果的概率。形式化表
+示为$$p(y|x;\theta)$$在参数$$\theta$$确定的情况下，求解条件概率$$p(y|x)$$。
+通俗的解释为在给定特征后预测结果出现的概率。
+就按照Andrew Ng讲的那样，确定肿瘤是良性的还是恶性的，可以使用判别模型的方法是先
+从历史数据中学习到模型，然后通过提取肿瘤的特征来预测出它是良性">
   
     <link rel="alternative" href="/atom.xml" title="曾经渐行远，未免心戚戚" type="application/atom+xml">
   
   
     <link href="/favicon.ico" rel="icon" type="image/x-ico">
   
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body>
-  <div id="container">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
     <div class="left-col">
     <div class="overlay"></div>
 <div class="intrude-less">
@@ -76,7 +85,7 @@
 						<li>Tags</li>
 						
 						
-						<li>About</li>
+						<li>Über</li>
 						
 					</ul>
 				</div>
@@ -117,7 +126,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/java-线程池-ThreadPool-线程/" style="font-size: 10px;">java 线程池 ThreadPool 线程</a>
+						<a href="/tags/ThreadPool/" style="font-size: 10px;">ThreadPool</a> <a href="/tags/java线程池/" style="font-size: 10px;">java线程池</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a>
 					</div>
 				</section>
 				
@@ -191,7 +200,7 @@
   
     <div class="article-meta">
       <a href="/2014/04/30/2014-04-30-generative-method/" class="article-date">
-  	<time datetime="2014-04-30T14:52:00.000Z" itemprop="datePublished">2014-04-30</time>
+  	<time datetime="2014-04-30T13:52:00.000Z" itemprop="datePublished">2014-04-30</time>
 </a>
     </div>
   
@@ -224,24 +233,47 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>线性回归模型和logistic回归是判别模型，也就是根据特征值来求结果的概率。形式化表<br>示为$$p(y|x;\theta)$$在参数$$\theta$$确定的情况下，求解条件概率$$p(y|x)$$。<br>通俗的解释为在给定特征后预测结果出现的概率。</p>
-<p>就按照Andrew Ng讲的那样，确定肿瘤是良性的还是恶性的，可以使用判别模型的方法是先<br>从历史数据中学习到模型，然后通过提取肿瘤的特征来预测出它是良性恶性的概率。</p>
-<p>反过来，要是我们先从良性肿瘤学习出良性肿瘤的模型，从恶性肿瘤学习出恶性肿瘤的模型，<br>然后提取肿瘤的特征，放到良性肿瘤的模型看下概率，在放到恶性肿瘤的模型看下概率，哪个<br>大是哪个。</p>
-<p>形式化表示为求$$P(X|Y)$$,x是特征，y是类型即模型。<br>利用贝叶斯公式发现两个模型的统一性：</p>
-<p>$$<br>p(y|x)=\frac { p(x|y)p(y) }{ p(x) }<br>$$</p>
-<p>由于我们关注的是 y 的离散值结果中哪个概率大（比如良性肿瘤和恶性肿瘤哪个概率大），<br>而并不是关心具体的概率，因此上式改写为：</p>
-<p>$$<br>\quad \quad \quad \quad \begin{eqnarray} \max <em>{ y }{ p(y|x) }  &amp; = &amp; \max </em>{ y }{ \frac { p(x|y)p(y) }{ p(x) }  }  \  &amp; = &amp;\max _{ y } p(x|y)p(y) \end{eqnarray}<br>$$</p>
+        <p>线性回归模型和logistic回归是判别模型，也就是根据特征值来求结果的概率。形式化表
+示为$$p(y|x;\theta)$$在参数$$\theta$$确定的情况下，求解条件概率$$p(y|x)$$。
+通俗的解释为在给定特征后预测结果出现的概率。</p>
+<p>就按照Andrew Ng讲的那样，确定肿瘤是良性的还是恶性的，可以使用判别模型的方法是先
+从历史数据中学习到模型，然后通过提取肿瘤的特征来预测出它是良性恶性的概率。</p>
+<p>反过来，要是我们先从良性肿瘤学习出良性肿瘤的模型，从恶性肿瘤学习出恶性肿瘤的模型，
+然后提取肿瘤的特征，放到良性肿瘤的模型看下概率，在放到恶性肿瘤的模型看下概率，哪个
+大是哪个。</p>
+<p>形式化表示为求$$P(X|Y)$$,x是特征，y是类型即模型。
+利用贝叶斯公式发现两个模型的统一性：</p>
+<p>$$
+p(y|x)=\frac { p(x|y)p(y) }{ p(x) }
+$$</p>
+<p>由于我们关注的是 y 的离散值结果中哪个概率大（比如良性肿瘤和恶性肿瘤哪个概率大），
+而并不是关心具体的概率，因此上式改写为：</p>
+<p>$$
+\quad \quad \quad \quad \begin{eqnarray} \max _{ y }{ p(y|x) }  &amp; = &amp; \max _{ y }{ \frac { p(x|y)p(y) }{ p(x) }  }  \  &amp; = &amp;\max _{ y } p(x|y)p(y) \end{eqnarray}
+$$</p>
 <p>其中$$p(x|y)$$称为后验概率,$$p(y)$$称为先验概率.</p>
-<p>由$$p(x|y)*p(y)=p(x,y)$$,因此有时称判别模型求的是条件概率，生成模型求的是联<br>合概率。</p>
-<p>常见的判别模型有线性回归、对数回归、线性判别分析、支持向量机、boosting、条件<br>随机场、神经网络等。</p>
-<p>常见的生产模型有隐马尔科夫模型、朴素贝叶斯模型、高斯混合模型、LDA、Restricted<br>Boltzmann Machine 等。</p>
+<p>由$$p(x|y)*p(y)=p(x,y)$$,因此有时称判别模型求的是条件概率，生成模型求的是联
+合概率。</p>
+<p>常见的判别模型有线性回归、对数回归、线性判别分析、支持向量机、boosting、条件
+随机场、神经网络等。</p>
+<p>常见的生产模型有隐马尔科夫模型、朴素贝叶斯模型、高斯混合模型、LDA、Restricted
+Boltzmann Machine 等。</p>
 <p>上篇博客较为详细地介绍了两个模型</p>
 <p>###高斯判别分析（Gaussian discriminant analysis）</p>
-<h5 id="多维正太分布"><a href="#多维正太分布" class="headerlink" title="多维正太分布"></a>多维正太分布</h5><p>多变量正态分布描述的是n维随机变量的分布情况。所以这里的$$\mu $$变成了n维随机变量，$$\sigma $$也变成了<br>矩阵$$\Sigma $$.记做$$N(\mu,\Sigma)$$.假设有 n 个随机变量$$X_1,X_2,\cdots ,X_n$$.所以显而易见，$$\mu $$的第i个分量是$$E(X<em>i),\Sigma</em>{ii}=Var(X<em>i),\Sigma</em>{ij}=Cov(X_i,X_j)$$.</p>
+<h5>多维正太分布</h5>
+<p>多变量正态分布描述的是n维随机变量的分布情况。所以这里的$$\mu $$变成了n维随机变量，$$\sigma $$也变成了
+矩阵$$\Sigma $$.记做$$N(\mu,\Sigma)$$.假设有 n 个随机变量$$X_1,X_2,\cdots ,X_n$$.所以显而易见，$$\mu $$的第i个分量是$$E(X_i),\Sigma_{ii}=Var(X_i),\Sigma_{ij}=Cov(X_i,X_j)$$.</p>
 <p>概率密度函数如下：</p>
-<p>$$<br>p(x;\mu,\Sigma)=\frac { 1 }{ \left( 2\pi  \right) ^{ n/2 }\left| \Sigma  \right| ^{ 1/2 } } exp\left( -\frac { 1 }{ 2 } \left( x-\mu \right)^T \Sigma^{-1}{\left(x-\mu\right)} \right)<br>$$</p>
-<h5 id="模型分析与应用"><a href="#模型分析与应用" class="headerlink" title="模型分析与应用"></a>模型分析与应用</h5><p>如果输入特征x连续型随机变量，那么可以使用高斯判别分析模型来确定$$p(x|y)$$。模型如下,先以二元分布即伯努利分布来说（因为前面的例子是二元的）:</p>
-<p>$$<br>y\sim Bernoulli\left( \phi \right) \<br>x|y=0\sim N(\mu_0,\Sigma)\<br>x|y=1\sim N(\mu_1,\Sigma)<br>$$</p>
+<p>$$
+p(x;\mu,\Sigma)=\frac { 1 }{ \left( 2\pi  \right) ^{ n/2 }\left| \Sigma  \right| ^{ 1/2 } } exp\left( -\frac { 1 }{ 2 } \left( x-\mu \right)^T \Sigma^{-1}{\left(x-\mu\right)} \right)
+$$</p>
+<h5>模型分析与应用</h5>
+<p>如果输入特征x连续型随机变量，那么可以使用高斯判别分析模型来确定$$p(x|y)$$。模型如下,先以二元分布即伯努利分布来说（因为前面的例子是二元的）:</p>
+<p>$$
+y\sim Bernoulli\left( \phi \right) \
+x|y=0\sim N(\mu_0,\Sigma)\
+x|y=1\sim N(\mu_1,\Sigma)
+$$</p>
 
       
     </div>
@@ -406,6 +438,23 @@ MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
 </script>
 
 
-  </div>
+  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
 </body>
 </html>
