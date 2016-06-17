@@ -10,7 +10,7 @@
 链表结点声明如下：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="some commen list problems in the interview">
-<meta property="og:url" content="http://aluenkinglee.com/2014/04/28/2014-04-28-some-commen-list-problems-in-the-interview/index.html">
+<meta property="og:url" content="http://kinglanding.github.io/2014/04/28/2014-04-28-some-commen-list-problems-in-the-interview/index.html">
 <meta property="og:site_name" content="曾经渐行远，未免心戚戚">
 <meta property="og:description" content="链表是最基本的数据结构，面试官也常常用链表来考察面试者的基本能力，而且链表相关的操作相对而言比较简单，也适合考察写代码的能力。链表的操作也离不开指针，指针又很容易导致出错。综合多方面的原因，链表题目在面试中占据着很重要的地位。本文对链表相关的面试题做了较为全面的整理，希望能对找工作的同学有所帮助。
 链表结点声明如下：">
@@ -29,9 +29,24 @@
 </head>
 
 <body>
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><!--加载jquery-->
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<!--start 加载search_path函数 -->
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+        search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+</script>
+<!--end of  加载search_path函数 -->
+
+<div id="container">
     <div class="left-col">
-    <div class="overlay"></div>
+        <div class="overlay"></div>
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
@@ -44,8 +59,6 @@
 		  <h1 class="header-author"><a href="/">Aluen King Lee</a></h1>
 		</hgroup>
 
-		
-		<p class="header-subtitle">A blogging framework for hackers.</p>
 		
 
 		
@@ -95,6 +108,8 @@
 				        
 							<li><a href="/tags/随笔">随笔</a></li>
 				        
+							<li><a href="/search">搜索</a></li>
+				        
 						</ul>
 					</nav>
 					<nav class="header-nav">
@@ -128,7 +143,7 @@
 				
 				<section class="switch-part switch-part3">
 				
-					<div id="js-aboutme">我是谁，我从哪里来，我到哪里去？我就是我，是颜色不一样的吃货…</div>
+					<div id="js-aboutme">有梦想就要去实现</div>
 				</section>
 				
 			</div>
@@ -138,7 +153,7 @@
 
     </div>
     <div class="mid-col">
-      <nav id="mobile-nav">
+        <nav id="mobile-nav">
   	<div class="overlay">
   		<div class="slider-trigger"></div>
   		<h1 class="header-author js-mobile-header hide">Aluen King Lee</h1>
@@ -154,8 +169,6 @@
 			  <h1 class="header-author">Aluen King Lee</h1>
 			</hgroup>
 			
-			<p class="header-subtitle">A blogging framework for hackers.</p>
-			
 			<nav class="header-menu">
 				<ul>
 				
@@ -164,6 +177,8 @@
 					<li><a href="/archives">所有文章</a></li>
 		        
 					<li><a href="/tags/随笔">随笔</a></li>
+		        
+					<li><a href="/search">搜索</a></li>
 		        
 		        <div class="clearfix"></div>
 				</ul>
@@ -187,7 +202,7 @@
 	</div>
 </nav>
 
-      <div class="body-wrap"><article id="post-2014-04-28-some-commen-list-problems-in-the-interview" class="article article-type-post" itemscope itemprop="blogPost">
+        <div class="body-wrap"><article id="post-2014-04-28-some-commen-list-problems-in-the-interview" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
       <a href="/2014/04/28/2014-04-28-some-commen-list-problems-in-the-interview/" class="article-date">
@@ -316,7 +331,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="2014-04-28-some-commen-list-problems-in-the-interview" data-title="some commen list problems in the interview" data-url="http://aluenkinglee.com/2014/04/28/2014-04-28-some-commen-list-problems-in-the-interview/"></div>
+	<div class="ds-thread" data-thread-key="2014-04-28-some-commen-list-problems-in-the-interview" data-title="some commen list problems in the interview" data-url="http://kinglanding.github.io/2014/04/28/2014-04-28-some-commen-list-problems-in-the-interview/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
@@ -337,7 +352,7 @@
 
 
 </div>
-      <footer id="footer">
+        <footer id="footer">
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
@@ -425,7 +440,7 @@ MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
 </script>
 
 
-  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+</div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>

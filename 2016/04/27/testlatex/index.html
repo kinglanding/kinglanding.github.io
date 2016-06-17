@@ -14,7 +14,7 @@ $$\frac{\partial u}{\partial t}
 = h^2 \left( \f">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Latex on hexo">
-<meta property="og:url" content="http://aluenkinglee.com/2016/04/27/testlatex/index.html">
+<meta property="og:url" content="http://kinglanding.github.io/2016/04/27/testlatex/index.html">
 <meta property="og:site_name" content="曾经渐行远，未免心戚戚">
 <meta property="og:description" content="\begin{aligned}
 \phi(x,y) = \phi \left(\sum_{i=1}^n x_ie_i, \sum_{j=1}^n y_je_j \right)
@@ -41,9 +41,24 @@ $$\frac{\partial u}{\partial t}
 </head>
 
 <body>
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><!--加载jquery-->
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<!--start 加载search_path函数 -->
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+        search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+</script>
+<!--end of  加载search_path函数 -->
+
+<div id="container">
     <div class="left-col">
-    <div class="overlay"></div>
+        <div class="overlay"></div>
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
@@ -56,8 +71,6 @@ $$\frac{\partial u}{\partial t}
 		  <h1 class="header-author"><a href="/">Aluen King Lee</a></h1>
 		</hgroup>
 
-		
-		<p class="header-subtitle">A blogging framework for hackers.</p>
 		
 
 		
@@ -107,6 +120,8 @@ $$\frac{\partial u}{\partial t}
 				        
 							<li><a href="/tags/随笔">随笔</a></li>
 				        
+							<li><a href="/search">搜索</a></li>
+				        
 						</ul>
 					</nav>
 					<nav class="header-nav">
@@ -140,7 +155,7 @@ $$\frac{\partial u}{\partial t}
 				
 				<section class="switch-part switch-part3">
 				
-					<div id="js-aboutme">我是谁，我从哪里来，我到哪里去？我就是我，是颜色不一样的吃货…</div>
+					<div id="js-aboutme">有梦想就要去实现</div>
 				</section>
 				
 			</div>
@@ -150,7 +165,7 @@ $$\frac{\partial u}{\partial t}
 
     </div>
     <div class="mid-col">
-      <nav id="mobile-nav">
+        <nav id="mobile-nav">
   	<div class="overlay">
   		<div class="slider-trigger"></div>
   		<h1 class="header-author js-mobile-header hide">Aluen King Lee</h1>
@@ -166,8 +181,6 @@ $$\frac{\partial u}{\partial t}
 			  <h1 class="header-author">Aluen King Lee</h1>
 			</hgroup>
 			
-			<p class="header-subtitle">A blogging framework for hackers.</p>
-			
 			<nav class="header-menu">
 				<ul>
 				
@@ -176,6 +189,8 @@ $$\frac{\partial u}{\partial t}
 					<li><a href="/archives">所有文章</a></li>
 		        
 					<li><a href="/tags/随笔">随笔</a></li>
+		        
+					<li><a href="/search">搜索</a></li>
 		        
 		        <div class="clearfix"></div>
 				</ul>
@@ -199,7 +214,7 @@ $$\frac{\partial u}{\partial t}
 	</div>
 </nav>
 
-      <div class="body-wrap"><article id="post-testlatex" class="article article-type-post" itemscope itemprop="blogPost">
+        <div class="body-wrap"><article id="post-testlatex" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
       <a href="/2016/04/27/testlatex/" class="article-date">
@@ -280,18 +295,18 @@ $$\frac{\partial u}{\partial t}
     
 <nav id="article-nav">
   
-    <a href="/2016/05/16/2016-05-16-JSR-133-FAQ/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2016/04/27/2016-04-27-think-about-difference-of-exception-between-thread-and-pool/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption"><</strong>
       <div class="article-nav-title">
         
-          JSR-133 FAQ
+          关于异常在线程与线程池不同表现的一个思考
         
       </div>
     </a>
   
   
-    <a href="/2016/04/27/2016-04-27-think-about-difference-of-exception-between-thread-and-pool/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">关于异常在线程与线程池不同表现的一个思考</div>
+    <a href="/2015/01/14/2015-01-15-use-mongo-map-reduce-statistic-word-occurrence/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">使用mongodb内置的mapreduce聚合函数统计词频</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -326,7 +341,7 @@ $$\frac{\partial u}{\partial t}
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="testlatex" data-title="Latex on hexo" data-url="http://aluenkinglee.com/2016/04/27/testlatex/"></div>
+	<div class="ds-thread" data-thread-key="testlatex" data-title="Latex on hexo" data-url="http://kinglanding.github.io/2016/04/27/testlatex/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
@@ -347,7 +362,7 @@ $$\frac{\partial u}{\partial t}
 
 
 </div>
-      <footer id="footer">
+        <footer id="footer">
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
@@ -435,7 +450,7 @@ MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
 </script>
 
 
-  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+</div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>

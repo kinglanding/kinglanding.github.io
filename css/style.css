@@ -1570,7 +1570,7 @@ a {
 .article-entry .gist .gist-file .gist-meta {
   background: #272822;
   color: highlight-comment;
-  font: 0.85em "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font: 0.85em "Helvetica Neue", "Helvetica", "Hiragino Sans GB", "Microsoft YaHei", "Source Han Sans CN", "WenQuanYi Micro Hei", Arial, sans-serif;
   text-shadow: 0 0;
   padding: 0;
   margin-top: 1em;
@@ -2218,6 +2218,16 @@ pre .css ~ * .id {
 }
 ::-webkit-scrollbar-button:end:active {
   background: url("../img/scrollbar_arrow.png") no-repeat -30px -18px;
+}
+ul.search-result-list {
+  padding-left: 10px;
+}
+a.search-result-title {
+  font-weight: bold;
+}
+em.search-keyword {
+  border-bottom: 1px dashed #4088b8;
+  font-weight: bold;
 }
 #viewer {
   position: fixed;

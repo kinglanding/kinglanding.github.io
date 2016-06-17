@@ -4,16 +4,17 @@
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>Category: KMP 数据结构 动态规划 | 曾经渐行远，未免心戚戚</title>
+  <title>RESULT | 曾经渐行远，未免心戚戚</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description">
 <meta property="og:type" content="website">
-<meta property="og:title" content="曾经渐行远，未免心戚戚">
-<meta property="og:url" content="http://kinglanding.github.io/categories/KMP-数据结构-动态规划/index.html">
+<meta property="og:title" content="RESULT">
+<meta property="og:url" content="http://kinglanding.github.io/search/index.html">
 <meta property="og:site_name" content="曾经渐行远，未免心戚戚">
 <meta property="og:description">
+<meta property="og:updated_time" content="2016-06-17T06:14:31.358Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="曾经渐行远，未免心戚戚">
+<meta name="twitter:title" content="RESULT">
 <meta name="twitter:description">
   
     <link rel="alternative" href="/atom.xml" title="曾经渐行远，未免心戚戚" type="application/atom+xml">
@@ -199,53 +200,81 @@
 </nav>
 
         <div class="body-wrap">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2014" class="archive-year">2014</a>
+<!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
+          MathJax.InputJax.TeX.prefilterHooks.Add(function (data) {
+                  data.math = data.math.replace(/^\s*<!\[CDATA\[\s*((?:\n|.)*)\s*\]\]>\s*$/m,"$1");
+                    });
+          });
+
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+
+</script>
+
+<script type="text/javascript"
+        src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<link rel="stylesheet" href="/css/style.css">
+<!-- 新 Bootstrap 核心 CSS 文件 -->
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<div id="site_search">
+
+    <div class="row" style="margin-top: 5%;margin-left: 5%; margin-right: 5%;" >
+        <!-- /.col-lg-6 -->
+        <div class="col-lg-6" style="max-width: 600px; min-width: auto">
+            <div class="input-group">
+                <input type="text" id="local-search-input" name="q" results="0"
+                       class="form-control" autofocus="autofocus" placeholder="Search for...">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button">Go!</button>
+                </span>
+            </div>
+            <!-- /input-group -->
         </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2014/05/19/2014-05-19-my-understanding-about-kmp/" class="archive-article-date">
-  	<time datetime="2014-05-19T13:56:00.000Z" itemprop="datePublished">May 19</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2014/05/19/2014-05-19-my-understanding-about-kmp/">我对KMP算法的理解</a>
-    </h1>
-  
+        <!-- /.col-lg-6 -->
+    </div>
+    <!-- /.row -->
 
-        <div class="article-info info-on-right">
-          
-          
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/KMP-数据结构-动态规划/">KMP 数据结构 动态规划</a>
-	</div>
+</div>
+<div class="row" style="margin-left: 5%; margin-right: 5%;margin-bottom: 5%">
 
+    <div id="local-search-result" class="search search-type-post show is-hiddened"></div>
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-
+</div>
 </div>
         <footer id="footer">
   <div class="outer">
@@ -273,7 +302,7 @@
 		isPost: false,
 		isArchive: false,
 		isTag: false,
-		isCategory: true,
+		isCategory: false,
 		open_in_new: false
 	}
 </script>
