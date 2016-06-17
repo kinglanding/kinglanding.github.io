@@ -45,7 +45,7 @@
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
 			
-			<img lazy-src="null" class="js-avatar">
+			<img lazy-src="/img/tusiki.jpg" class="js-avatar">
 			
 		</a>
 
@@ -85,7 +85,7 @@
 						<li>Tags</li>
 						
 						
-						<li>Über</li>
+						<li>About</li>
 						
 					</ul>
 				</div>
@@ -126,7 +126,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/ThreadPool/" style="font-size: 10px;">ThreadPool</a> <a href="/tags/java线程池/" style="font-size: 10px;">java线程池</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a>
+						<a href="/tags/ThreadPool/" style="font-size: 10px;">ThreadPool</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/java内存模型/" style="font-size: 10px;">java内存模型</a> <a href="/tags/java线程池/" style="font-size: 10px;">java线程池</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/math-example/" style="font-size: 10px;">math example</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a>
 					</div>
 				</section>
 				
@@ -156,7 +156,7 @@
 		<header id="header" class="inner">
 			<div class="profilepic">
 			
-				<img lazy-src="null" class="js-avatar">
+				<img lazy-src="/img/tusiki.jpg" class="js-avatar">
 			
 			</div>
 			<hgroup>
@@ -237,7 +237,7 @@
 或者是SYN,SYN|ACK,ACK. 而我要做的也就是这个，提取一个流的前N个packets，针对目前的需求，只需要在传输层截取UDP和TCP的前多少个流即可。
 所以我得分析网络层的这些协议底层到底是怎么回事，在结合libpcap完成流的提取任务。</p>
 <p>相对来说TCP还是个复杂的协议，而且值得清楚的认识以下。那么结合wireshark和代码来认识下TCP里面的东西。</p>
-<p>&lt;!--more--&gt;</p>
+<a id="more"></a>
 <p><a href="https://github.com/aluenkinglee/stuff/blob/master/cplusplus/traffic_parser/b.pcap?raw=true" title="pcap文件" target="_blank" rel="external">这里</a>是个已经准备好的pcap文件，本文结合这个文件对此进行描述。</p>
 <p>这个文件分析的是微信在单一环境中的网络行为，所以比较简单。打开这个文件，找到开始的几个右键单击选择<code>Follow TCP Stream</code>，或者在filter那里输入<code>tcp.stream eq 1</code>可以看到这里。</p>
 <p><img src="https://github.com/aluenkinglee/aluenkinglee.github.io/blob/source/source/images/2014-02-26-li-jie-tcpzhong-de-xu-lie-hao-he-que-ren-hao/tcp1.png?raw=true" alt="Follow TCP Stream" title="Follow TCP Stream"></p>

@@ -7,27 +7,18 @@
   <title>特征选择-信息增益算法 | 曾经渐行远，未免心戚戚</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="信息增益：特征 $A$ 对于训练数据集$D$的信息增益 $g\left( D,A \right)$,定义为集合 $D$ 的经验熵 $H\left( D \right)$ 与特征 $A$ 在给定条件下 $D$
-的经验条件熵c之差。
-&amp;lt;!--more--&amp;gt;
-$$
-g\left( D,A \right) =H\left( D \right) -H\left( { D }|{ A } \rig">
+的经验条件熵c之差。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="特征选择-信息增益算法">
 <meta property="og:url" content="http://aluenkinglee.com/2014/04/21/2014-04-21-feature-selection--infomation-gain/index.html">
 <meta property="og:site_name" content="曾经渐行远，未免心戚戚">
 <meta property="og:description" content="信息增益：特征 $A$ 对于训练数据集$D$的信息增益 $g\left( D,A \right)$,定义为集合 $D$ 的经验熵 $H\left( D \right)$ 与特征 $A$ 在给定条件下 $D$
-的经验条件熵c之差。
-&amp;lt;!--more--&amp;gt;
-$$
-g\left( D,A \right) =H\left( D \right) -H\left( { D }|{ A } \rig">
+的经验条件熵c之差。">
 <meta property="og:updated_time" content="2015-07-26T12:33:50.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="特征选择-信息增益算法">
 <meta name="twitter:description" content="信息增益：特征 $A$ 对于训练数据集$D$的信息增益 $g\left( D,A \right)$,定义为集合 $D$ 的经验熵 $H\left( D \right)$ 与特征 $A$ 在给定条件下 $D$
-的经验条件熵c之差。
-&amp;lt;!--more--&amp;gt;
-$$
-g\left( D,A \right) =H\left( D \right) -H\left( { D }|{ A } \rig">
+的经验条件熵c之差。">
   
     <link rel="alternative" href="/atom.xml" title="曾经渐行远，未免心戚戚" type="application/atom+xml">
   
@@ -45,7 +36,7 @@ g\left( D,A \right) =H\left( D \right) -H\left( { D }|{ A } \rig">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
 			
-			<img lazy-src="null" class="js-avatar">
+			<img lazy-src="/img/tusiki.jpg" class="js-avatar">
 			
 		</a>
 
@@ -85,7 +76,7 @@ g\left( D,A \right) =H\left( D \right) -H\left( { D }|{ A } \rig">
 						<li>Tags</li>
 						
 						
-						<li>Über</li>
+						<li>About</li>
 						
 					</ul>
 				</div>
@@ -126,7 +117,7 @@ g\left( D,A \right) =H\left( D \right) -H\left( { D }|{ A } \rig">
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/ThreadPool/" style="font-size: 10px;">ThreadPool</a> <a href="/tags/java线程池/" style="font-size: 10px;">java线程池</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a>
+						<a href="/tags/ThreadPool/" style="font-size: 10px;">ThreadPool</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/java内存模型/" style="font-size: 10px;">java内存模型</a> <a href="/tags/java线程池/" style="font-size: 10px;">java线程池</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/math-example/" style="font-size: 10px;">math example</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a>
 					</div>
 				</section>
 				
@@ -156,7 +147,7 @@ g\left( D,A \right) =H\left( D \right) -H\left( { D }|{ A } \rig">
 		<header id="header" class="inner">
 			<div class="profilepic">
 			
-				<img lazy-src="null" class="js-avatar">
+				<img lazy-src="/img/tusiki.jpg" class="js-avatar">
 			
 			</div>
 			<hgroup>
@@ -234,9 +225,9 @@ g\left( D,A \right) =H\left( D \right) -H\left( { D }|{ A } \rig">
     <div class="article-entry" itemprop="articleBody">
       
         <p><strong>信息增益</strong>：特征 $A$ 对于训练数据集$D$的信息增益 $g\left( D,A \right)$,定义为集合 $D$ 的经验熵 $H\left( D \right)$ 与特征 $A$ 在给定条件下 $D$
-的经验条件熵c之差。
-&lt;!--more--&gt;
-$$
+的经验条件熵c之差。</p>
+<a id="more"></a>
+<p>$$
 g\left( D,A \right) =H\left( D \right) -H\left( { D }|{ A } \right)
 $$</p>
 <p>给定训练数据集$D$和特征$A$，经验熵$H(D)$表示对数据集$D$进行分类的不确定性，

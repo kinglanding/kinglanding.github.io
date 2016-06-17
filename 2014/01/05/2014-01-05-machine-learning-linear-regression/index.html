@@ -55,7 +55,7 @@
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
 			
-			<img lazy-src="null" class="js-avatar">
+			<img lazy-src="/img/tusiki.jpg" class="js-avatar">
 			
 		</a>
 
@@ -95,7 +95,7 @@
 						<li>Tags</li>
 						
 						
-						<li>Über</li>
+						<li>About</li>
 						
 					</ul>
 				</div>
@@ -136,7 +136,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/ThreadPool/" style="font-size: 10px;">ThreadPool</a> <a href="/tags/java线程池/" style="font-size: 10px;">java线程池</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a>
+						<a href="/tags/ThreadPool/" style="font-size: 10px;">ThreadPool</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/java内存模型/" style="font-size: 10px;">java内存模型</a> <a href="/tags/java线程池/" style="font-size: 10px;">java线程池</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/math-example/" style="font-size: 10px;">math example</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a>
 					</div>
 				</section>
 				
@@ -166,7 +166,7 @@
 		<header id="header" class="inner">
 			<div class="profilepic">
 			
-				<img lazy-src="null" class="js-avatar">
+				<img lazy-src="/img/tusiki.jpg" class="js-avatar">
 			
 			</div>
 			<hgroup>
@@ -251,8 +251,8 @@
 <p>对于监督学习中的两类问题，或者说三类吧，分别是：回归问题，分类问题和标注问题（tagging）。后面这个很有意思，不过在这里现说一下回归和分类的区别，假如我们要
 做一个连续变量的预测，比如说房价的预测，或者明日气温的预测，都是属于回归问题；而对于离散变量的预测，比如判断一个病人是否得了癌症，良性还是恶心，则是一个明显的分
 类问题。</p>
-<p>接下来的文章，大概是对Andrew Ng视频的一个简单的总结，会结合变成实例（octave和C++）来插叙。
-&lt;!--more--&gt;</p>
+<p>接下来的文章，大概是对Andrew Ng视频的一个简单的总结，会结合变成实例（octave和C++）来插叙。</p>
+<a id="more"></a>
 <p>###线性回归</p>
 <p>好吧，先从一个简单的例子讲起，假设我们要为一个房子售价做个数学模型，价格和什么有关系？当然因素很多，比如房间的大小，离商业区的距离，嗯，房子几坪，奥，看起来不是
 个简单事儿～，那好吧，遵循我们先从最简单做起的原则，现假设相同尺寸的房子价格和城市人口多少有关系，其他的先抛到一边去，我喜欢做甩手掌柜==
@@ -321,10 +321,10 @@ J{(\theta_0,\theta_1) } \
 $$</p>
 <p>这是octave实现，向量形式,代码[详见](https://github.com/aluenkinglee/mlclass/blob/master/
 mlclass-ex1/gradientDescent.m)</p>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">function [theta, J_history] = gradientDescent(X, y, theta, alpha, num_iters)</span><br><span class="line">%GRADIENTDESCENT Performs gradient descent to learn theta</span><br><span class="line">%   theta = GRADIENTDESENT(X, y, theta, alpha, num_iters) updates theta by </span><br><span class="line">%   taking num_iters gradient steps with learning rate alpha</span><br><span class="line"></span><br><span class="line">% Initialize some useful values</span><br><span class="line">m = length(y); % number of training examples</span><br><span class="line">J_history = zeros(num_iters, 1);</span><br><span class="line">for iter = 1:num_iters</span><br><span class="line">    %theta1 = theta(1) - alpha * X(:,1)&apos; *(X * theta - y) / m;</span><br><span class="line">    %theta2 = theta(2) - alpha * X(:,2)&apos; *(X * theta - y) / m;</span><br><span class="line">    %theta = [theta1; theta2]</span><br><span class="line">    theta = theta - alpha / m * (X&apos; * (X * theta - y));</span><br><span class="line">    % Save the cost J in every iteration    </span><br><span class="line">    J_history(iter) = computeCost(X, y, theta);</span><br><span class="line">end</span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">function [theta, J_history] = gradientDescent(X, y, theta, alpha, num_iters)</span><br><span class="line">%GRADIENTDESCENT Performs gradient descent to learn theta</span><br><span class="line">%   theta = GRADIENTDESENT(X, y, theta, alpha, num_iters) updates theta by </span><br><span class="line">%   taking num_iters gradient steps with learning rate alpha</span><br><span class="line"></span><br><span class="line">% Initialize some useful values</span><br><span class="line">m = length(y); % number of training examples</span><br><span class="line">J_history = zeros(num_iters, 1);</span><br><span class="line">for iter = 1:num_iters</span><br><span class="line">    %theta1 = theta(1) - alpha * X(:,1)&apos; *(X * theta - y) / m;</span><br><span class="line">    %theta2 = theta(2) - alpha * X(:,2)&apos; *(X * theta - y) / m;</span><br><span class="line">    %theta = [theta1; theta2]</span><br><span class="line">    theta = theta - alpha / m * (X&apos; * (X * theta - y));</span><br><span class="line">    % Save the cost J in every iteration    </span><br><span class="line">    J_history(iter) = computeCost(X, y, theta);</span><br><span class="line">end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
 <p>对应的C++实现，向量形式，代码[详见](https://github.com/aluenkinglee/mlclass/blob/master/mlclass
 -ex1/gradientDescent.cpp)</p>
-<p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="string">"gradientDescent.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="string">"computeCost.h"</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> mlclass::ex1;</span><br><span class="line"><span class="keyword">namespace</span> mlclass&#123;</span><br><span class="line"><span class="keyword">namespace</span> ex1&#123;</span><br><span class="line">    <span class="comment">//Performs gradient descent to learn theta</span></span><br><span class="line">    <span class="function">mat <span class="title">gradientDescent</span><span class="params">(mat X, vec y, mat&amp; theta, <span class="keyword">double</span> alpah,<span class="keyword">long</span> num_inters)</span></span>&#123;</span><br><span class="line">        <span class="comment">//number of training examples</span></span><br><span class="line">        <span class="keyword">long</span> m = y.n_rows;</span><br><span class="line">        </span><br><span class="line">        mat J_history = zeros&lt;mat&gt;(num_inters,<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">long</span> i = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (;i &lt; num_inters; i++)&#123;</span><br><span class="line">            theta = theta - alpah/m* (X.t()* (X*theta - y));</span><br><span class="line">            J_history(i) = computeCost(X, y, theta);    </span><br><span class="line">        &#125;</span><br><span class="line">        return J_history;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="string">"gradientDescent.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="string">"computeCost.h"</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> mlclass::ex1;</span><br><span class="line"><span class="keyword">namespace</span> mlclass&#123;</span><br><span class="line"><span class="keyword">namespace</span> ex1&#123;</span><br><span class="line">    <span class="comment">//Performs gradient descent to learn theta</span></span><br><span class="line">    <span class="function">mat <span class="title">gradientDescent</span><span class="params">(mat X, vec y, mat&amp; theta, <span class="keyword">double</span> alpah,<span class="keyword">long</span> num_inters)</span></span>&#123;</span><br><span class="line">        <span class="comment">//number of training examples</span></span><br><span class="line">        <span class="keyword">long</span> m = y.n_rows;</span><br><span class="line">        </span><br><span class="line">        mat J_history = zeros&lt;mat&gt;(num_inters,<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">long</span> i = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (;i &lt; num_inters; i++)&#123;</span><br><span class="line">            theta = theta - alpah/m* (X.t()* (X*theta - y));</span><br><span class="line">            J_history(i) = computeCost(X, y, theta);    </span><br><span class="line">        &#125;</span><br><span class="line">        return J_history;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><strong>有一个事情需要说明一下</strong></p>
 <p>梯度下降发的收敛速度比较慢，相比于直接用公式求解$\theta$来说，尤其是当m较小的时候，比如说$m&lt;10000$,
 这个时候用公式求解$\theta$比较快，但是大于这个值之后，计算矩阵的逆是花费较大的，此时使用梯度下降法比较理想，而且可以做到分布式计算值，加快求解速度。</p>

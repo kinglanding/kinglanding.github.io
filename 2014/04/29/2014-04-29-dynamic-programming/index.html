@@ -7,51 +7,18 @@
   <title>dynamic programming | 曾经渐行远，未免心戚戚</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="好几年了，没有特意去做与ACM相关的算法题了，时至今日，也确实忘得差不多了，不过，现在也到了该拾起来的时候了。
-动态规划
-&amp;lt;!--more --&amp;gt;
-动态规划（Dynamic Programming）是用来解决最优化问题的最常用手段,说起定义，网上浩瀚如烟，有很多类型，比如：
-
-
-背包问题：0-1背包，完全背包，硬币问题，装箱子问题等。
-
-
-最短路径问题：网络流等。
-
-
-树形动规：最优查">
+动态规划">
 <meta property="og:type" content="article">
 <meta property="og:title" content="dynamic programming">
 <meta property="og:url" content="http://aluenkinglee.com/2014/04/29/2014-04-29-dynamic-programming/index.html">
 <meta property="og:site_name" content="曾经渐行远，未免心戚戚">
 <meta property="og:description" content="好几年了，没有特意去做与ACM相关的算法题了，时至今日，也确实忘得差不多了，不过，现在也到了该拾起来的时候了。
-动态规划
-&amp;lt;!--more --&amp;gt;
-动态规划（Dynamic Programming）是用来解决最优化问题的最常用手段,说起定义，网上浩瀚如烟，有很多类型，比如：
-
-
-背包问题：0-1背包，完全背包，硬币问题，装箱子问题等。
-
-
-最短路径问题：网络流等。
-
-
-树形动规：最优查">
+动态规划">
 <meta property="og:updated_time" content="2015-07-26T12:33:50.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="dynamic programming">
 <meta name="twitter:description" content="好几年了，没有特意去做与ACM相关的算法题了，时至今日，也确实忘得差不多了，不过，现在也到了该拾起来的时候了。
-动态规划
-&amp;lt;!--more --&amp;gt;
-动态规划（Dynamic Programming）是用来解决最优化问题的最常用手段,说起定义，网上浩瀚如烟，有很多类型，比如：
-
-
-背包问题：0-1背包，完全背包，硬币问题，装箱子问题等。
-
-
-最短路径问题：网络流等。
-
-
-树形动规：最优查">
+动态规划">
   
     <link rel="alternative" href="/atom.xml" title="曾经渐行远，未免心戚戚" type="application/atom+xml">
   
@@ -69,7 +36,7 @@
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
 			
-			<img lazy-src="null" class="js-avatar">
+			<img lazy-src="/img/tusiki.jpg" class="js-avatar">
 			
 		</a>
 
@@ -109,7 +76,7 @@
 						<li>Tags</li>
 						
 						
-						<li>Über</li>
+						<li>About</li>
 						
 					</ul>
 				</div>
@@ -150,7 +117,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/ThreadPool/" style="font-size: 10px;">ThreadPool</a> <a href="/tags/java线程池/" style="font-size: 10px;">java线程池</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a>
+						<a href="/tags/ThreadPool/" style="font-size: 10px;">ThreadPool</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/java内存模型/" style="font-size: 10px;">java内存模型</a> <a href="/tags/java线程池/" style="font-size: 10px;">java线程池</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/math-example/" style="font-size: 10px;">math example</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a>
 					</div>
 				</section>
 				
@@ -180,7 +147,7 @@
 		<header id="header" class="inner">
 			<div class="profilepic">
 			
-				<img lazy-src="null" class="js-avatar">
+				<img lazy-src="/img/tusiki.jpg" class="js-avatar">
 			
 			</div>
 			<hgroup>
@@ -259,7 +226,7 @@
       
         <p>好几年了，没有特意去做与ACM相关的算法题了，时至今日，也确实忘得差不多了，不过，现在也到了该拾起来的时候了。</p>
 <h5>动态规划</h5>
-<p>&lt;!--more --&gt;</p>
+<a id="more"></a>
 <p>动态规划（Dynamic Programming）是用来解决最优化问题的最常用手段,说起定义，网上浩瀚如烟，有很多类型，比如：</p>
 <ul>
 <li>
@@ -300,9 +267,9 @@ $$</p>
 f(i)=\underset { d\in D\left( {1,3,5} \right)  }{min}{1+f(i-d)},i!=0
 $$</p>
 <p>当然了$$i==0$$时，f(0)=0.</p>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">f(11)=min&#123;1+f(11-1),1+f(11-3),1+f(11-5)&#125;;</span><br><span class="line">f(10)=min&#123;1+f(10-1),1+f(10-3),1+f(10-5)&#125;;</span><br><span class="line">f(9)=min&#123;1+f(9-1),1+f(9-3),1+f(9-5)&#125;;</span><br><span class="line">f(8)=min&#123;1+f(8-1),1+f(8-3),1+f(8-5)&#125;;</span><br><span class="line">f(7)=min&#123;1+f(7-1),1+f(7-3),1+f(7-5)&#125;;</span><br><span class="line">f(6)=min&#123;1+f(6-1),1+f(6-3),1+f(6-5)&#125;;</span><br><span class="line">f(5)=min&#123;1+f(5-1),1+f(5-3),1+f(5-5)&#125;;</span><br><span class="line">f(4)=min&#123;1+f(4-1),1+f(4-3) )&#125;;</span><br><span class="line">f(3)=min&#123;1+f(3-1),1+f(3-3) )&#125;;</span><br><span class="line">f(2)=min&#123;1+f(2-1)&#125;;</span><br><span class="line">f(1)=min&#123;1+f(1-1)&#125;;</span><br><span class="line">f(0)已知=0；</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">f(11)=min&#123;1+f(11-1),1+f(11-3),1+f(11-5)&#125;;</span><br><span class="line">f(10)=min&#123;1+f(10-1),1+f(10-3),1+f(10-5)&#125;;</span><br><span class="line">f(9)=min&#123;1+f(9-1),1+f(9-3),1+f(9-5)&#125;;</span><br><span class="line">f(8)=min&#123;1+f(8-1),1+f(8-3),1+f(8-5)&#125;;</span><br><span class="line">f(7)=min&#123;1+f(7-1),1+f(7-3),1+f(7-5)&#125;;</span><br><span class="line">f(6)=min&#123;1+f(6-1),1+f(6-3),1+f(6-5)&#125;;</span><br><span class="line">f(5)=min&#123;1+f(5-1),1+f(5-3),1+f(5-5)&#125;;</span><br><span class="line">f(4)=min&#123;1+f(4-1),1+f(4-3) )&#125;;</span><br><span class="line">f(3)=min&#123;1+f(3-1),1+f(3-3) )&#125;;</span><br><span class="line">f(2)=min&#123;1+f(2-1)&#125;;</span><br><span class="line">f(1)=min&#123;1+f(1-1)&#125;;</span><br><span class="line">f(0)已知=0；</span><br></pre></td></tr></table></figure>
 <p>所以：</p>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">f(1)=min&#123;1+f(1-1)&#125;=1；</span><br><span class="line">f(2)=min&#123;1+f(2-1)&#125;=2；</span><br><span class="line">f(3)=min&#123;1+f(3-1),1+f(3-3) )&#125;=min&#123;3,1&#125;=1;</span><br><span class="line">f(4)=min&#123;1+f(4-1),1+f(4-3) )&#125;=min&#123;2,2&#125;=2;</span><br><span class="line">f(5)=min&#123;1+f(5-1),1+f(5-3),1+f(5-5)&#125;=min&#123;3,3,1&#125;=1;</span><br><span class="line">f(6)=min&#123;1+f(6-1),1+f(6-3),1+f(6-5)&#125;=min&#123;2,2,2&#125;=2;</span><br><span class="line">f(7)=min&#123;1+f(7-1),1+f(7-3),1+f(7-5)&#125;=min&#123;3,3,3&#125;=3;</span><br><span class="line">f(8)=min&#123;1+f(8-1),1+f(8-3),1+f(8-5)&#125;=min&#123;4,2,2&#125;=2;</span><br><span class="line">f(9)=min&#123;1+f(9-1),1+f(9-3),1+f(9-5)&#125;=min&#123;3,3,3&#125;=3;</span><br><span class="line">f(10)=min&#123;1+f(10-1),1+f(10-3),1+f(10-5)&#125;=min&#123;4,4,2&#125;=2;</span><br><span class="line">f(11)=min&#123;1+f(11-1),1+f(11-3),1+f(11-5)&#125;=min&#123;3,3,3&#125;=3;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">f(1)=min&#123;1+f(1-1)&#125;=1；</span><br><span class="line">f(2)=min&#123;1+f(2-1)&#125;=2；</span><br><span class="line">f(3)=min&#123;1+f(3-1),1+f(3-3) )&#125;=min&#123;3,1&#125;=1;</span><br><span class="line">f(4)=min&#123;1+f(4-1),1+f(4-3) )&#125;=min&#123;2,2&#125;=2;</span><br><span class="line">f(5)=min&#123;1+f(5-1),1+f(5-3),1+f(5-5)&#125;=min&#123;3,3,1&#125;=1;</span><br><span class="line">f(6)=min&#123;1+f(6-1),1+f(6-3),1+f(6-5)&#125;=min&#123;2,2,2&#125;=2;</span><br><span class="line">f(7)=min&#123;1+f(7-1),1+f(7-3),1+f(7-5)&#125;=min&#123;3,3,3&#125;=3;</span><br><span class="line">f(8)=min&#123;1+f(8-1),1+f(8-3),1+f(8-5)&#125;=min&#123;4,2,2&#125;=2;</span><br><span class="line">f(9)=min&#123;1+f(9-1),1+f(9-3),1+f(9-5)&#125;=min&#123;3,3,3&#125;=3;</span><br><span class="line">f(10)=min&#123;1+f(10-1),1+f(10-3),1+f(10-5)&#125;=min&#123;4,4,2&#125;=2;</span><br><span class="line">f(11)=min&#123;1+f(11-1),1+f(11-3),1+f(11-5)&#125;=min&#123;3,3,3&#125;=3;</span><br></pre></td></tr></table></figure>
 <p>从我们的计算过程来看，求解既可以从前往后也可以从后往前。</p>
 
       

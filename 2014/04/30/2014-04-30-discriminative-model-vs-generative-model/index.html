@@ -7,33 +7,18 @@
   <title>Discriminative Model Vs. Generative Model | 曾经渐行远，未免心戚戚</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="判别模型和生成模型分析
-在学习复习ML内容时，中文检索生成模型搜到了该这里本文主要参考该文章，并稍作整理。
-&amp;lt;!-- more --&amp;gt;
-这两者进行预测的方式不同在于模型的处理上：
-生成模型：无穷样本 ==&amp;gt; 概率密度模型 = 产生模型 ==&amp;gt; 预测
-判别模型：有限样本 ==&amp;gt; 判别函数 = 预测模型 ==&amp;gt; 预测
-简单的说，假设$$x$$是观察值，$$y$$是模">
+在学习复习ML内容时，中文检索生成模型搜到了该这里本文主要参考该文章，并稍作整理。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Discriminative Model Vs. Generative Model">
 <meta property="og:url" content="http://aluenkinglee.com/2014/04/30/2014-04-30-discriminative-model-vs-generative-model/index.html">
 <meta property="og:site_name" content="曾经渐行远，未免心戚戚">
 <meta property="og:description" content="判别模型和生成模型分析
-在学习复习ML内容时，中文检索生成模型搜到了该这里本文主要参考该文章，并稍作整理。
-&amp;lt;!-- more --&amp;gt;
-这两者进行预测的方式不同在于模型的处理上：
-生成模型：无穷样本 ==&amp;gt; 概率密度模型 = 产生模型 ==&amp;gt; 预测
-判别模型：有限样本 ==&amp;gt; 判别函数 = 预测模型 ==&amp;gt; 预测
-简单的说，假设$$x$$是观察值，$$y$$是模">
+在学习复习ML内容时，中文检索生成模型搜到了该这里本文主要参考该文章，并稍作整理。">
 <meta property="og:updated_time" content="2015-07-26T12:33:50.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Discriminative Model Vs. Generative Model">
 <meta name="twitter:description" content="判别模型和生成模型分析
-在学习复习ML内容时，中文检索生成模型搜到了该这里本文主要参考该文章，并稍作整理。
-&amp;lt;!-- more --&amp;gt;
-这两者进行预测的方式不同在于模型的处理上：
-生成模型：无穷样本 ==&amp;gt; 概率密度模型 = 产生模型 ==&amp;gt; 预测
-判别模型：有限样本 ==&amp;gt; 判别函数 = 预测模型 ==&amp;gt; 预测
-简单的说，假设$$x$$是观察值，$$y$$是模">
+在学习复习ML内容时，中文检索生成模型搜到了该这里本文主要参考该文章，并稍作整理。">
   
     <link rel="alternative" href="/atom.xml" title="曾经渐行远，未免心戚戚" type="application/atom+xml">
   
@@ -51,7 +36,7 @@
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
 			
-			<img lazy-src="null" class="js-avatar">
+			<img lazy-src="/img/tusiki.jpg" class="js-avatar">
 			
 		</a>
 
@@ -91,7 +76,7 @@
 						<li>Tags</li>
 						
 						
-						<li>Über</li>
+						<li>About</li>
 						
 					</ul>
 				</div>
@@ -132,7 +117,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/ThreadPool/" style="font-size: 10px;">ThreadPool</a> <a href="/tags/java线程池/" style="font-size: 10px;">java线程池</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a>
+						<a href="/tags/ThreadPool/" style="font-size: 10px;">ThreadPool</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/java内存模型/" style="font-size: 10px;">java内存模型</a> <a href="/tags/java线程池/" style="font-size: 10px;">java线程池</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/math-example/" style="font-size: 10px;">math example</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a>
 					</div>
 				</section>
 				
@@ -162,7 +147,7 @@
 		<header id="header" class="inner">
 			<div class="profilepic">
 			
-				<img lazy-src="null" class="js-avatar">
+				<img lazy-src="/img/tusiki.jpg" class="js-avatar">
 			
 			</div>
 			<hgroup>
@@ -241,7 +226,7 @@
       
         <h2>判别模型和生成模型分析</h2>
 <p>在学习复习ML内容时，中文检索生成模型搜到了该<a href="http://blog.sciencenet.cn/home.php?mod=space&amp;uid=248173&amp;do=blog&amp;id=227964" target="_blank" rel="external">这里</a>本文主要参考该文章，并稍作整理。</p>
-<p>&lt;!-- more --&gt;</p>
+<a id="more"></a>
 <p>这两者进行预测的方式不同在于模型的处理上：</p>
 <p><strong>生成模型</strong>：无穷样本 ==&gt; 概率密度模型 = 产生模型 ==&gt; 预测</p>
 <p><strong>判别模型</strong>：有限样本 ==&gt; 判别函数 = 预测模型 ==&gt; 预测</p>

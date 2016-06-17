@@ -39,7 +39,7 @@ $\min _{ w }{ f\left( w \right)  } \\ s.t\quad h_{ i }\left( w \right) =0,\quad 
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
 			
-			<img lazy-src="null" class="js-avatar">
+			<img lazy-src="/img/tusiki.jpg" class="js-avatar">
 			
 		</a>
 
@@ -79,7 +79,7 @@ $\min _{ w }{ f\left( w \right)  } \\ s.t\quad h_{ i }\left( w \right) =0,\quad 
 						<li>Tags</li>
 						
 						
-						<li>Über</li>
+						<li>About</li>
 						
 					</ul>
 				</div>
@@ -120,7 +120,7 @@ $\min _{ w }{ f\left( w \right)  } \\ s.t\quad h_{ i }\left( w \right) =0,\quad 
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/ThreadPool/" style="font-size: 10px;">ThreadPool</a> <a href="/tags/java线程池/" style="font-size: 10px;">java线程池</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a>
+						<a href="/tags/ThreadPool/" style="font-size: 10px;">ThreadPool</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/java内存模型/" style="font-size: 10px;">java内存模型</a> <a href="/tags/java线程池/" style="font-size: 10px;">java线程池</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/math-example/" style="font-size: 10px;">math example</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a>
 					</div>
 				</section>
 				
@@ -150,7 +150,7 @@ $\min _{ w }{ f\left( w \right)  } \\ s.t\quad h_{ i }\left( w \right) =0,\quad 
 		<header id="header" class="inner">
 			<div class="profilepic">
 			
-				<img lazy-src="null" class="js-avatar">
+				<img lazy-src="/img/tusiki.jpg" class="js-avatar">
 			
 			</div>
 			<hgroup>
@@ -229,10 +229,10 @@ $\min _{ w }{ f\left( w \right)  } \\ s.t\quad h_{ i }\left( w \right) =0,\quad 
       
         <p>在解决约束最优化的额问题中，常常利用拉格朗日对偶性将原始问题转化为对偶问题，通过解对偶问题得到原始问题的解。该方法主要应用的SVM和最大熵模型中。</p>
 <p>先抛开上面的二次规划问题，先来看看存在等式约束的极值问题求法，比如下面的最优化问题：</p>
-<p><span>$\min _{ w }{ f\left( w \right)  } \\ s.t\quad h_{ i }\left( w \right) =0,\quad i=1,\cdots ,l$</span><!-- Has MathJax --></p>
+<span>$\min _{ w }{ f\left( w \right)  } \\ s.t\quad h_{ i }\left( w \right) =0,\quad i=1,\cdots ,l$</span><!-- Has MathJax -->
 <p>目标函数是f(w)，下面是等式约束。通常解法是引入拉格朗日算子，这里使用$$\beta$$来表示算子，得到拉格朗日公式为</p>
-<p>&lt;!-- more --&gt;</p>
-<p><span>$L \left( w,\beta  \right) =f\left( w \right) +\sum _{ i=1 }^{ l }{ \beta _{ i }h_{ i } } \left( w \right)$</span><!-- Has MathJax --></p>
+<a id="more"></a>
+<span>$L \left( w,\beta  \right) =f\left( w \right) +\sum _{ i=1 }^{ l }{ \beta _{ i }h_{ i } } \left( w \right)$</span><!-- Has MathJax -->
 <p>L是等式约束的个数。</p>
 <p>然后分别对w和 $$\beta$$求偏导，使得偏导数等于0，然后解出w和 $\beta_i$。至于为什么引入拉格朗日算子可以求出极值，原因是f(w)
 的dw变化方向受其他不等式的约束，dw的变化方向与f(w)的梯度垂直时才能获得极值，而且在极值处，f(w)的梯度与其他等式梯度的线性组合平行，因此他们之间存在线性关系。（参考《最优化与KKT条件》）

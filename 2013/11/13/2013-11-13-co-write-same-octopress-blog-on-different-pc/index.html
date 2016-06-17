@@ -51,7 +51,7 @@ master存储的是博客网站本身，github基于此对页面渲染。该分�
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
 			
-			<img lazy-src="null" class="js-avatar">
+			<img lazy-src="/img/tusiki.jpg" class="js-avatar">
 			
 		</a>
 
@@ -91,7 +91,7 @@ master存储的是博客网站本身，github基于此对页面渲染。该分�
 						<li>Tags</li>
 						
 						
-						<li>Über</li>
+						<li>About</li>
 						
 					</ul>
 				</div>
@@ -132,7 +132,7 @@ master存储的是博客网站本身，github基于此对页面渲染。该分�
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/ThreadPool/" style="font-size: 10px;">ThreadPool</a> <a href="/tags/java线程池/" style="font-size: 10px;">java线程池</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a>
+						<a href="/tags/ThreadPool/" style="font-size: 10px;">ThreadPool</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/java内存模型/" style="font-size: 10px;">java内存模型</a> <a href="/tags/java线程池/" style="font-size: 10px;">java线程池</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/math-example/" style="font-size: 10px;">math example</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a>
 					</div>
 				</section>
 				
@@ -162,7 +162,7 @@ master存储的是博客网站本身，github基于此对页面渲染。该分�
 		<header id="header" class="inner">
 			<div class="profilepic">
 			
-				<img lazy-src="null" class="js-avatar">
+				<img lazy-src="/img/tusiki.jpg" class="js-avatar">
 			
 			</div>
 			<hgroup>
@@ -251,21 +251,21 @@ master存储的是博客网站本身，github基于此对页面渲染。该分�
 <p><code>source</code>存储的是生成博客的源文件（各种markdown文件）,写作博客是在这个分支。每次写完之后，记得推送到服务器。这样就不用担心我们的备份了。</p>
 </li>
 </ol>
-<p>&lt;!--more--&gt;</p>
+<a id="more"></a>
 <h2>克隆服务器上的git到新机器</h2>
 <p>将博客的源文件clone到本地的（假设就叫做）octopress文件夹内。</p>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git clone -b source git@github.com:username/username.github.com.git octopress</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git clone -b source git@github.com:username/username.github.com.git octopress</span><br></pre></td></tr></table></figure>
 <p>接下来这步骤是最重要的，当初栽在这儿了。(会出现<code>No such file or directory - _deploy</code>)</p>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cd octopress</span><br><span class="line">$ git clone -b master git@github.com:username/username.github.com.git _deploy</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cd octopress</span><br><span class="line">$ git clone -b master git@github.com:username/username.github.com.git _deploy</span><br></pre></td></tr></table></figure>
 <p>还是要安装博客的。</p>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ gem install bundler</span><br><span class="line">$ rbenv rehash    		# If you use rbenv, rehash to be able to run the bundle command</span><br><span class="line">$ bundle install</span><br><span class="line">$ rake setup_github_pages	#执行初始化</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ gem install bundler</span><br><span class="line">$ rbenv rehash    		# If you use rbenv, rehash to be able to run the bundle command</span><br><span class="line">$ bundle install</span><br><span class="line">$ rake setup_github_pages	#执行初始化</span><br></pre></td></tr></table></figure>
 <p>然后会提示输入仓库的ssh url。</p>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Enter the read/write url for your repository</span><br><span class="line">(For example, &apos;git@github.com:your_username/your_username.github.com)</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Enter the read/write url for your repository</span><br><span class="line">(For example, &apos;git@github.com:your_username/your_username.github.com)</span><br></pre></td></tr></table></figure>
 <h2>Co-write 协同写作博客</h2>
 <p>如果你是和别人合作博客，或者自己同时在好几个电脑上写博客，每次开始之前，git pull origin source获得最新的文件,rake generate生成新的页面.更新master并不是必须的，因为你更改源文件之后还是需要rake generate的.</p>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ cd octopress</span><br><span class="line">$ git pull origin source  	# update the local source branch</span><br><span class="line">$ cd ./_deploy</span><br><span class="line">$ git pull origin master  	# update the local master branch</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ cd octopress</span><br><span class="line">$ git pull origin source  	# update the local source branch</span><br><span class="line">$ cd ./_deploy</span><br><span class="line">$ git pull origin master  	# update the local master branch</span><br></pre></td></tr></table></figure>
 <p>在source分支做了博客的发布，或者改变了博客的设置之后</p>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ rake generate		 	#生成新的页面</span><br><span class="line"></span><br><span class="line">$ git add .</span><br><span class="line">$ git commit -am &quot;Some comment here.&quot; </span><br><span class="line">$ git push origin source  	# 上面三行是更新远端source分支</span><br><span class="line"></span><br><span class="line">$ rake deploy             	# 更新远端master分支，文章就发布到了博客中</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ rake generate		 	#生成新的页面</span><br><span class="line"></span><br><span class="line">$ git add .</span><br><span class="line">$ git commit -am &quot;Some comment here.&quot; </span><br><span class="line">$ git push origin source  	# 上面三行是更新远端source分支</span><br><span class="line"></span><br><span class="line">$ rake deploy             	# 更新远端master分支，文章就发布到了博客中</span><br></pre></td></tr></table></figure>
 <h2>Reference</h2>
 <ol>
 <li>
