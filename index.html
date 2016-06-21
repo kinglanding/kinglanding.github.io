@@ -85,7 +85,7 @@
 						<li>Tags</li>
 						
 						
-						<li>About</li>
+						<li>A propos</li>
 						
 					</ul>
 				</div>
@@ -270,67 +270,6 @@
 
 
   
-    <article id="post-2016-04-27-think-about-difference-of-exception-between-thread-and-pool" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/04/27/2016-04-27-think-about-difference-of-exception-between-thread-and-pool/" class="article-date">
-  	<time datetime="2016-04-27T05:09:21.000Z" itemprop="datePublished">2016-04-27</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/27/2016-04-27-think-about-difference-of-exception-between-thread-and-pool/">关于异常在线程与线程池不同表现的一个思考</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>如果一个线程在执行的过程中，遇到了某种异常，中断异常啊、空指针异常啊、算数异常，并且程序本身没有捕获异常，会发送什么？你可能会说，程序直接挂掉呗~然后日志里有异常日志。</p>
-<p>但实际上，要看这个线程是在什么地方。如果是在线程池外面，这个程序确实就直接挂掉了；</p>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ThreadPool/">ThreadPool</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java线程池/">java线程池</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/线程/">线程</a></li></ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a  href="/2016/04/27/2016-04-27-think-about-difference-of-exception-between-thread-and-pool/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
     <article id="post-testlatex" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -405,6 +344,67 @@
 
       
 
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-2016-04-27-think-about-difference-of-exception-between-thread-and-pool" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/04/27/2016-04-27-think-about-difference-of-exception-between-thread-and-pool/" class="article-date">
+  	<time datetime="2016-04-27T05:09:21.000Z" itemprop="datePublished">2016-04-27</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/27/2016-04-27-think-about-difference-of-exception-between-thread-and-pool/">关于异常在线程与线程池不同表现的一个思考</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>如果一个线程在执行的过程中，遇到了某种异常，中断异常啊、空指针异常啊、算数异常，并且程序本身没有捕获异常，会发送什么？你可能会说，程序直接挂掉呗~然后日志里有异常日志。</p>
+<p>但实际上，要看这个线程是在什么地方。如果是在线程池外面，这个程序确实就直接挂掉了；</p>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ThreadPool/">ThreadPool</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java线程池/">java线程池</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/线程/">线程</a></li></ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/04/27/2016-04-27-think-about-difference-of-exception-between-thread-and-pool/#more">more >></a>
+        </p>
       
       <div class="clearfix"></div>
     </div>

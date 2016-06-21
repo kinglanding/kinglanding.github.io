@@ -53,7 +53,8 @@ var searchFunc = function (path, search_id, content_id) {
                     // show search results
                     if (isMatch) {
                         numOfPostFound += 1; // keeping track of # of results
-                        str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                        str += "<div class=\"panel panel-default\">" +
+                            "<div class=\'panel-heading\'><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a></div>";
                         var content = data.content.trim().replace(/<[^>]+>/g, "");
                         if (first_occur >= 0) {
                             // cut out 100 characters
@@ -75,11 +76,12 @@ var searchFunc = function (path, search_id, content_id) {
                                 match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
                             });
 
-                            str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            str += "<div class=\"search-result-body panel-body\">" + match_content + "...</div>"
                         }
-                        str += "</li>";
+                        str += "</div>";
                     }
                 });
+
                 str += "</ul>";
                 // attaching a summary of searching result
                 if (numOfPostFound > 0) {
@@ -91,7 +93,8 @@ var searchFunc = function (path, search_id, content_id) {
                 } else {
                     summary = "Nothing found";
                 }
-                var summary = "<p class=\"text-xlarge text-color-base archieve-result search-result-summary\">" + summary + "</ul>";
+                var summary = "<div class=\"page-header search-result-number\"><h3>" + summary + "</h3></div></ul>";
+
                 $resultContent.innerHTML = summary + str;
             });
         }

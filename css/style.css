@@ -2219,15 +2219,24 @@ pre .css ~ * .id {
 ::-webkit-scrollbar-button:end:active {
   background: url("../img/scrollbar_arrow.png") no-repeat -30px -18px;
 }
-ul.search-result-list {
-  padding-left: 10px;
+.search-result-list {
+  padding-left: 15px;
+  padding-right: 15px;
 }
 a.search-result-title {
   font-weight: bold;
 }
+.search-result-body {
+  word-wrap: break-word;
+}
 em.search-keyword {
   border-bottom: 1px dashed #4088b8;
   font-weight: bold;
+  color: #f00;
+  font-style: normal;
+}
+.search-result-number {
+  padding-left: 15px;
 }
 #viewer {
   position: fixed;
