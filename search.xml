@@ -4,6 +4,177 @@
   
     
     <entry>
+      <title><![CDATA[dive into annotation]]></title>
+      <url>http://kinglanding.github.io/2016/06/22/dive-into-annotation/</url>
+      <content type="html"><![CDATA[<p>初识注解，还是源自懵懂年代查看开源代码中的<code>@Override</code>,<code>@Deprecated</code>,<code>@SuppressWarnings</code>,这种新特性引进与jdk5.0, 借助于编辑器的功劳，
+能为平常的代码编写提供很多的帮助。</p>
+<table>
+<thead>
+<tr>
+<th>注解</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Override</td>
+<td>表明当前方法是覆盖了父类方法，好的编程习惯，编译器会检查代码的某些错误</td>
+</tr>
+<tr>
+<td>Deprecated</td>
+<td>表明当前的元素已经不推荐使用</td>
+</tr>
+<tr>
+<td>SuppressWarnings</td>
+<td>关闭不当的编译器警告信息</td>
+</tr>
+</tbody>
+</table>
+<h1>自定义注解</h1>
+<p>在编写自定义注解之前，有必要了解下<code>java.lang.annotation</code>这个包</p>
+<a id="more"></a>
+<h2>元注解(meta-annotation)</h2>
+<p>元注解的作用就是负责注解其他注解。Java5.0定义了4个标准的meta-annotation类型，它们被用来提供对其它 annotation类型作说明。Java5.0定义的元注解,
+UML图如下所示:</p>
+<p><img src="/img/post/dive-into-annotation.png" alt="java.lang.annotation UML图"></p>
+<p>其中最为重要的就是红色框内的类。包含4个元注解，2个枚举类。</p>
+<ul>
+<li>Retention</li>
+<li>Documented</li>
+<li>Target</li>
+<li>Inherited</li>
+</ul>
+<p>以上4个注解即为jdk提供的元注解，因为他们的Target的适应类型都是<code>ElementType.ANNOTATION_TYPE</code>,只能用于修饰其他注解。</p>
+<table>
+<thead>
+<tr>
+<th>元注解</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Retention</td>
+<td>描述注解的生命周期，详见RetentionPoicy解释</td>
+</tr>
+<tr>
+<td>Documented</td>
+<td>若一个注解A使用@Document修饰，那么被A修饰的类Class，可以使用javadoc编译Class，A将会显示</td>
+</tr>
+<tr>
+<td>Target</td>
+<td>用于描述注解的使用范围</td>
+</tr>
+<tr>
+<td>Inherited</td>
+<td>若一个注解A使用@Inherited修饰，那么被A修饰的类Parent的子类Child会继承注解A的修饰</td>
+</tr>
+</tbody>
+</table>
+<p>另外两个枚举类是<code>ElementType</code>和<code>RetentionPolicy</code>,见如下表格:</p>
+<table>
+<thead>
+<tr>
+<th>ElementType</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TYPE</td>
+<td>描述类、接口(包括注解类型)或enum声明</td>
+</tr>
+<tr>
+<td>FIELD</td>
+<td>域声明（包含枚举常量）</td>
+</tr>
+<tr>
+<td>METHOD</td>
+<td>方法声明</td>
+</tr>
+<tr>
+<td>PARAMETER</td>
+<td>参数声明</td>
+</tr>
+<tr>
+<td>CONSTRUCTOR</td>
+<td>构造函数声明</td>
+</tr>
+<tr>
+<td>LOCAL_VARIABLE</td>
+<td>局部变量声明</td>
+</tr>
+<tr>
+<td>ANNOTATION_TYPE</td>
+<td>注解类型声明，和TYPE相比，这个类型只能用于注解！（元注解的Target都是这个声明）</td>
+</tr>
+<tr>
+<td>PACKAGE</td>
+<td>包声明</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>ElementType</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SOURCE</td>
+<td>被该字段修饰的注解，会被编译器丢弃</td>
+</tr>
+<tr>
+<td>CLASS</td>
+<td>编译器会将该注解记录到class文件中，不会被加载到虚拟机中，这是Target的默认值</td>
+</tr>
+<tr>
+<td>RUNTIME</td>
+<td>编译器会将该注解记录到class文件中，也会被加载到虚拟机中。所以有可能会通过反射读取。</td>
+</tr>
+</tbody>
+</table>
+<h2>如何编写自定义的注解</h2>
+<p>定义注解，格式如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@meta</span>-annotation A</span><br><span class="line"><span class="meta">@meta</span>-annotation B</span><br><span class="line"><span class="meta">@meta</span>-annotation ...</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> AnnotationName &#123;</span><br><span class="line">    <span class="comment">// 方法实际上是声明了一个配置参数, 方法的名称就是参数的名称</span></span><br><span class="line">    <span class="comment">// 可以通过default来声明参数的默认值。(option)</span></span><br><span class="line">    <span class="keyword">public</span> TYPE function-name() [ <span class="keyword">default</span> &#123;vlaue&#125; ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>@meta-annotation A</code>是一些元注解；
+@interface自定义注解，自动继承了java.lang.annotation.Annotation接口，由编译器完成内部细节。
+<code>TYPE</code>是返回值类型，只能是基本类型，Class，String，enum和Annotation以及他们的数据类型。
+方法名即参数名，使用时类型这样 <code>@AnnotationName(function-name = {value})</code></p>
+<h2>例子</h2>
+<p>Doc注解</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> jls.basic.annotation;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.*;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * 使用Documented （meta-annotation 元注释），用来</span><br><span class="line"> * 生成javadoc</span><br><span class="line"> */</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.SOURCE)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.TYPE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Doc &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Document注解</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> jls.basic.annotation;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.*;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * 使用Documented （meta-annotation 元注释），用来</span><br><span class="line"> * 生成javadoc,这个保留到运行期</span><br><span class="line"> */</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.TYPE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Document &#123;</span><br><span class="line">    <span class="function">String <span class="title">value</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Color注解</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> jls.basic.annotation.use;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.FIELD)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Color &#123;</span><br><span class="line">    <span class="function">ColorPolicy <span class="title">value</span><span class="params">()</span> <span class="keyword">default</span> ColorPolicy.RED</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Name注解</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> jls.basic.annotation.use;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.FIELD)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Name &#123;</span><br><span class="line">    <span class="function">String <span class="title">value</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>ColorPolicy 枚举</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> jls.basic.annotation.use;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> ColorPolicy &#123;</span><br><span class="line">    RED,</span><br><span class="line">    GREEN,</span><br><span class="line">    BLACK,</span><br><span class="line">    PUPLE,</span><br><span class="line">    YELLOW</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>测试用例，用来说明如何使用注解。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> jls.basic.annotation.use;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> jls.basic.annotation.Doc;</span><br><span class="line"><span class="keyword">import</span> jls.basic.annotation.Document;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.annotation.PostConstruct;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Annotation;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Field;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Doc</span><span class="comment">// 这是一个SOURCE级别的注解</span></span><br><span class="line"><span class="meta">@Document</span>(<span class="string">"Document是RUNTIME级的"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Banana</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Name</span>(value = <span class="string">"banana"</span>)</span><br><span class="line">    <span class="keyword">protected</span> String name;</span><br><span class="line">    <span class="meta">@Color</span>(value = ColorPolicy.BLACK)</span><br><span class="line">    <span class="keyword">protected</span> ColorPolicy color;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Banana</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ColorPolicy <span class="title">getColor</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> color;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setColor</span><span class="params">(ColorPolicy color)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.color = color;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@PostConstruct</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">display</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(toString());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Banana&#123;"</span> +</span><br><span class="line">                <span class="string">"name='"</span> + name + <span class="string">'\''</span> +</span><br><span class="line">                <span class="string">", color="</span> + color +</span><br><span class="line">                <span class="string">'&#125;'</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Banana banana = <span class="keyword">new</span> Banana();</span><br><span class="line">        System.out.println(banana);</span><br><span class="line">     </span><br><span class="line">        <span class="comment">// 要想使用注解，还是得自己动手丰衣足食啊~</span></span><br><span class="line">        </span><br><span class="line">        Class clz = Banana.class;</span><br><span class="line">        <span class="comment">// 看是否有Doc类型的注解。无，因为Doc注解的Retention是SOURCE</span></span><br><span class="line">        System.out.println(clz.getAnnotation(Doc.class));</span><br><span class="line">        <span class="comment">// 看是否有 Document 类型的注解。有，因为Document注解的Retention是 RUNTIME</span></span><br><span class="line">        System.out.println(clz.getAnnotation(Document.class));</span><br><span class="line">        <span class="comment">// 获取class level的注解值</span></span><br><span class="line">        Document document = (Document) clz.getAnnotation(Document.class);</span><br><span class="line">        System.out.println(document.value());</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 获取 类 这一level上的所有注解</span></span><br><span class="line">        Annotation[] annotations = clz.getDeclaredAnnotations();</span><br><span class="line">        <span class="keyword">for</span> (Annotation annotation : annotations) &#123;</span><br><span class="line">            System.out.println(annotation);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 分析字段，像Spring初始化bean的方式那样设置字段的值</span></span><br><span class="line">        Field[] fields = clz.getDeclaredFields();</span><br><span class="line">        <span class="keyword">for</span> (Field field : fields) &#123;</span><br><span class="line">            <span class="keyword">if</span> (field.isAnnotationPresent(Color.class)) &#123;</span><br><span class="line">                banana.setColor(field.getAnnotation(Color.class).value());</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (field.isAnnotationPresent(Name.class)) &#123;</span><br><span class="line">                banana.setName(field.getAnnotation(Name.class).value());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(banana);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>Banana</code>使用注解修饰了name和color，是不是给人一种感觉:&quot;只要我初始化一个对象，它就应该有默认值啦~&quot;，上述例子main函数的前两行说明这个现象，new了一个对象，
+打印下，诶？ 怎么没有值？注解并不像在无参构造函数中给某些字段赋初值。注解如果没有额外的操作，是不起作用的。</p>
+<p>所以有了下面的那些操作，通过反射获取注解，拿到他们的值，在给对象设置值，ok，其实这就是Spring底层初始化bean的逻辑，通过bean工厂类，拿到bean中的注解值，
+返回一个有值的对象，托管到Spring容器中.</p>
+<p>所以呢，注解要和反射结合起来，才能起作用。后面再总结啦。</p>
+<h2>总结</h2>
+<p>有个思维导图不错，侵权立删
+<img src="http://images.cnitblog.com/blog/34483/201304/25200814-475cf2f3a8d24e0bb3b4c442a4b44734.jpg" alt="注解思维导图"></p>
+<blockquote>
+<p>Reference</p>
+</blockquote>
+<ol>
+<li><a href="http://www.cnblogs.com/peida/archive/2013/04/26/3038503.html" target="_blank" rel="external">图片来源</a></li>
+<li><a href="http://blog.csdn.net/duo2005duo/article/details/50505884" target="_blank" rel="external">Java注解（1）-基础</a></li>
+</ol>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[JSR-133 FAQ]]></title>
       <url>http://kinglanding.github.io/2016/05/16/2016-05-16-JSR-133-FAQ/</url>
       <content type="html"><![CDATA[<h1>内存模型究竟是个啥玩意儿？</h1>
@@ -61,47 +232,6 @@
     </entry>
     
     <entry>
-      <title><![CDATA[Latex on hexo]]></title>
-      <url>http://kinglanding.github.io/2016/04/27/testlatex/</url>
-      <content type="html"><![CDATA[<p>\begin{aligned}
-\phi(x,y) = \phi \left(\sum_{i=1}^n x_ie_i, \sum_{j=1}^n y_je_j \right)
-= \sum_{i=1}^n \sum_{j=1}^n x_i y_j \phi(e_i, e_j)
-\end{aligned}</p>
-<p>$$\frac{\partial u}{\partial t}
-= h^2 \left( \frac{\partial^2 u}{\partial x^2} +
-\frac{\partial^2 u}{\partial y^2} +
-\frac{\partial^2 u}{\partial z^2}\right)$$</p>
-<span>$$\begin{aligned}
-\dot{x} &amp; = \sigma(y-x) \\
-\dot{y} &amp; = \rho x - y - xz \\
-\dot{z} &amp; = -\beta z + xy
-\end{aligned}$$</span><!-- Has MathJax -->
-<p>\begin{aligned}
-\dot{x} &amp; = \sigma(y-x) \
-\dot{y} &amp; = \rho x - y - xz \
-\dot{z} &amp; = -\beta z + xy
-\end{aligned}</p>
-<p>Simple inline $a = b + c$.</p>
-<span>$$f(x1, x2) = \frac{ 1 }{2\pi \sigma1\sigma2\sqrt{1-r^2}}e^{-\frac{1}{2(1-r^2)} 
-[\frac{(x1-\mu\_{x1})^2}{\sigma\_{x1}^2} - \frac{2r(x1-\mu\_{x1})(x2-\mu\_{x2})}{\sigma\_{x1} \sigma\_{x2}} + \frac{(x2-\mu\_{x2})^2}{\sigma\_{x2}^2}]}$$</span><!-- Has MathJax -->
-<span>$$\begin{aligned}
-  &amp; \phi(x,y) = \phi \left(\sum_{i=1}^n x_ie_i, \sum_{j=1}^n y_je_j \right)
-  = \sum_{i=1}^n \sum_{j=1}^n x_i y_j \phi(e_i, e_j) = \\
-  &amp; (x_1, \ldots, x_n) \left( \begin{array}{ccc}
-      \phi(e_1, e_1) &amp; \cdots &amp; \phi(e_1, e_n) \\
-      \vdots &amp; \ddots &amp; \vdots \\
-      \phi(e_n, e_1) &amp; \cdots &amp; \phi(e_n, e_n)
-    \end{array} \right)
-  \left( \begin{array}{c}
-      y_1 \\
-      \vdots \\
-      y_n
-    \end{array} \right)
-\end{aligned}$$</span><!-- Has MathJax -->
-<span>$$\min { \quad \frac { 1 }{ 2 } \left\| w \right\| ^{ 2 }+c\sum _{ i=1 }^{ l }{ { \xi }_{ i } } } \\ st.\quad y_{ i }(\omega ^{ T }\phi (x_i)-b)\ge 1-\xi _{ i },\left( \xi _{ i }&gt;0 \right)$$</span><!-- Has MathJax -->  ]]></content>
-    </entry>
-    
-    <entry>
       <title><![CDATA[关于异常在线程与线程池不同表现的一个思考]]></title>
       <url>http://kinglanding.github.io/2016/04/27/2016-04-27-think-about-difference-of-exception-between-thread-and-pool/</url>
       <content type="html"><![CDATA[<p>如果一个线程在执行的过程中，遇到了某种异常，中断异常啊、空指针异常啊、算数异常，并且程序本身没有捕获异常，会发送什么？你可能会说，程序直接挂掉呗~然后日志里有异常日志。</p>
@@ -154,6 +284,47 @@
 <li>http://stackoverflow.com/questions/1838923/why-is-uncaughtexceptionhandler-not-called-by-executorservice</li>
 </ol>
 ]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Latex on hexo]]></title>
+      <url>http://kinglanding.github.io/2016/04/27/testlatex/</url>
+      <content type="html"><![CDATA[<p>\begin{aligned}
+\phi(x,y) = \phi \left(\sum_{i=1}^n x_ie_i, \sum_{j=1}^n y_je_j \right)
+= \sum_{i=1}^n \sum_{j=1}^n x_i y_j \phi(e_i, e_j)
+\end{aligned}</p>
+<p>$$\frac{\partial u}{\partial t}
+= h^2 \left( \frac{\partial^2 u}{\partial x^2} +
+\frac{\partial^2 u}{\partial y^2} +
+\frac{\partial^2 u}{\partial z^2}\right)$$</p>
+<span>$$\begin{aligned}
+\dot{x} &amp; = \sigma(y-x) \\
+\dot{y} &amp; = \rho x - y - xz \\
+\dot{z} &amp; = -\beta z + xy
+\end{aligned}$$</span><!-- Has MathJax -->
+<p>\begin{aligned}
+\dot{x} &amp; = \sigma(y-x) \
+\dot{y} &amp; = \rho x - y - xz \
+\dot{z} &amp; = -\beta z + xy
+\end{aligned}</p>
+<p>Simple inline $a = b + c$.</p>
+<span>$$f(x1, x2) = \frac{ 1 }{2\pi \sigma1\sigma2\sqrt{1-r^2}}e^{-\frac{1}{2(1-r^2)} 
+[\frac{(x1-\mu\_{x1})^2}{\sigma\_{x1}^2} - \frac{2r(x1-\mu\_{x1})(x2-\mu\_{x2})}{\sigma\_{x1} \sigma\_{x2}} + \frac{(x2-\mu\_{x2})^2}{\sigma\_{x2}^2}]}$$</span><!-- Has MathJax -->
+<span>$$\begin{aligned}
+  &amp; \phi(x,y) = \phi \left(\sum_{i=1}^n x_ie_i, \sum_{j=1}^n y_je_j \right)
+  = \sum_{i=1}^n \sum_{j=1}^n x_i y_j \phi(e_i, e_j) = \\
+  &amp; (x_1, \ldots, x_n) \left( \begin{array}{ccc}
+      \phi(e_1, e_1) &amp; \cdots &amp; \phi(e_1, e_n) \\
+      \vdots &amp; \ddots &amp; \vdots \\
+      \phi(e_n, e_1) &amp; \cdots &amp; \phi(e_n, e_n)
+    \end{array} \right)
+  \left( \begin{array}{c}
+      y_1 \\
+      \vdots \\
+      y_n
+    \end{array} \right)
+\end{aligned}$$</span><!-- Has MathJax -->
+<span>$$\min { \quad \frac { 1 }{ 2 } \left\| w \right\| ^{ 2 }+c\sum _{ i=1 }^{ l }{ { \xi }_{ i } } } \\ st.\quad y_{ i }(\omega ^{ T }\phi (x_i)-b)\ge 1-\xi _{ i },\left( \xi _{ i }&gt;0 \right)$$</span><!-- Has MathJax -->  ]]></content>
     </entry>
     
     <entry>

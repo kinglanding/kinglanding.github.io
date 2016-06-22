@@ -85,7 +85,7 @@
 						<li>Tags</li>
 						
 						
-						<li>A propos</li>
+						<li>Über</li>
 						
 					</ul>
 				</div>
@@ -128,7 +128,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/ThreadPool/" style="font-size: 10px;">ThreadPool</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/java内存模型/" style="font-size: 10px;">java内存模型</a> <a href="/tags/java线程池/" style="font-size: 10px;">java线程池</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/math-example/" style="font-size: 10px;">math example</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a>
+						<a href="/tags/Annotation/" style="font-size: 10px;">Annotation</a> <a href="/tags/ThreadPool/" style="font-size: 10px;">ThreadPool</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/java内存模型/" style="font-size: 10px;">java内存模型</a> <a href="/tags/java线程池/" style="font-size: 10px;">java线程池</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/math-example/" style="font-size: 10px;">math example</a> <a href="/tags/来自陈年佳酿的笔记/" style="font-size: 10px;">来自陈年佳酿的笔记</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a>
 					</div>
 				</section>
 				
@@ -199,6 +199,80 @@
 </nav>
 
         <div class="body-wrap">
+  
+    <article id="post-2014-09-02-qian-tan-wei-bo-biao-qian-ju-he" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2014/09/02/2014-09-02-qian-tan-wei-bo-biao-qian-ju-he/" class="article-date">
+  	<time datetime="2014-09-01T15:47:00.000Z" itemprop="datePublished">2014-09-02</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/09/02/2014-09-02-qian-tan-wei-bo-biao-qian-ju-he/">浅谈微博标签聚合</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>标注问题在机器学习中是一个监督学习的问题，当然在这里我们所要面对是微博中用户给自己添加标签的
+问题，并不是研究如何给用户添加标签。
+浏览微博中用户的个人资料时，你会发现大部分用户都给自己添加了自认为所属类别的标签，这个很正确，
+属于人工标注的典例。但是，细细浏览下每个人的标签我们会发现，其实好多标签的意思是一样的，比如
+<code>苹果</code>，<code>iphone</code>，<code>iphone5</code>，的意思是类似的，还有<code>安卓</code>,<code>Android</code>,<code>智能手机</code>，<code>安卓手机</code>,
+很明显，他们又是类，有没有办法把类似的标签聚集在一起呢？</p>
+<p>直到现在，从我们的需求出发可以看到这是一个聚类问题，将相似的标签聚集到一起，并找出可以代表这
+类相似标签的标签。</p>
+<p>整体思路是根据用户的标签数据集得到“标签-用户”矩阵，考录到这个矩阵大部分为0值，所以使用稀疏矩阵
+来降低内存无用消耗。然后使用一个相似度来代表距离，可以使用cosine相似度，pearson相似度，等等，
+在这里使用的是余弦相似度，使用这里的算法进行聚类之后，得到聚类模型，如图所示。</p>
+<p>接下来就是找到相似的标签，这个我们可以想象，从根节点开始，离根节点越远的拥有共同祖先的叶节点相似
+越大，每个内节点都有一个代表它孩子的相似度，我们需要做的是，找到一个cutoff，然后，只要某个节点
+小于该cutoff，那么认为他们之前没有相似关系，若大于改值，则意味这以改节点为祖先的叶节点是一个
+簇，简单实用，而且效果不错。</p>
+<p>到现在为止，我们找到了相似的标签集合，那么如何从集合中找到代表性的标签呢？一个显而易见的就是，计算
+该标签被用户引用的次数，简单的总是最好的！</p>
+<p>如图所示，这是按照上述思路完成的结果的一部分显示结果，数据太多，不方便显示。</p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/机器学习-微博标签-层次聚类/">机器学习 微博标签 层次聚类</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-2014-07-12-use-svm-to-classify-whether-a-person-is-good-or-bad-on-credit-using-sns-data" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -437,72 +511,6 @@
       
         <p class="article-more-link">
           <a  href="/2014/06/03/2014-06-03-lagrange-duality/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-2014-06-03-my-understanding-about-svm" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2014/06/03/2014-06-03-my-understanding-about-svm/" class="article-date">
-  	<time datetime="2014-06-03T11:53:00.000Z" itemprop="datePublished">2014-06-03</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/06/03/2014-06-03-my-understanding-about-svm/">从逻辑回归分类到SVM分类</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>上一章讲到了线性回归的一个典型算法，核心思想就是利用最小二乘法最为损失函数，不断使用梯度下降法（或者使用随机梯度下降法（stochastic gradient descent））来更新theta值。</p>
-<p>后来降到了分类，逻辑回归只不过有个很好的性质就是值分布在0到1之间，正好可以利用到分类上。logistic回归就是要学习得到θ，使得正例的特征远大于 0，负例的特征远
-小于 0，强调在全部训练实例上达到这个目标。为什么说逻辑回归是个线性模型？这是因为该模型是将特性的线性组合作为自变量，然后使用logistic函数（或者说是sigmoid函数）将自变量映射到（0-1）上，将值和概率结合之后从而应用到分类上。
-函数表示形式：</p>
-<p>$$
-h_{ \theta  }\left( x \right) =g\left( \theta ^{ T }x \right) =\frac { 1 }{ 1+{e  }^{ -\theta^{T}x } }
-$$</p>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/机器学习-SVM/">机器学习 SVM</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2014/06/03/2014-06-03-my-understanding-about-svm/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
