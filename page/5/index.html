@@ -128,7 +128,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Annotation/" style="font-size: 10px;">Annotation</a> <a href="/tags/ThreadPool/" style="font-size: 10px;">ThreadPool</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/java内存模型/" style="font-size: 10px;">java内存模型</a> <a href="/tags/java线程池/" style="font-size: 10px;">java线程池</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/math-example/" style="font-size: 10px;">math example</a> <a href="/tags/来自陈年佳酿的笔记/" style="font-size: 10px;">来自陈年佳酿的笔记</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a>
+						<a href="/tags/Annotation/" style="font-size: 10px;">Annotation</a> <a href="/tags/ThreadPool/" style="font-size: 10px;">ThreadPool</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/java内存模型/" style="font-size: 10px;">java内存模型</a> <a href="/tags/java线程池/" style="font-size: 10px;">java线程池</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/math-example/" style="font-size: 10px;">math example</a> <a href="/tags/reflect/" style="font-size: 10px;">reflect</a> <a href="/tags/反射/" style="font-size: 10px;">反射</a> <a href="/tags/来自陈年佳酿的笔记/" style="font-size: 10px;">来自陈年佳酿的笔记</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a>
 					</div>
 				</section>
 				
@@ -199,6 +199,67 @@
 </nav>
 
         <div class="body-wrap">
+  
+    <article id="post-2014-04-21-feature-selection--infomation-gain" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2014/04/21/2014-04-21-feature-selection--infomation-gain/" class="article-date">
+  	<time datetime="2014-04-21T06:41:00.000Z" itemprop="datePublished">2014-04-21</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/04/21/2014-04-21-feature-selection--infomation-gain/">特征选择-信息增益算法</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>信息增益</strong>：特征 $A$ 对于训练数据集$D$的信息增益 $g\left( D,A \right)$,定义为集合 $D$ 的经验熵 $H\left( D \right)$ 与特征 $A$ 在给定条件下 $D$
+的经验条件熵c之差。</p>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/特征选择-信息增益算法/">特征选择 信息增益算法</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a  href="/2014/04/21/2014-04-21-feature-selection--infomation-gain/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-2014-04-20-a-scratch-of-feature-selection-in-traffic-classification" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -425,74 +486,6 @@
       
         <p class="article-more-link">
           <a  href="/2014/02/24/2014-02-24-c-plus-plus-de-hashtablena-xie-shi/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-2014-01-05-machine-learning-linear-regression" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2014/01/05/2014-01-05-machine-learning-linear-regression/" class="article-date">
-  	<time datetime="2014-01-05T03:00:00.000Z" itemprop="datePublished">2014-01-05</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/01/05/2014-01-05-machine-learning-linear-regression/">Machine Learning :linear regression</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>机器学习中，总体来说是分为两类问题：</p>
-<p>1.有监督的学习方法
-2.无监督的学习方法</p>
-<p>其他是这两者的综合，比如说半监督学习方法，强化学习（这个还未接触过）。</p>
-<p>本文呢，先从有监督的学习方法开始讲起，主要是记载学习过程中个人认为最重要的地方。</p>
-<p>对于监督学习中的两类问题，或者说三类吧，分别是：回归问题，分类问题和标注问题（tagging）。后面这个很有意思，不过在这里现说一下回归和分类的区别，假如我们要
-做一个连续变量的预测，比如说房价的预测，或者明日气温的预测，都是属于回归问题；而对于离散变量的预测，比如判断一个病人是否得了癌症，良性还是恶心，则是一个明显的分
-类问题。</p>
-<p>接下来的文章，大概是对Andrew Ng视频的一个简单的总结，会结合变成实例（octave和C++）来插叙。</p>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/C-Armadillo-Machine-Learning-octave-linear-regression/">C++ Armadillo Machine-Learning octave linear-regression</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2014/01/05/2014-01-05-machine-learning-linear-regression/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>

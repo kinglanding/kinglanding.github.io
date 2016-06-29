@@ -128,7 +128,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Annotation/" style="font-size: 10px;">Annotation</a> <a href="/tags/ThreadPool/" style="font-size: 10px;">ThreadPool</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/java内存模型/" style="font-size: 10px;">java内存模型</a> <a href="/tags/java线程池/" style="font-size: 10px;">java线程池</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/math-example/" style="font-size: 10px;">math example</a> <a href="/tags/来自陈年佳酿的笔记/" style="font-size: 10px;">来自陈年佳酿的笔记</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a>
+						<a href="/tags/Annotation/" style="font-size: 10px;">Annotation</a> <a href="/tags/ThreadPool/" style="font-size: 10px;">ThreadPool</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/java内存模型/" style="font-size: 10px;">java内存模型</a> <a href="/tags/java线程池/" style="font-size: 10px;">java线程池</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/math-example/" style="font-size: 10px;">math example</a> <a href="/tags/reflect/" style="font-size: 10px;">reflect</a> <a href="/tags/反射/" style="font-size: 10px;">反射</a> <a href="/tags/来自陈年佳酿的笔记/" style="font-size: 10px;">来自陈年佳酿的笔记</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a>
 					</div>
 				</section>
 				
@@ -199,6 +199,73 @@
 </nav>
 
         <div class="body-wrap">
+  
+    <article id="post-2015-01-15-use-mongo-map-reduce-statistic-word-occurrence" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/01/14/2015-01-15-use-mongo-map-reduce-statistic-word-occurrence/" class="article-date">
+  	<time datetime="2015-01-14T04:51:00.000Z" itemprop="datePublished">2015-01-14</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/01/14/2015-01-15-use-mongo-map-reduce-statistic-word-occurrence/">使用mongodb内置的mapreduce聚合函数统计词频</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>有个需求需要对数据库中的某个字段进行频率统计，数据量较大，大概在2亿左右。</p>
+<p>在之前先用一个简单的例子描述下问题。</p>
+<p>比如我有一个mongo中的文档集合，比如说</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">    &#123; summary:&quot;This is good&quot; &#125;,</span><br><span class="line">    &#123; summary:&quot;This is bad&quot; &#125;,</span><br><span class="line">    &#123; summary:&quot;Something that is neither good nor bad&quot; &#125;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">&gt;db.test.insert(&#123; summary:&quot;This is good&quot; &#125;);</span><br><span class="line">&gt;db.test.insert(&#123; summary:&quot;This is bad&quot; &#125;;</span><br><span class="line">&gt;db.test.insert(&#123; summary:&quot;Something that is neither good nor bad&quot; &#125;);</span><br></pre></td></tr></table></figure>
+<p>现在要统计每个单词的出现次数，忽略大小写，最后按照升序排序，就像这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">    &quot;is&quot;: 3,</span><br><span class="line">    &quot;bad&quot;: 2,</span><br><span class="line">    &quot;good&quot;: 2,</span><br><span class="line">    &quot;this&quot;: 2,</span><br><span class="line">    &quot;neither&quot;: 1,</span><br><span class="line">    &quot;nor&quot;: 1,</span><br><span class="line">    &quot;something&quot;: 1,</span><br><span class="line">    &quot;that&quot;: 1</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>所以我们可以使用mongo中自带的聚合函数框架——mapreduce，然后我们自己根据需求
+写个map函数和reduce函数就可以了。</p>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/mongodb-map-reduce/">mongodb map-reduce</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a  href="/2015/01/14/2015-01-15-use-mongo-map-reduce-statistic-word-occurrence/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-2014-09-02-qian-tan-wei-bo-biao-qian-ju-he" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -448,69 +515,6 @@
       
         <p class="article-more-link">
           <a  href="/2014/06/27/2014-07-12-po-su-bei-xie-si-wen-ben-fen-lei/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-2014-06-03-lagrange-duality" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2014/06/03/2014-06-03-lagrange-duality/" class="article-date">
-  	<time datetime="2014-06-03T12:41:00.000Z" itemprop="datePublished">2014-06-03</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/06/03/2014-06-03-lagrange-duality/">拉格朗日对偶</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在解决约束最优化的额问题中，常常利用拉格朗日对偶性将原始问题转化为对偶问题，通过解对偶问题得到原始问题的解。该方法主要应用的SVM和最大熵模型中。</p>
-<p>先抛开上面的二次规划问题，先来看看存在等式约束的极值问题求法，比如下面的最优化问题：</p>
-<span>$\min _{ w }{ f\left( w \right)  } \\ s.t\quad h_{ i }\left( w \right) =0,\quad i=1,\cdots ,l$</span><!-- Has MathJax -->
-<p>目标函数是f(w)，下面是等式约束。通常解法是引入拉格朗日算子，这里使用$$\beta$$来表示算子，得到拉格朗日公式为</p>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/机器学习-拉格朗日对偶/">机器学习 拉格朗日对偶</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2014/06/03/2014-06-03-lagrange-duality/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>

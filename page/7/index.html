@@ -128,7 +128,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Annotation/" style="font-size: 10px;">Annotation</a> <a href="/tags/ThreadPool/" style="font-size: 10px;">ThreadPool</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/java内存模型/" style="font-size: 10px;">java内存模型</a> <a href="/tags/java线程池/" style="font-size: 10px;">java线程池</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/math-example/" style="font-size: 10px;">math example</a> <a href="/tags/来自陈年佳酿的笔记/" style="font-size: 10px;">来自陈年佳酿的笔记</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a>
+						<a href="/tags/Annotation/" style="font-size: 10px;">Annotation</a> <a href="/tags/ThreadPool/" style="font-size: 10px;">ThreadPool</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/java内存模型/" style="font-size: 10px;">java内存模型</a> <a href="/tags/java线程池/" style="font-size: 10px;">java线程池</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/math-example/" style="font-size: 10px;">math example</a> <a href="/tags/reflect/" style="font-size: 10px;">reflect</a> <a href="/tags/反射/" style="font-size: 10px;">反射</a> <a href="/tags/来自陈年佳酿的笔记/" style="font-size: 10px;">来自陈年佳酿的笔记</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a>
 					</div>
 				</section>
 				
@@ -199,6 +199,75 @@
 </nav>
 
         <div class="body-wrap">
+  
+    <article id="post-2013-10-24-c-plus-plus-forward-declaration-and-copy-control" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2013/10/24/2013-10-24-c-plus-plus-forward-declaration-and-copy-control/" class="article-date">
+  	<time datetime="2013-10-23T20:33:00.000Z" itemprop="datePublished">2013-10-24</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2013/10/24/2013-10-24-c-plus-plus-forward-declaration-and-copy-control/">C++前置声明和复制控制</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>突然有兴致想起了看会C++，因为最近一直是python，java，python的节奏...在这样下去，C++水平恐怕就停留在了只会编算法的地儿了...</p>
+<p>随手一翻，看到了复制控制。对于这章，印象里的记忆是：</p>
+<blockquote>
+<blockquote>
+<p>如果一个类它有形如指针或者申请了其他的系统资源成员，这个时候就得注意了，如申请资源，如何释放资源，复制的时候应该注意这些成员的行为是怎么样的。</p>
+</blockquote>
+</blockquote>
+<p>然后，就不是很清楚了。大概看了看 其实也差不多...好吧是差很多。编程的过程中出现了一些问题。在这里记录下来&gt;.&lt; 真实忘不了了！</p>
+<p>#####复制构造函数
+它是一个特殊的构造函数，而且形参常用const Type&amp; 来修饰(如果凶残点，用指针也不是不行，但一定得是这两种！想想是为什么？)</p>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/C-predeclaration-赋值-复制-复制控制/">C++ predeclaration  赋值  复制 复制控制</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a  href="/2013/10/24/2013-10-24-c-plus-plus-forward-declaration-and-copy-control/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-2013-10-20-virtualbox-network-environment-and-login" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -440,67 +509,6 @@
       
         <p class="article-more-link">
           <a  href="/2013/04/16/2013-04-16-pythonchu-li-dai-you-shi-qu-de-de-zi-fu-chuan/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-2013-03-15-puzzles-of-vars-properties-in-python" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2013/03/15/2013-03-15-puzzles-of-vars-properties-in-python/" class="article-date">
-  	<time datetime="2013-03-15T08:06:00.000Z" itemprop="datePublished">2013-03-15</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2013/03/15/2013-03-15-puzzles-of-vars-properties-in-python/">python中关于变量属性的迷惑</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>当初使用C++，java的时候，变量的属性（可访问性，scope这类的意思）如public，private，protected，static这类很好理解。</p>
-<p>但是Python中默认的成员函数，成员变量都是公开的(public),而且python中没有类似public,private等关键词来修饰成员函数，成员变量。</p>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/python/">python</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2013/03/15/2013-03-15-puzzles-of-vars-properties-in-python/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>

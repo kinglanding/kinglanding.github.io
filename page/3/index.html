@@ -128,7 +128,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Annotation/" style="font-size: 10px;">Annotation</a> <a href="/tags/ThreadPool/" style="font-size: 10px;">ThreadPool</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/java内存模型/" style="font-size: 10px;">java内存模型</a> <a href="/tags/java线程池/" style="font-size: 10px;">java线程池</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/math-example/" style="font-size: 10px;">math example</a> <a href="/tags/来自陈年佳酿的笔记/" style="font-size: 10px;">来自陈年佳酿的笔记</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a>
+						<a href="/tags/Annotation/" style="font-size: 10px;">Annotation</a> <a href="/tags/ThreadPool/" style="font-size: 10px;">ThreadPool</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/java内存模型/" style="font-size: 10px;">java内存模型</a> <a href="/tags/java线程池/" style="font-size: 10px;">java线程池</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/math-example/" style="font-size: 10px;">math example</a> <a href="/tags/reflect/" style="font-size: 10px;">reflect</a> <a href="/tags/反射/" style="font-size: 10px;">反射</a> <a href="/tags/来自陈年佳酿的笔记/" style="font-size: 10px;">来自陈年佳酿的笔记</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a>
 					</div>
 				</section>
 				
@@ -199,6 +199,69 @@
 </nav>
 
         <div class="body-wrap">
+  
+    <article id="post-2014-06-03-lagrange-duality" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2014/06/03/2014-06-03-lagrange-duality/" class="article-date">
+  	<time datetime="2014-06-03T12:41:00.000Z" itemprop="datePublished">2014-06-03</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/06/03/2014-06-03-lagrange-duality/">拉格朗日对偶</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在解决约束最优化的额问题中，常常利用拉格朗日对偶性将原始问题转化为对偶问题，通过解对偶问题得到原始问题的解。该方法主要应用的SVM和最大熵模型中。</p>
+<p>先抛开上面的二次规划问题，先来看看存在等式约束的极值问题求法，比如下面的最优化问题：</p>
+<span>$\min _{ w }{ f\left( w \right)  } \\ s.t\quad h_{ i }\left( w \right) =0,\quad i=1,\cdots ,l$</span><!-- Has MathJax -->
+<p>目标函数是f(w)，下面是等式约束。通常解法是引入拉格朗日算子，这里使用$$\beta$$来表示算子，得到拉格朗日公式为</p>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/机器学习-拉格朗日对偶/">机器学习 拉格朗日对偶</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a  href="/2014/06/03/2014-06-03-lagrange-duality/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-2014-06-03-my-understanding-about-svm" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -550,67 +613,6 @@ $$</p>
 	</div>
 
 
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-2014-07-14-sort-list" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2014/05/14/2014-07-14-sort-list/" class="article-date">
-  	<time datetime="2014-05-14T04:51:00.000Z" itemprop="datePublished">2014-05-14</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/05/14/2014-07-14-sort-list/">链表排序</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>链表不想数组那样是连续的即像数组那样随机访问，只能从前往后遍历。所以排序的方法只能是像插入排序，选择排序，和归并排序。</p>
-<p>下面就先说归并排序。</p>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/list-java-sort-algorithm/">list java sort  algorithm</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2014/05/14/2014-07-14-sort-list/#more">more >></a>
-        </p>
       
       <div class="clearfix"></div>
     </div>
