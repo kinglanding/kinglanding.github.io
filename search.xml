@@ -4,6 +4,18 @@
   
     
     <entry>
+      <title><![CDATA[在idea中启用热加载]]></title>
+      <url>http://kinglanding.github.io/2016/06/29/2016-6-29-hotload-in-idea/</url>
+      <content type="html"><![CDATA[<p>idea真是开发神奇，越来越喜爱。修改个类或者资源文件啥的不在用重新部署下容器，
+也不用像eclipse那样装上JRebel的插件，有点太重。只需要这样：</p>
+<p><img src="/img/post/use-hotload.png" alt="use-hotload hotload"></p>
+<p>如此，就好，注意On frame deactivation这个选项，实际就是当你离开当前的frame时，
+idea就默默为你编译工程文件，然后放到explored的war中去了。本质就是将改好后的类
+编译一下就好。</p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[java基础系列2：反射]]></title>
       <url>http://kinglanding.github.io/2016/06/23/java-base-seri-2-reflection/</url>
       <content type="html"><![CDATA[<p>反射功能强大，运用运行时获取任意类的任何属性和方法。功能虽强大，单不要滥用哦。反射的概念是由Smith在1982年首次提出的，

@@ -128,7 +128,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Annotation/" style="font-size: 10px;">Annotation</a> <a href="/tags/ThreadPool/" style="font-size: 10px;">ThreadPool</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/java内存模型/" style="font-size: 10px;">java内存模型</a> <a href="/tags/java线程池/" style="font-size: 10px;">java线程池</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/math-example/" style="font-size: 10px;">math example</a> <a href="/tags/reflect/" style="font-size: 10px;">reflect</a> <a href="/tags/反射/" style="font-size: 10px;">反射</a> <a href="/tags/来自陈年佳酿的笔记/" style="font-size: 10px;">来自陈年佳酿的笔记</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a>
+						<a href="/tags/Annotation/" style="font-size: 10px;">Annotation</a> <a href="/tags/ThreadPool/" style="font-size: 10px;">ThreadPool</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/hotload/" style="font-size: 10px;">hotload</a> <a href="/tags/idea/" style="font-size: 10px;">idea</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/java内存模型/" style="font-size: 10px;">java内存模型</a> <a href="/tags/java线程池/" style="font-size: 10px;">java线程池</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/math-example/" style="font-size: 10px;">math example</a> <a href="/tags/reflect/" style="font-size: 10px;">reflect</a> <a href="/tags/反射/" style="font-size: 10px;">反射</a> <a href="/tags/来自陈年佳酿的笔记/" style="font-size: 10px;">来自陈年佳酿的笔记</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/热加载/" style="font-size: 10px;">热加载</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a>
 					</div>
 				</section>
 				
@@ -199,6 +199,97 @@
 </nav>
 
         <div class="body-wrap">
+  
+    <article id="post-testlatex" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/04/27/testlatex/" class="article-date">
+  	<time datetime="2016-04-27T05:09:21.000Z" itemprop="datePublished">2016-04-27</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/27/testlatex/">Latex on hexo</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>\begin{aligned}
+\phi(x,y) = \phi \left(\sum_{i=1}^n x_ie_i, \sum_{j=1}^n y_je_j \right)
+= \sum_{i=1}^n \sum_{j=1}^n x_i y_j \phi(e_i, e_j)
+\end{aligned}</p>
+<p>$$\frac{\partial u}{\partial t}
+= h^2 \left( \frac{\partial^2 u}{\partial x^2} +
+\frac{\partial^2 u}{\partial y^2} +
+\frac{\partial^2 u}{\partial z^2}\right)$$</p>
+<span>$$\begin{aligned}
+\dot{x} &amp; = \sigma(y-x) \\
+\dot{y} &amp; = \rho x - y - xz \\
+\dot{z} &amp; = -\beta z + xy
+\end{aligned}$$</span><!-- Has MathJax -->
+<p>\begin{aligned}
+\dot{x} &amp; = \sigma(y-x) \
+\dot{y} &amp; = \rho x - y - xz \
+\dot{z} &amp; = -\beta z + xy
+\end{aligned}</p>
+<p>Simple inline $a = b + c$.</p>
+<span>$$f(x1, x2) = \frac{ 1 }{2\pi \sigma1\sigma2\sqrt{1-r^2}}e^{-\frac{1}{2(1-r^2)} 
+[\frac{(x1-\mu\_{x1})^2}{\sigma\_{x1}^2} - \frac{2r(x1-\mu\_{x1})(x2-\mu\_{x2})}{\sigma\_{x1} \sigma\_{x2}} + \frac{(x2-\mu\_{x2})^2}{\sigma\_{x2}^2}]}$$</span><!-- Has MathJax -->
+<span>$$\begin{aligned}
+  &amp; \phi(x,y) = \phi \left(\sum_{i=1}^n x_ie_i, \sum_{j=1}^n y_je_j \right)
+  = \sum_{i=1}^n \sum_{j=1}^n x_i y_j \phi(e_i, e_j) = \\
+  &amp; (x_1, \ldots, x_n) \left( \begin{array}{ccc}
+      \phi(e_1, e_1) &amp; \cdots &amp; \phi(e_1, e_n) \\
+      \vdots &amp; \ddots &amp; \vdots \\
+      \phi(e_n, e_1) &amp; \cdots &amp; \phi(e_n, e_n)
+    \end{array} \right)
+  \left( \begin{array}{c}
+      y_1 \\
+      \vdots \\
+      y_n
+    \end{array} \right)
+\end{aligned}$$</span><!-- Has MathJax -->
+<span>$$\min { \quad \frac { 1 }{ 2 } \left\| w \right\| ^{ 2 }+c\sum _{ i=1 }^{ l }{ { \xi }_{ i } } } \\ st.\quad y_{ i }(\omega ^{ T }\phi (x_i)-b)\ge 1-\xi _{ i },\left( \xi _{ i }&gt;0 \right)$$</span><!-- Has MathJax -->  
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/math-example/">math example</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-2015-01-15-use-mongo-map-reduce-statistic-word-occurrence" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -452,69 +543,6 @@
       
         <p class="article-more-link">
           <a  href="/2014/07/09/2014-07-09-wei-pi-pei/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-2014-07-12-po-su-bei-xie-si-wen-ben-fen-lei" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2014/06/27/2014-07-12-po-su-bei-xie-si-wen-ben-fen-lei/" class="article-date">
-  	<time datetime="2014-06-27T04:11:00.000Z" itemprop="datePublished">2014-06-27</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/06/27/2014-07-12-po-su-bei-xie-si-wen-ben-fen-lei/">朴素贝叶斯文本分类</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>回顾朴素贝叶斯(NB)分类器:</p>
-<span>$$p(y_k|x)=\frac{p(y_k)p(x|y_k)}{p(x)}\propto p(y_k)p(x|y_k)=p(y_k)\prod_{i=1}^{d}{p(x_i|y_k)}$$</span><!-- Has MathJax -->
-<p>对于文本分类任务,即对一篇文章进行分类,是 NLP 中最常见的机器学习任务。一般情况下,类别从几个到几十不等,或者更多。使用朴素贝叶斯文分类器进行文本分类,我们需要首先考虑特征是什么,即x如何表示;$p(x_i|y_k )$的物理意义是什么,如何计算。对于特征方面,文本分类常规都是使用 bag-of-words 的特征,即以文章中出现的词作为特征,而不考虑词语出现的顺序。朴素贝叶斯文分类器也一般使用这种形式。那么特征空间的大小,就取决于词表(vocabulary)的大小,即语料集合中不重复词的个数。对于汉语来说,一般几万到百万不等。</p>
-<p>在 bag-of-words 的特征体系下,特征空间是确定了的,但是具体$x_i$的取值以及对应的$p(x_i |y_k )$的物理意义却可以有不同的考虑,对应着不同的参数计算公式及分类器训练和预测的实现。这取决于我们是否考虑词语在文章中出现的频次。</p>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/机器学习-朴素贝叶斯-文本分类/">机器学习 朴素贝叶斯 文本分类</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2014/06/27/2014-07-12-po-su-bei-xie-si-wen-ben-fen-lei/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
