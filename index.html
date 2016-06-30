@@ -21,7 +21,17 @@
   
     <link href="/favicon.ico" rel="icon" type="image/x-ico">
   
-  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <link rel="stylesheet" href="/css/style.css">
+
+    <!-- 增加点击次数插件-->
+    
+        <!-- jQuery文件-->
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<!--<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>-->
+<script src="/js/av-core-mini-0.6.1.js"></script>
+<script>AV.initialize("ULm4LbKU9FYj6CxYtKYnvaeB-gzGzoHsz", "TypHFu5f7mXg4U1N9RjFRo52");</script>
+<script src="/js/Counter.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
 </head>
 
 <body>
@@ -242,6 +252,16 @@ idea就默默为你编译工程文件，然后放到explored的war中去了。�
 	<div class="article-tag tagcloud">
 		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hotload/">hotload</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/idea/">idea</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/热加载/">热加载</a></li></ul>
 	</div>
+
+
+<div class="counter-tag counter">
+    <span id="/2016/06/29/2016-6-29-hotload-in-idea/" class="leancloud_visitors"
+          style="font-size: 12px" data-flag-title="在idea中启用热加载">
+         &nbsp;
+    <!-- 这里给出浏览数-->
+        Hits
+    </span>
+</div>
 
       
 
@@ -545,6 +565,13 @@ java.lang.reflect.Constructor.getDeclaringClass()</strong><br>
 直接看代码和注释就好，可以直接运行这个代码增加感性认识。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> jls.basic.reflect;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.InvocationTargetException;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.lang.System.out;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MethodInvoker</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="comment">// 私有函数，不可能被访问。使用反射修改修饰符，然后在调用</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 无形参</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">helloWorld</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        out.println(<span class="string">"Hello world"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 有形参，有返回值</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> String <span class="title">hello</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        String sentence = <span class="string">"Hello "</span> + name;</span><br><span class="line">        <span class="keyword">return</span> sentence;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String... args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 加载本类</span></span><br><span class="line">            Class&lt;?&gt; c = Class.forName(<span class="string">"jls.basic.reflect.MethodInvoker"</span>);</span><br><span class="line">            <span class="comment">// 实例化1个本类的对象</span></span><br><span class="line">            Object t = c.newInstance();</span><br><span class="line">            <span class="comment">// getDeclaredMethod 用来获取私有函数</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">// 调用helloWorld 这个私有方法,所以方法名是helloWorld</span></span><br><span class="line">            String privateMethodName = <span class="string">"helloWorld"</span>;</span><br><span class="line">            <span class="comment">// 因为helloWorld 的无形参，所以构造一个大小为零的数组</span></span><br><span class="line">            Class[] helloWorldMethodParameterTypes = <span class="keyword">new</span> Class[<span class="number">0</span>];</span><br><span class="line">            <span class="comment">// 获取私有函数</span></span><br><span class="line">            Method helloWorldMethod = c.getDeclaredMethod(privateMethodName, helloWorldMethodParameterTypes);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 调用私有方法... 不用设置访问属性..</span></span><br><span class="line">            <span class="comment">//helloWorldMethod.setAccessible(true);</span></span><br><span class="line">            out.format(<span class="string">"invoking %s()%n"</span>, helloWorldMethod.getName());</span><br><span class="line">            Object result = helloWorldMethod.invoke(t, <span class="keyword">null</span>);</span><br><span class="line">            <span class="comment">// 返回值是null</span></span><br><span class="line">            out.format(<span class="string">"%s() returned: %s%n"</span>, helloWorldMethod.getName(), result);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 调用 hello 这个私有方法,所以方法名是helloWorld</span></span><br><span class="line">            privateMethodName = <span class="string">"hello"</span>;</span><br><span class="line">            <span class="comment">// hello 方法有一个String类型的参数，所以构造一个大小为1的数组</span></span><br><span class="line">            Class[] helloMethodParameterTypes = <span class="keyword">new</span> Class[]&#123;String.class&#125;;</span><br><span class="line">            String parameter = <span class="string">"aluen"</span>;</span><br><span class="line">            <span class="comment">// 获取私有函数</span></span><br><span class="line">            Method helloMethod = c.getDeclaredMethod(privateMethodName, helloMethodParameterTypes);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 调用私有方法</span></span><br><span class="line">            <span class="comment">//helloMethod.setAccessible(true);</span></span><br><span class="line">            out.format(<span class="string">"invoking %s()%n"</span>, helloMethod.getName());</span><br><span class="line">            result = helloMethod.invoke(t, parameter);</span><br><span class="line">            <span class="comment">// 返回值是String</span></span><br><span class="line">            out.format(<span class="string">"%s() returned: %s%n"</span>, helloMethod.getName(), result);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// production code should handle these exceptions more gracefully</span></span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassNotFoundException x) &#123;</span><br><span class="line">            x.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InstantiationException x) &#123;</span><br><span class="line">            x.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IllegalAccessException x) &#123;</span><br><span class="line">            x.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (NoSuchMethodException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InvocationTargetException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3>构造函数</h3>
+<h4>构造类的实例</h4>
+<p>创建实例有两类方法，<code>java.lang.reflect.Constructor.newInstance()</code>和<code>Class.newInstance()</code>.前者用的更多，因为：</p>
+<ul>
+<li><code>Class.newInstance()</code>只能调用无参构造函数，而<code>Constructor.newInstance()</code>可以调用任意构造函数。</li>
+<li><code>Class.newInstance()</code>会抛出构造函数所有的异常；而<code>Constructor.newInstance()</code>可以将这些异常打包成<code>InvocationTargetException</code>.</li>
+<li><code>Class.newInstance()</code></li>
+</ul>
 
       
     </div>
@@ -555,6 +582,16 @@ java.lang.reflect.Constructor.getDeclaringClass()</strong><br>
 	<div class="article-tag tagcloud">
 		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/reflect/">reflect</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/反射/">反射</a></li></ul>
 	</div>
+
+
+<div class="counter-tag counter">
+    <span id="/2016/06/23/java-base-seri-2-reflection/" class="leancloud_visitors"
+          style="font-size: 12px" data-flag-title="java基础系列2：反射">
+         &nbsp;
+    <!-- 这里给出浏览数-->
+        Hits
+    </span>
+</div>
 
       
 
@@ -637,6 +674,16 @@ java.lang.reflect.Constructor.getDeclaringClass()</strong><br>
 		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Annotation/">Annotation</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/来自陈年佳酿的笔记/">来自陈年佳酿的笔记</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/注解/">注解</a></li></ul>
 	</div>
 
+
+<div class="counter-tag counter">
+    <span id="/2016/06/22/dive-into-annotation/" class="leancloud_visitors"
+          style="font-size: 12px" data-flag-title="dive into annotation">
+         &nbsp;
+    <!-- 这里给出浏览数-->
+        Hits
+    </span>
+</div>
+
       
 
       
@@ -707,6 +754,16 @@ java.lang.reflect.Constructor.getDeclaringClass()</strong><br>
 		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java内存模型/">java内存模型</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jvm/">jvm</a></li></ul>
 	</div>
 
+
+<div class="counter-tag counter">
+    <span id="/2016/05/16/2016-05-16-JSR-133-FAQ/" class="leancloud_visitors"
+          style="font-size: 12px" data-flag-title="JSR-133 FAQ">
+         &nbsp;
+    <!-- 这里给出浏览数-->
+        Hits
+    </span>
+</div>
+
       
 
       
@@ -730,10 +787,10 @@ java.lang.reflect.Constructor.getDeclaringClass()</strong><br>
 
 
   
-    <article id="post-2016-04-27-think-about-difference-of-exception-between-thread-and-pool" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-testlatex" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/04/27/2016-04-27-think-about-difference-of-exception-between-thread-and-pool/" class="article-date">
+      <a href="/2016/04/27/testlatex/" class="article-date">
   	<time datetime="2016-04-27T05:09:21.000Z" itemprop="datePublished">2016-04-27</time>
 </a>
     </div>
@@ -747,7 +804,7 @@ java.lang.reflect.Constructor.getDeclaringClass()</strong><br>
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/27/2016-04-27-think-about-difference-of-exception-between-thread-and-pool/">关于异常在线程与线程池不同表现的一个思考</a>
+      <a class="article-title" href="/2016/04/27/testlatex/">Latex on hexo</a>
     </h1>
   
 
@@ -756,8 +813,42 @@ java.lang.reflect.Constructor.getDeclaringClass()</strong><br>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>如果一个线程在执行的过程中，遇到了某种异常，中断异常啊、空指针异常啊、算数异常，并且程序本身没有捕获异常，会发送什么？你可能会说，程序直接挂掉呗~然后日志里有异常日志。</p>
-<p>但实际上，要看这个线程是在什么地方。如果是在线程池外面，这个程序确实就直接挂掉了；</p>
+        <p>\begin{aligned}
+\phi(x,y) = \phi \left(\sum_{i=1}^n x_ie_i, \sum_{j=1}^n y_je_j \right)
+= \sum_{i=1}^n \sum_{j=1}^n x_i y_j \phi(e_i, e_j)
+\end{aligned}</p>
+<p>$$\frac{\partial u}{\partial t}
+= h^2 \left( \frac{\partial^2 u}{\partial x^2} +
+\frac{\partial^2 u}{\partial y^2} +
+\frac{\partial^2 u}{\partial z^2}\right)$$</p>
+<span>$$\begin{aligned}
+\dot{x} &amp; = \sigma(y-x) \\
+\dot{y} &amp; = \rho x - y - xz \\
+\dot{z} &amp; = -\beta z + xy
+\end{aligned}$$</span><!-- Has MathJax -->
+<p>\begin{aligned}
+\dot{x} &amp; = \sigma(y-x) \
+\dot{y} &amp; = \rho x - y - xz \
+\dot{z} &amp; = -\beta z + xy
+\end{aligned}</p>
+<p>Simple inline $a = b + c$.</p>
+<span>$$f(x1, x2) = \frac{ 1 }{2\pi \sigma1\sigma2\sqrt{1-r^2}}e^{-\frac{1}{2(1-r^2)} 
+[\frac{(x1-\mu\_{x1})^2}{\sigma\_{x1}^2} - \frac{2r(x1-\mu\_{x1})(x2-\mu\_{x2})}{\sigma\_{x1} \sigma\_{x2}} + \frac{(x2-\mu\_{x2})^2}{\sigma\_{x2}^2}]}$$</span><!-- Has MathJax -->
+<span>$$\begin{aligned}
+  &amp; \phi(x,y) = \phi \left(\sum_{i=1}^n x_ie_i, \sum_{j=1}^n y_je_j \right)
+  = \sum_{i=1}^n \sum_{j=1}^n x_i y_j \phi(e_i, e_j) = \\
+  &amp; (x_1, \ldots, x_n) \left( \begin{array}{ccc}
+      \phi(e_1, e_1) &amp; \cdots &amp; \phi(e_1, e_n) \\
+      \vdots &amp; \ddots &amp; \vdots \\
+      \phi(e_n, e_1) &amp; \cdots &amp; \phi(e_n, e_n)
+    \end{array} \right)
+  \left( \begin{array}{c}
+      y_1 \\
+      \vdots \\
+      y_n
+    \end{array} \right)
+\end{aligned}$$</span><!-- Has MathJax -->
+<span>$$\min { \quad \frac { 1 }{ 2 } \left\| w \right\| ^{ 2 }+c\sum _{ i=1 }^{ l }{ { \xi }_{ i } } } \\ st.\quad y_{ i }(\omega ^{ T }\phi (x_i)-b)\ge 1-\xi _{ i },\left( \xi _{ i }&gt;0 \right)$$</span><!-- Has MathJax -->  
       
     </div>
     
@@ -765,15 +856,21 @@ java.lang.reflect.Constructor.getDeclaringClass()</strong><br>
       
       
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ThreadPool/">ThreadPool</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java线程池/">java线程池</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/线程/">线程</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/math-example/">math example</a></li></ul>
 	</div>
 
-      
+
+<div class="counter-tag counter">
+    <span id="/2016/04/27/testlatex/" class="leancloud_visitors"
+          style="font-size: 12px" data-flag-title="Latex on hexo">
+         &nbsp;
+    <!-- 这里给出浏览数-->
+        Hits
+    </span>
+</div>
 
       
-        <p class="article-more-link">
-          <a  href="/2016/04/27/2016-04-27-think-about-difference-of-exception-between-thread-and-pool/#more">more >></a>
-        </p>
+
       
       <div class="clearfix"></div>
     </div>

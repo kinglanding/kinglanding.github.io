@@ -18,7 +18,7 @@
 主要是指程序可以访问、检测和修改它本身状态或行为的一种能力。这一概念的提出很快引发了计算机科学领域关于应用反射性的研究。
 它首先被程序语言的设计领域所采用,并在Lisp和面向对象方面取得了成绩。当然反射本身并不是一个新概念，
 它可能会使我们联想到光学中的反射概念，尽管计算">
-<meta property="og:updated_time" content="2016-06-28T12:37:28.829Z">
+<meta property="og:updated_time" content="2016-06-29T12:05:54.483Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java基础系列2：反射">
 <meta name="twitter:description" content="反射功能强大，运用运行时获取任意类的任何属性和方法。功能虽强大，单不要滥用哦。反射的概念是由Smith在1982年首次提出的，
@@ -31,7 +31,17 @@
   
     <link href="/favicon.ico" rel="icon" type="image/x-ico">
   
-  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <link rel="stylesheet" href="/css/style.css">
+
+    <!-- 增加点击次数插件-->
+    
+        <!-- jQuery文件-->
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<!--<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>-->
+<script src="/js/av-core-mini-0.6.1.js"></script>
+<script>AV.initialize("ULm4LbKU9FYj6CxYtKYnvaeB-gzGzoHsz", "TypHFu5f7mXg4U1N9RjFRo52");</script>
+<script src="/js/Counter.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
 </head>
 
 <body>
@@ -236,6 +246,16 @@
 	<div class="article-tag tagcloud">
 		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/reflect/">reflect</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/反射/">反射</a></li></ul>
 	</div>
+
+
+<div class="counter-tag counter">
+    <span id="/2016/06/23/java-base-seri-2-reflection/" class="leancloud_visitors"
+          style="font-size: 12px" data-flag-title="java基础系列2：反射">
+         &nbsp;
+    <!-- 这里给出浏览数-->
+        Hits
+    </span>
+</div>
 
         
 
@@ -502,6 +522,13 @@ java.lang.reflect.Constructor.getDeclaringClass()</strong><br>
 直接看代码和注释就好，可以直接运行这个代码增加感性认识。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> jls.basic.reflect;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.InvocationTargetException;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.lang.System.out;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MethodInvoker</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="comment">// 私有函数，不可能被访问。使用反射修改修饰符，然后在调用</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 无形参</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">helloWorld</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        out.println(<span class="string">"Hello world"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 有形参，有返回值</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> String <span class="title">hello</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        String sentence = <span class="string">"Hello "</span> + name;</span><br><span class="line">        <span class="keyword">return</span> sentence;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String... args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 加载本类</span></span><br><span class="line">            Class&lt;?&gt; c = Class.forName(<span class="string">"jls.basic.reflect.MethodInvoker"</span>);</span><br><span class="line">            <span class="comment">// 实例化1个本类的对象</span></span><br><span class="line">            Object t = c.newInstance();</span><br><span class="line">            <span class="comment">// getDeclaredMethod 用来获取私有函数</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">// 调用helloWorld 这个私有方法,所以方法名是helloWorld</span></span><br><span class="line">            String privateMethodName = <span class="string">"helloWorld"</span>;</span><br><span class="line">            <span class="comment">// 因为helloWorld 的无形参，所以构造一个大小为零的数组</span></span><br><span class="line">            Class[] helloWorldMethodParameterTypes = <span class="keyword">new</span> Class[<span class="number">0</span>];</span><br><span class="line">            <span class="comment">// 获取私有函数</span></span><br><span class="line">            Method helloWorldMethod = c.getDeclaredMethod(privateMethodName, helloWorldMethodParameterTypes);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 调用私有方法... 不用设置访问属性..</span></span><br><span class="line">            <span class="comment">//helloWorldMethod.setAccessible(true);</span></span><br><span class="line">            out.format(<span class="string">"invoking %s()%n"</span>, helloWorldMethod.getName());</span><br><span class="line">            Object result = helloWorldMethod.invoke(t, <span class="keyword">null</span>);</span><br><span class="line">            <span class="comment">// 返回值是null</span></span><br><span class="line">            out.format(<span class="string">"%s() returned: %s%n"</span>, helloWorldMethod.getName(), result);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 调用 hello 这个私有方法,所以方法名是helloWorld</span></span><br><span class="line">            privateMethodName = <span class="string">"hello"</span>;</span><br><span class="line">            <span class="comment">// hello 方法有一个String类型的参数，所以构造一个大小为1的数组</span></span><br><span class="line">            Class[] helloMethodParameterTypes = <span class="keyword">new</span> Class[]&#123;String.class&#125;;</span><br><span class="line">            String parameter = <span class="string">"aluen"</span>;</span><br><span class="line">            <span class="comment">// 获取私有函数</span></span><br><span class="line">            Method helloMethod = c.getDeclaredMethod(privateMethodName, helloMethodParameterTypes);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 调用私有方法</span></span><br><span class="line">            <span class="comment">//helloMethod.setAccessible(true);</span></span><br><span class="line">            out.format(<span class="string">"invoking %s()%n"</span>, helloMethod.getName());</span><br><span class="line">            result = helloMethod.invoke(t, parameter);</span><br><span class="line">            <span class="comment">// 返回值是String</span></span><br><span class="line">            out.format(<span class="string">"%s() returned: %s%n"</span>, helloMethod.getName(), result);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// production code should handle these exceptions more gracefully</span></span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassNotFoundException x) &#123;</span><br><span class="line">            x.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InstantiationException x) &#123;</span><br><span class="line">            x.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IllegalAccessException x) &#123;</span><br><span class="line">            x.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (NoSuchMethodException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InvocationTargetException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3>构造函数</h3>
+<h4>构造类的实例</h4>
+<p>创建实例有两类方法，<code>java.lang.reflect.Constructor.newInstance()</code>和<code>Class.newInstance()</code>.前者用的更多，因为：</p>
+<ul>
+<li><code>Class.newInstance()</code>只能调用无参构造函数，而<code>Constructor.newInstance()</code>可以调用任意构造函数。</li>
+<li><code>Class.newInstance()</code>会抛出构造函数所有的异常；而<code>Constructor.newInstance()</code>可以将这些异常打包成<code>InvocationTargetException</code>.</li>
+<li><code>Class.newInstance()</code></li>
+</ul>
 
       
     </div>
