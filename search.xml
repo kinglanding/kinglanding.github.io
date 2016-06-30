@@ -658,9 +658,7 @@ db.taobao_id_count.find({&quot;value&quot;:2})
 在重复个数为2的taobao_id中，用它的taobao_id在device总集中查找，看返回结果是否为两个。db.device.find({&quot;taobao_id&quot;:&quot;+/quUacD9KYQAAcmQQglxvvO&quot;})
 结果只有两个结果</p>
 <blockquote>
-<blockquote>
 <p>Referrence</p>
-</blockquote>
 </blockquote>
 <ol>
 <li>
@@ -928,7 +926,7 @@ $$</p>
 { p }^{ \ast  }=\min <em>{ w }{ { \theta  }</em>{ p }\left( w \right)  }
 $$</p>
 <p>哎哟，看看我们的等价形式哦，首先有两个参数，其中还是一个不等式约束=。=,考虑下对偶吧，极小极大问题转化为等价的极大极小问题。</p>
-<p>####对偶形式</p>
+<h4>对偶形式</h4>
 <p>定义$${ \theta  }_{ D }\left( \alpha ,\beta  \right) =\min <em>{ w }{ L\left( w,\alpha ,\beta  \right)  } $$，在考虑极大化$${ \theta  }</em>{ D }\left( \alpha ,\beta  \right) $$,先把这两个参数看成固定值，求关于w的最小值，之后在求对偶的最大值即</p>
 <p>$$
 \max <em>{ \alpha ,\beta :{ \alpha  }</em>{ i }\ge 0 }{ { \theta  }_{ D }\left( \alpha ,\beta  \right)  } =\max <em>{ \alpha ,\beta :{ \alpha  }</em>{ i }\ge 0 }{ \min _{ w }{ L\left( w,\alpha ,\beta  \right)  }  }
@@ -943,9 +941,7 @@ $$</p>
 <p>所以如果 $${ w }^{ \ast  },{ \alpha }^{ \ast  },{ \beta }^{ \ast  }$$  满足了库恩-塔克条件，那么他们就是原问题和对偶问题的解。当$$g_{i}(w^{ \ast  })=0$$ 时，w处于可行域的边界上，这时才是起作用的约束。而其他位于可行域内部（ $$g_{i}(w^{ \ast  })&lt;0$$ 的）点都是不起作用的约束，其 $${ \alpha }^{ \ast  }=0$$。这个KKT双重补足条件会用来解释支持向量和SMO的收敛测试。</p>
 <p>KKT的总体思想是将极值会在可行域边界上取得，也就是不等式为0或等式约束里取得，而最优下降方向一般是这些等式的线性组合，其中每个元素要么是不等式为0的约束，要么是等式约束。对于在可行域边界内的点，对最优解不起作用，因此前面的系数为0。</p>
 <blockquote>
-<blockquote>
 <p>参考</p>
-</blockquote>
 </blockquote>
 <ol>
 <li>
@@ -978,7 +974,7 @@ h_{ b,w }\left( x \right) =g\left( w^{ T }x+b \right)
 $$</p>
 <p>和逻辑回归的形式很相像。</p>
 <p>表达形式就引申到这里，在来谈下SVM的思想，当我们学习线性回归时，我们的想法就是使用最小二乘法拟合数据，而在分类问题中，我们的想法就是找到一条直线，使正负样本离这个线或者超平面尽可能的远。也就是<code>间隔</code>最大。用一句话来说就是：<strong>在特征空间上的间隔最大的线性分类器。所以我们所有的努力都在如何是间隔最大化上，而这个可以转化为一个凸二次规划的问题</strong>。所以SVM的学习算法就是求解凸二次规划的最优化算法。</p>
-<p>#####函数间隔（functional margin）和几何间隔（geometric margin）</p>
+<h4>函数间隔（functional margin）和几何间隔（geometric margin）</h4>
 <p>我们定义函数间隔就是：对于给定的数据集T和超平面（w,b），样本点$$\left( x^{(i)},y^{(i)} \right) $$到超平面的函数间隔为：
 $$
 \widehat { \gamma  } ^{ (i) }=y^{ (i) }(w^{T}\cdot x^{ (i) }+b)
@@ -1018,9 +1014,7 @@ $$</p>
 <p>这就变成了一个凸二次规划问题，详情见<a href="http://zh.wikipedia.org/wiki/%E4%BA%8C%E6%AC%A1%E8%A7%84%E5%88%92" target="_blank" rel="external">凸二次规划</a></p>
 <p>接下来是关于拉格朗日对偶的问题，在这之后，在描述SVM中最简单的分类器——<strong>线性可分支持向量机</strong>，因为这个情况下，数据是线性可分的，而且噪音没有，只需要通过<strong>硬间隔最大化</strong>,即可学习一个线性的分类器，又称硬间隔支持向量机。</p>
 <blockquote>
-<blockquote>
 <p>参考</p>
-</blockquote>
 </blockquote>
 <ol>
 <li>
@@ -1053,33 +1047,31 @@ $$</p>
 <p>kill pid</p>
 </li>
 </ol>
-<p>#####查看占用端口号的服务</p>
+<h5>查看占用端口号的服务</h5>
 <p>可以使用netstat命令</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Active Internet connections (only servers)</span><br><span class="line">Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name</span><br><span class="line">Active Internet connections (only servers)</span><br><span class="line">Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name  </span><br><span class="line">tcp        0      0 0.0.0.0:6633            0.0.0.0:*               LISTEN      6267/java              </span><br><span class="line">tcp        0      0 0.0.0.0:3307            0.0.0.0:*               LISTEN      12711/              </span><br><span class="line">tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      3936/httpd          </span><br><span class="line">tcp        0      0 0.0.0.0:21              0.0.0.0:*               LISTEN      3910/              </span><br><span class="line">tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      3753/sshd          </span><br><span class="line">tcp        0      0 0.0.0.0:25              0.0.0.0:*               LISTEN      3786/</span><br></pre></td></tr></table></figure>
-<p>######用管道符给grep处理</p>
+<h5>用管道符给grep处理</h5>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -nlp | grep 6633</span><br></pre></td></tr></table></figure>
 <p>既然取出一行了，那就容易了，再筛选一下，用awk分割取出其中一个</p>
-<p>######读取出端口号</p>
+<h5>读取出端口号</h5>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -nlp | grep 6633 | awk <span class="string">'&#123;print $7&#125;'</span></span><br></pre></td></tr></table></figure>
 <p>6267/java</p>
 <p>意思是取第七个字段，这里默认应该是用tab字符分割的，已经读取出来了，但是还得拿到/前面的数字</p>
-<p>######取/前面的数字就可以了，这里还是可以用awk处理</p>
+<h5>取/前面的数字就可以了，这里还是可以用awk处理</h5>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -nlp | grep 6633 | awk <span class="string">'&#123;print $7&#125;'</span> | awk -F<span class="string">"/"</span> <span class="string">'&#123; print $1 &#125;'</span></span><br></pre></td></tr></table></figure>
 <p>6267</p>
-<p>######把这个数字传给kill就可以</p>
+<h5>把这个数字传给kill就可以</h5>
 <p>kill命令不能跟在管道符后面继续处理了，会出错的.</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">kill</span> [<span class="string">'] netstat -nlp | grep 6633 | awk '</span>&#123;<span class="built_in">print</span> <span class="variable">$7</span>&#125;<span class="string">' | awk -F"/" '</span>&#123; <span class="built_in">print</span> <span class="variable">$1</span> &#125;<span class="string">' ['</span>]</span><br></pre></td></tr></table></figure>
 <blockquote>
-<blockquote>
 <p>其它类似的命令</p>
-</blockquote>
 </blockquote>
 <ol>
 <li>查看端口属于哪个程序？端口被哪个进程占用</li>
 </ol>
 <p>也可以使用lsof命令。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ lsof -i :6633</span><br><span class="line"></span><br><span class="line">COMMAND   PID   USER      FD   TYPE    DEVICE  SIZE/OFF NODE NAME</span><br><span class="line">java    7838   kinglee   50r   IPv6  35452317       0t0  TCP *:6633 (LISTEN)</span><br></pre></td></tr></table></figure>
-<p>####reference</p>
+<h3>reference</h3>
 <ol>
 <li>
 <p><a href="http://baike.baidu.com/link?url=idG3yCyykQj00QVBW_jreekVZWjIGU5urL553dG9o4ZYgwpbnjd7jJ2DVjxrm5EZ" target="_blank" rel="external">netstat</a></p>
@@ -1098,7 +1090,7 @@ $$</p>
       <title><![CDATA[threading:why import it into os]]></title>
       <url>http://kinglanding.github.io/2014/05/19/2014-05-19-threading-why-import-it-into-os/</url>
       <content type="html"><![CDATA[<p>线程的引入是为了提高CPU利用率。线程给操作系统带来的创建维护和管理负担要轻。因为与线程相关的信息比较少，交情的负担意味着线程的代价或开销比较少。当处理器除一个进程并激活另一个进程时，就要发生上下文切换。为了发生上下文切换，操作系统必须启动和重新启动每个进程所需的信息。这就意味着必须保存描述进程存在状态的有关信息，在进程再次激活时，就可以从离开的地点继续执行。</p>
-<p>######那么系统在进程切换时需要保存那些信息呢？</p>
+<h4>那么系统在进程切换时需要保存那些信息呢？</h4>
 <ol>
 <li>
 <p>所需信息包括可执行程序、堆栈、以及静态与动态分配变量内存的指针。</p>
@@ -1116,8 +1108,8 @@ $$</p>
 <p>进程需要文件描述器和读写指针来继续使用资源。</p>
 </li>
 </ol>
-<p>######而线程同样需要上下文。当线程被抢先时同样也会发生上下文切换。</p>
-<p>######与进程相比线程的优势如下：</p>
+<h4>而线程同样需要上下文。当线程被抢先时同样也会发生上下文切换。</h4>
+<h4>与进程相比线程的优势如下：</h4>
 <ol>
 <li>
 <p>线程不需要地址空间。线程包含在进程的地址空间中。（所以在重新任命进程时所需的线程都不需要）</p>
@@ -1139,7 +1131,7 @@ $$</p>
 </li>
 </ol>
 <p>线程与进程的相同之处是：都有ID，寄存器组、状态、以及优先权。线程与子进程共享父进程的资源。</p>
-<p>######他们的不同之处是：</p>
+<h4>他们的不同之处是：</h4>
 <ol>
 <li>
 <p>线程没有自己的地址空间，如果进程创建了多个所有的线程都将包含在他的地址空间中。</p>
@@ -1160,7 +1152,7 @@ $$</p>
       <content type="html"><![CDATA[<p>和朴素的字符串匹配算法相比，KMP加快匹配的关键在于当某个位置不匹配了，不在模版不再是向右滑动一个位置，而是跟匹配处相关的一个值。这样，在字符串的匹配时间就是和搜索串长度相关的一个值$$O(n)$$。</p>
 <p>至于相关的资料，参阅了<a href="http://blog.csdn.net/v_july_v/article/details/7041827" target="_blank" rel="external">六之再续：KMP算法之总结篇（12.09修订，必懂KMP</a>，只是这个个人感觉有点凌乱。</p>
 <p>定义要搜索的字符串模式是$$P$$,搜索的源是文本$$T$$.那让我们看看next数组怎么诞生的。</p>
-<p>####局部匹配表</p>
+<h4>局部匹配表</h4>
 <p>理解KMP算法的关键就是<strong>局部匹配表</strong>,或者形象的称作为<strong>next数组</strong>，
 <a href="http://book.douban.com/subject/1885170/" target="_blank" rel="external">算法导论</a>p571页详细的描述了推导的过程，并给出了证明。但是仍然还是晦涩难懂的。</p>
 <p>对于这个推论：设$$P$$是长度为$$m$$的模式，next是P的前缀函数，对于$$q=2,3,...,m$$</p>
@@ -1181,7 +1173,7 @@ $$</p>
 <p>好了 ，有了上面的定义，我们就可以简单，最重要的是明白计算next值了：<code>某个位置的next值为，到此位置的字符串产生的真前缀和真后缀</code><strong>并集</strong><code>中的最长元素的长度</code>。</p>
 <p>就比如上面的那个例子，模式串为&quot;ababaca&quot;</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&quot;a&quot;的真前缀和真后缀都为空集，next[0]=0;</span><br><span class="line"></span><br><span class="line">&quot;ab&quot;的真前缀为[b],真后缀为[a], next[1]=0;</span><br><span class="line"></span><br><span class="line">&quot;aba&quot;的真前缀为[a,ab],真后缀为[a,ba],next[2]=1;</span><br><span class="line"></span><br><span class="line">&quot;abab&quot;的真前缀为[a,ab,aba],真后缀为[b,ab,bab],next[3]=2;</span><br><span class="line"></span><br><span class="line">&quot;ababa&quot;的真前缀为[a,ab,aba,abab],真后缀为[baba,aba,ba,a],next[4]=3;</span><br><span class="line"></span><br><span class="line">&quot;ababac&quot;的真前缀为[a,ab,aba,abab,ababa],真后缀为[babac,abac,bac,ac,c],next[5]=0;</span><br><span class="line"></span><br><span class="line">&quot;ababaca&quot;的真前缀为[a,ab,aba,abab,ababa,ababac],真后缀为[babaca,abaca,baca,aca,ca,a],next[5]=1;</span><br></pre></td></tr></table></figure>
-<p>####如何使用</p>
+<h4>如何使用</h4>
 <p>见上面的例子吧，很好理解不是。</p>
 <p>对了一下是代码。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">compute_prefix</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* p, <span class="keyword">int</span> *next)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    next[<span class="number">0</span>]=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> len = <span class="built_in">strlen</span>(p);</span><br><span class="line">    <span class="keyword">int</span> k =<span class="number">0</span>,q;</span><br><span class="line">    <span class="keyword">for</span>(q=<span class="number">1</span>; q &lt; len; q++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">///前q个字符中，前缀字符串集和后缀字符串集中最长的交集元素的长度</span></span><br><span class="line">        <span class="keyword">while</span>( (k &gt; <span class="number">0</span>) &amp;&amp; (p[k] != p[q]) )</span><br><span class="line">            k = next[k<span class="number">-1</span>];</span><br><span class="line">        <span class="comment">/// 请看前面的那个状态转移函数的公式</span></span><br><span class="line">        <span class="keyword">if</span>( p[k] == p[q] )</span><br><span class="line">            k=k+<span class="number">1</span>;</span><br><span class="line">        next[q] = k;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -1239,15 +1231,15 @@ $$</p>
 <p>常见的生产模型有隐马尔科夫模型、朴素贝叶斯模型、高斯混合模型、LDA、Restricted
 Boltzmann Machine 等。</p>
 <p>上篇博客较为详细地介绍了两个模型</p>
-<p>###高斯判别分析（Gaussian discriminant analysis）</p>
-<h5>多维正太分布</h5>
+<h3>高斯判别分析（Gaussian discriminant analysis）</h3>
+<h4>多维正太分布</h4>
 <p>多变量正态分布描述的是n维随机变量的分布情况。所以这里的$$\mu $$变成了n维随机变量，$$\sigma $$也变成了
 矩阵$$\Sigma $$.记做$$N(\mu,\Sigma)$$.假设有 n 个随机变量$$X_1,X_2,\cdots ,X_n$$.所以显而易见，$$\mu $$的第i个分量是$$E(X_i),\Sigma_{ii}=Var(X_i),\Sigma_{ij}=Cov(X_i,X_j)$$.</p>
 <p>概率密度函数如下：</p>
 <p>$$
 p(x;\mu,\Sigma)=\frac { 1 }{ \left( 2\pi  \right) ^{ n/2 }\left| \Sigma  \right| ^{ 1/2 } } exp\left( -\frac { 1 }{ 2 } \left( x-\mu \right)^T \Sigma^{-1}{\left(x-\mu\right)} \right)
 $$</p>
-<h5>模型分析与应用</h5>
+<h4>模型分析与应用</h4>
 <p>如果输入特征x连续型随机变量，那么可以使用高斯判别分析模型来确定$$p(x|y)$$。模型如下,先以二元分布即伯努利分布来说（因为前面的例子是二元的）:</p>
 <p>$$
 y\sim Bernoulli\left( \phi \right) \
@@ -1275,9 +1267,9 @@ $$</p>
 <h3>判别模型Discriminative Model</h3>
 <p>又可以称为条件模型，或条件概率模型。估计的是条件概率分布(conditional distribution)，即$$ p(class|context)$$。按照上文的记法就是$$P(y|x)$$
 利用正负例和分类标签，焦点在判别模型的边缘分布。目标函数直接对应于分类准确率。</p>
-<p>######主要特点：</p>
+<h4>主要特点：</h4>
 <p>寻找不同类别之间的最优分类面，反映的是异类数据之间的差异。</p>
-<p>######优点:</p>
+<h4>优点:</h4>
 <ol>
 <li>
 <p>分类边界更灵活，比使用纯概率方法或生产模型得到的更高级。</p>
@@ -1295,7 +1287,7 @@ $$</p>
 <p>判别模型的性能比生成模型要简单，比较容易学习</p>
 </li>
 </ol>
-<p>######缺点:</p>
+<h4>缺点:</h4>
 <ol>
 <li>
 <p>不能反映训练数据本身的特性。能力有限，可以告诉你的是1还是2，但没有办法把整个场景描述出来。</p>
@@ -1328,7 +1320,7 @@ $$</p>
 <p>Conditional random fields(CRF): 目前最新提出的热门模型，从NLP领域产生的，正在向ASR和CV上发展。</p>
 </li>
 </ol>
-<p>######主要应用：</p>
+<h4>主要应用：</h4>
 <ol>
 <li>
 <p>图像文本分类</p>
@@ -1344,7 +1336,7 @@ $$</p>
 <p>估计的是联合概率分布（joint probability distribution），$$p(class, context)=p(class|context)*p(context)$$,换用之前的描述就是$$p(y, x)=p(y|x)*p(x)$$.</p>
 <p>用于随机生成的观察值建模，特别是在给定某些隐藏参数情况下。在机器学习中，或用于直接对数据建模（用概率密度函数对观察到的draw建模），或作为生成条件概率密度函数的中间步骤。通过使用<strong>贝叶斯定律</strong>可以从生成模型中得到条件分布。</p>
 <p>如果观察到的数据是完全由生成模型所生成的，那么就可以拟合生成模型的参数，从而仅可能的增加数据相似度。但观测数据往往完全从生成模型得到，所以比较准确的方式是直接对条件密度函数建模，即使用分类或回归分析。</p>
-<p>######主要特点:</p>
+<h4>主要特点:</h4>
 <ol>
 <li>
 <p>一般主要是对<strong>后验概率</strong>建模，从统计的角度表示数据的分布情况，能够反映同类数据本身的相似度</p>
@@ -1353,7 +1345,7 @@ $$</p>
 <p>只关注自己的inclass本身（即点左下角区域内的概率），不关心到底判别边界在哪</p>
 </li>
 </ol>
-<p>######优点:</p>
+<h4>优点:</h4>
 <ol>
 <li>
 <p>模型可以通过增量学习得到（同意！）</p>
@@ -1380,7 +1372,7 @@ $$</p>
 <p>can tolerate significant intra-class variation of object appearance</p>
 </li>
 </ol>
-<p>######缺点:</p>
+<h4>缺点:</h4>
 <ol>
 <li>学习和计算过程比较复杂</li>
 </ol>
@@ -1402,12 +1394,10 @@ $$</p>
 <p>Sigmoidal belief networks</p>
 </li>
 </ol>
-<p>####两者之间的关系</p>
+<h3>两者之间的关系</h3>
 <p><strong>由生成模型可以得到判别模型，但由判别模型得不到生成模型。</strong></p>
 <blockquote>
-<blockquote>
 <p>参考</p>
-</blockquote>
 </blockquote>
 <p>http://prfans.com/forum/viewthread.php?tid=80</p>
 <p>http://hi.baidu.com/cat_ng/blog/item/5e59c3cea730270593457e1d.html</p>
@@ -1560,7 +1550,7 @@ $$</p>
 <h2>在线特征提取</h2>
 <p>尽管Moore提出了248中流量特征，这些特征源自于同一个流中的报头信息。实际应用中的确不能全部都用到。具体操作是对现有的特征集使用那十个特征选择方法，分别选出各自的特征子集，然后应用到SVM分类器中，判别的准则为建模时间(训练时间)和准确率。然后合并准确率最高的前3个特征集合的并集作为最优特征子集。然后在分出那些特征可以在线获取（SOF-selection of features），他们作为分类器的输入-报文的特征向量。</p>
 <p>核心思想是使用监督方法对有标记的数据集进行分类时，对特征集合进行规约，减少特征集的大小。</p>
-<p>######使用信息熵增益算法对特征进行降纬</p>
+<h3>使用信息熵增益算法对特征进行降纬</h3>
 <p>实验前,<a href="http://www.aluenkinglee.com/blog/2014/04/21/feature-selection--infomation-gain/" target="_blank" rel="external">信息熵增益算法</a></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">Instances:    42</span><br><span class="line">Attributes:   35</span><br><span class="line">              sip</span><br><span class="line">              sport</span><br><span class="line">              dip</span><br><span class="line">              dport</span><br><span class="line">              protocal</span><br><span class="line">              interval1</span><br><span class="line">              interval2</span><br><span class="line">              interval3</span><br><span class="line">              interval4</span><br><span class="line">              interval5</span><br><span class="line">              interval6</span><br><span class="line">              interval7</span><br><span class="line">              interval8</span><br><span class="line">              interval9</span><br><span class="line">              packet_len1</span><br><span class="line">              packet_len2</span><br><span class="line">              packet_len3</span><br><span class="line">              packet_len4</span><br><span class="line">              packet_len5</span><br><span class="line">              packet_len6</span><br><span class="line">              packet_len7</span><br><span class="line">              packet_len8</span><br><span class="line">              packet_len9</span><br><span class="line">              packet_len10</span><br><span class="line">              payload_len1</span><br><span class="line">              payload_len2</span><br><span class="line">              payload_len3</span><br><span class="line">              payload_len4</span><br><span class="line">              payload_len5</span><br><span class="line">              payload_len6</span><br><span class="line">              payload_len7</span><br><span class="line">              payload_len8</span><br><span class="line">              payload_len9</span><br><span class="line">              payload_len10</span><br><span class="line">              cluster</span><br></pre></td></tr></table></figure>
 <p>得到的属性的排序是</p>
@@ -1572,20 +1562,20 @@ $$</p>
 <p>降维之前的聚类结果</p>
 <p><img src="https://github.com/aluenkinglee/aluenkinglee.github.io/blob/source/source/images/2014-04-20-a-scratch-of-feature-selection-in-traffic-classification/%E6%AC%A7%E5%87%A0%E9%87%8C%E5%BE%B7%E8%B7%9D%E7%A6%BB.png?raw=true" alt="降维之前的聚类结果" title="降维之前的聚类结果"></p>
 <p>效果非常吻合。</p>
-<h6>使用PCA对特征集规约</h6>
+<h3>使用PCA对特征集规约</h3>
 <p>这个使用weka的来做的，做出来之后有12个特征（都是原有特征的线性组合）</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Attributes:   12</span><br><span class="line">              0.333payload_len7+0.332packet_len7-0.307dip+0.295payload_len6+0.293packet_len6...</span><br><span class="line">              0.399packet_len8+0.398payload_len8-0.269payload_len5-0.268packet_len5+0.261interval5...</span><br><span class="line">              0.399interval4+0.309interval1-0.308packet_len10-0.274packet_len9-0.272payload_len9...</span><br><span class="line">              -0.366payload_len9-0.366packet_len9-0.349packet_len5-0.347payload_len5-0.288interval1...</span><br><span class="line">              -0.357interval3+0.351packet_len7+0.348payload_len7-0.324interval5+0.313interval7...</span><br><span class="line">              0.454interval6-0.424interval5-0.401interval1+0.262interval9+0.256packet_len4...</span><br><span class="line">              -0.402interval7-0.388payload_len6-0.387packet_len6-0.357interval8-0.26sport...</span><br><span class="line">              -0.597interval9+0.443packet_len10-0.427packet_len2-0.239packet_len3-0.209packet_len6...</span><br><span class="line">              0.865interval2+0.178interval3+0.168packet_len10+0.149packet_len4-0.146payload_len9...</span><br><span class="line">              -0.751sport+0.346interval3+0.286dip+0.216interval7-0.178packet_len2...</span><br><span class="line">              -0.434interval3+0.425interval2+0.315payload_len9+0.312packet_len9-0.311sport...</span><br></pre></td></tr></table></figure>
 <p>降维之后的聚类结果</p>
 <p><img src="https://github.com/aluenkinglee/aluenkinglee.github.io/blob/source/source/images/2014-04-20-a-scratch-of-feature-selection-in-traffic-classification/reduction1.png?raw=true" alt="降维之后的聚类结果" title="降维之后的聚类结果"></p>
 <p>分析，由于降维特征减少太多，走势已经不太吻合。</p>
-<h6>卡方分布提取特征算法</h6>
+<h3>卡方分布提取特征算法</h3>
 <p>对于这个算法，这里只给出特征选取的结果</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">Ranked attributes:</span><br><span class="line">157.0864   12 interval7</span><br><span class="line">145.6184   22 packet_len8</span><br><span class="line">130.1739   20 packet_len6</span><br><span class="line">123.7833    6 interval1</span><br><span class="line">123.0833    9 interval4</span><br><span class="line">118.16     32 payload_len8</span><br><span class="line">108.7528   34 payload_len10</span><br><span class="line">108.5061   24 packet_len10</span><br><span class="line">103.1333   18 packet_len4</span><br><span class="line"> 92.3818   11 interval6</span><br><span class="line"> 85.5423   23 packet_len9</span><br><span class="line"> 81.0409   19 packet_len5</span><br><span class="line"> 61.9733   28 payload_len4</span><br><span class="line"> 42        31 payload_len7</span><br><span class="line"> 42        29 payload_len5</span><br><span class="line"> 42        30 payload_len6</span><br><span class="line"> 42        21 packet_len7</span><br><span class="line"> 39.4135   16 packet_len2</span><br><span class="line"> 39.4135   17 packet_len3</span><br><span class="line"> 38.4      14 interval9</span><br><span class="line"> 37.9167    2 sport</span><br><span class="line"> 36.9542    3 dip</span><br><span class="line"> 33.9      10 interval5</span><br><span class="line">  0         5 protocal</span><br><span class="line">  0        33 payload_len9</span><br><span class="line">  0         4 dport</span><br><span class="line">  0         1 sip</span><br><span class="line">  0        25 payload_len1</span><br><span class="line">  0        15 packet_len1</span><br><span class="line">  0        13 interval8</span><br><span class="line">  0         8 interval3</span><br><span class="line">  0         7 interval2</span><br><span class="line">  0        26 payload_len2</span><br><span class="line">  0        27 payload_len3</span><br></pre></td></tr></table></figure>
 <p>被取消的特征同样是那11个特征，只是排序结果不一样了。
 所以理所当然kmeans实验室一致的。
 Kmeans实验和实验1一样</p>
 <p>最终选取的特征集合为23个</p>
-<h4>参考</h4>
+<h2>参考</h2>
 <p>[1]. Jamil, H.A., et al., Selection of On-line Features for Peer-to-Peer Network Traffic Classification, in Recent Advances in Intelligent Informatics. 2014, Springer. p. 379-390.</p>
 <p>[2]. Zhen, L. and L. Qiong, A new feature selection method for internet traffic classification using ml. Physics Procedia, 2012. 33: p. 1338-1345.</p>
 <p>[3]. Moore, A.W. and D. Zuev. Internet traffic classification using bayesian analysis techniques. in ACM SIGMETRICS Performance Evaluation Review. 2005: ACM.</p>
@@ -1620,18 +1610,12 @@ windows是win7 + mingw）</p>
 </li>
 </ul>
 <blockquote>
-<blockquote>
 <p>参考</p>
 </blockquote>
-</blockquote>
-<ul>
-<li>
-<p><a href="http://stackoverflow.com/questions/18389313/glibc-detected-main-free-invalid-next-size-fast" target="_blank" rel="external">'** glibc detected *** ./main: free(): invalid next size (fast):'</a></p>
-</li>
-<li>
-<p><a href="http://www.cplusplus.com/reference/cstring/memcpy/?kw=memcpy" target="_blank" rel="external">'好好使用memcpy'</a></p>
-</li>
-</ul>
+<ol>
+<li><a href="http://stackoverflow.com/questions/18389313/glibc-detected-main-free-invalid-next-size-fast" target="_blank" rel="external">'** glibc detected *** ./main: free(): invalid next size (fast):'</a></li>
+<li><a href="http://www.cplusplus.com/reference/cstring/memcpy/?kw=memcpy" target="_blank" rel="external">'好好使用memcpy'</a></li>
+</ol>
 ]]></content>
     </entry>
     
@@ -1646,7 +1630,7 @@ windows是win7 + mingw）</p>
 <p><a href="https://github.com/aluenkinglee/stuff/blob/master/cplusplus/traffic_parser/b.pcap?raw=true" title="pcap文件" target="_blank" rel="external">这里</a>是个已经准备好的pcap文件，本文结合这个文件对此进行描述。</p>
 <p>这个文件分析的是微信在单一环境中的网络行为，所以比较简单。打开这个文件，找到开始的几个右键单击选择<code>Follow TCP Stream</code>，或者在filter那里输入<code>tcp.stream eq 1</code>可以看到这里。</p>
 <p><img src="https://github.com/aluenkinglee/aluenkinglee.github.io/blob/source/source/images/2014-02-26-li-jie-tcpzhong-de-xu-lie-hao-he-que-ren-hao/tcp1.png?raw=true" alt="Follow TCP Stream" title="Follow TCP Stream"></p>
-<p>####三次握手</p>
+<h4>三次握手</h4>
 <p>TCP利用了8个标志位，在头部位置，以此来控制链接的状态，对我们最有用的就是SYN，ACK，FIN了。</p>
 <ul>
 <li>SYN - (Synchronize) Initiates a connection</li>
@@ -1654,14 +1638,14 @@ windows是win7 + mingw）</p>
 <li>ACK - Acknowledges received data</li>
 </ul>
 <p>下面将会看到，一个packet包含了多个flag set。</p>
-<p>######对于这个流的第一个，注意Flags里面出了SYN位是1之外，其它都是0。</p>
+<h6>对于这个流的第一个，注意Flags里面出了SYN位是1之外，其它都是0。</h6>
 <p><img src="https://github.com/aluenkinglee/aluenkinglee.github.io/blob/source/source/images/2014-02-26-li-jie-tcpzhong-de-xu-lie-hao-he-que-ren-hao/tcp2.png?raw=true" alt="第一次握手" title="第一次握手"></p>
-<p>######接下来在看第二个，注意它有两个标志位被设置为1，分别是SYN和ACK。</p>
+<h6>接下来在看第二个，注意它有两个标志位被设置为1，分别是SYN和ACK。</h6>
 <p><img src="https://github.com/aluenkinglee/aluenkinglee.github.io/blob/source/source/images/2014-02-26-li-jie-tcpzhong-de-xu-lie-hao-he-que-ren-hao/tcp3.png?raw=true" alt="第二次握手" title="第二次握手"></p>
-<p>######对于第三个packet，就只有ACK设置了。</p>
+<h6>对于第三个packet，就只有ACK设置了。</h6>
 <p><img src="https://github.com/aluenkinglee/aluenkinglee.github.io/blob/source/source/images/2014-02-26-li-jie-tcpzhong-de-xu-lie-hao-he-que-ren-hao/tcp4.png?raw=true" alt="第三次握手" title="第三次握手"></p>
 <p>这就是最初的TCP三次握手。</p>
-<p>####序列号和应答号（SEQ和ACK）</p>
+<h4>序列号和应答号（SEQ和ACK）</h4>
 <p>假设客户端为A，服务器为B，双方都为护着一个32bit的序列号，用来追踪传输了多少数据。。这个号包括了之前所传输的负载的
 大小，由另一端的应答号来应答“你传的数据我都收到了。。”</p>
 <p>当一个机器开始初始TCP序列号时，它是随机的！！不然会出现序列号攻击。。（我忘记了，在用那个wireshark后成功被它的相对序列号迷惑了==）,是一个0～ $2^{32}-1$的数。相对序列号是给人看的，所以像wireshark之辈使用它是为了人们方便阅读理解的。
@@ -1669,29 +1653,31 @@ windows是win7 + mingw）</p>
 <p>接下来让我们结合下图来看这个流的行为。在<code>Statistics &gt; Flow Graph...</code>选择<code>TCP flow</code>。</p>
 <p><img src="https://github.com/aluenkinglee/aluenkinglee.github.io/blob/source/source/images/2014-02-26-li-jie-tcpzhong-de-xu-lie-hao-he-que-ren-hao/tcp5.png?raw=true" alt="流图" title="流图"></p>
 <p>这张图很容易理解就不说了。使用这张流图可以很方便的帮助我们理解他们是怎么工作的。</p>
-<p>######packet #1</p>
+<h6>packet #1</h6>
 <p>A向B发了一个请求，我们可以在frame的tcp中分析出来，SYN=1而ACK=0，这意味这是一个流的起始包。这里使用的是相对序列号，所以为0.</p>
-<p>######packet #2</p>
+<h6>packet #2</h6>
 <p>B收到了响应，恩，因为这是会话的开始，所以B这边也生成了一个随机的序列号，只不过在这里也显示为0了。SYN置为1。另外ACK也置为1，表明收到了A的响应。
 (注意！虽然A没有发送任何负载payload，B仍然把ACK置为1，是因为收到的SYN或者FIN触发了这个增1行为。这儿不会涉及到任何负载长度的计算，因为带有这样信号的包不会携带负载的。)</p>
-<p>######packet #3</p>
+<h6>packet #3</h6>
 <p>和#2一样，A回应了B的响应（SEQ=0，ACK=1）所以ACK为1.自己的SEQ因为收到的包中有SYN所以变为1。此时，双方的SEQ都是1，这种现象在所有TCP开始建立连接时候都是一样的。</p>
-<p>######packet #4</p>
+<h6>packet #4</h6>
 <p>A这个包此时带有负载，这里的SEQ是1，因为上个包（#3）没有传输任何数据，ACK也是1，因为A没有传输任何数据。注意！packet的长度是341，但是我们计算的是传输层的数据长度--负载的长度，所以是ACK — LEN = LEN（#4）-LEN（#3） = 341 - 66 = 275。</p>
-<p>######packet #5</p>
+<h6>packet #5</h6>
 <p>这个包是B（#5）对A（#4）发送数据的响应，此时B的ACK加上负载的长度是275变为276，表示我B收到了你A传输的数据payload（#4）. B此时的SEQ仍为1.</p>
-<p>######packet #6</p>
+<h6>packet #6</h6>
 <p>这个包是B对A放送的HTTP响应，因为之前它（B）所有的包都没有负载，所以SEQ仍然为1，而ACK还是276.负载长度为627.</p>
-<p>######packet #7</p>
+<h6>packet #7</h6>
 <p>好吧，这个例子有点特殊，到这里为止B的数据就发送完了。。。所以FIN置为1，表明你（A）要得我（B）都给完了，没我的事儿了，SEQ加上我发送的数据长度为628，你那边确认之后应该和我一样才对。ACK还是之前你给我发送的那些数据，还是这些276.</p>
-<p>######packet #8</p>
+<h6>packet #8</h6>
 <p>A:收到了所有的数据，我先确认给你我数据我收到了，ACK加上627变为628。我之前发送的数据截止到目前是276，没错，我们对上了。</p>
-<p>######packet #9</p>
+<h6>packet #9</h6>
 <p>A:既然我都要到了，那么我们就分手吧~~ 同意，FIN置为1，因为从B收到了带有FIN的报文（#7），所以ACK+1，变为629。因为上个数据包#8 没有发送任何数据，所以这里的SEQ不变,</p>
-<p>######packet #10</p>
+<h6>packet #10</h6>
 <p>因为#9带有FIN，所以SEQ自增1.ACK不变。</p>
 <p>关于代码，请看下篇。</p>
-<h2>参考</h2>
+<blockquote>
+<p>参考</p>
+</blockquote>
 <ol>
 <li>
 <p><a href="http://stackoverflow.com/questions/2672734/tcp-sequence-number-question" target="_blank" rel="external">TCP sequence number question</a></p>
@@ -1722,11 +1708,11 @@ windows是win7 + mingw）</p>
 <p>3.比较桶的内部元素是否与key相等（编写equal_to函数，基本类型意外用户根据需求编写），若都不相等，则没有找到。</p>
 <p>4.取出相等的记录的value。</p>
 <p>综上所述，实现一个hashtable必须注意hash函数 和 比较函数的接口提供。</p>
-<p>#####hashtable迭代器的设计</p>
+<h3>hashtable迭代器的设计</h3>
 <p>首先明确我们的需求，定位有hash函数搞定，而找到该桶之后，只是需要顺着桶往下找就够了，所以迭代器是个前向迭代器，对应的接口有实值，键值，hash仿函数，提取仿函数，等于仿函数，还有空间配置器等。其他编写仿照一般的迭代器设计即可。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> Value, <span class="keyword">class</span> Key,</span><br><span class="line">         <span class="keyword">class</span> HashFcn, <span class="keyword">class</span> ExtractKey,</span><br><span class="line">         <span class="keyword">class</span> EqualKey, <span class="keyword">class</span> Alloc&gt;</span><br><span class="line"><span class="keyword">struct</span> __hashtable_iterator</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">typedef</span> hashtable&lt;Value, Key, HashFcn, ExtractKey, EqualKey, Alloc&gt; HashTable;</span><br><span class="line">    <span class="keyword">typedef</span> __hashtable_iterator&lt;Value, Key,</span><br><span class="line">            HashFcn, ExtractKey,</span><br><span class="line">            EqualKey, Alloc&gt;</span><br><span class="line">            iterator;</span><br><span class="line">    <span class="keyword">typedef</span> __hashtable_iterator&lt;<span class="keyword">const</span> Value, Key,</span><br><span class="line">            HashFcn, ExtractKey,</span><br><span class="line">            EqualKey, Alloc&gt;</span><br><span class="line">            const_iterator;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">typedef</span> __hashtable_nodes&lt;Value&gt; node;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//因为是前向移动，没有后退操作--</span></span><br><span class="line">    <span class="keyword">typedef</span> forward_iterator_tag    iterator_categor;</span><br><span class="line">    <span class="keyword">typedef</span> Value                   value_type;</span><br><span class="line">    <span class="keyword">typedef</span> <span class="keyword">ptrdiff_t</span>               difference_type;</span><br><span class="line">    <span class="keyword">typedef</span> <span class="keyword">size_t</span>                  size_type;</span><br><span class="line">    <span class="keyword">typedef</span> Value*                  pointer;</span><br><span class="line">    <span class="keyword">typedef</span> Value&amp;                  reference;</span><br><span class="line"></span><br><span class="line">    node* cur;</span><br><span class="line">    HashTable* ht;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//constructor</span></span><br><span class="line">    __hashtable_iterator(node* n, HashTable* tab) : cur(n), ht(tab) &#123;&#125;</span><br><span class="line">    __hashtable_iterator() &#123;&#125;</span><br><span class="line"></span><br><span class="line">    reference <span class="keyword">operator</span>*()  <span class="keyword">const</span></span><br><span class="line">    &#123;</span><br><span class="line">        return cur-&gt;val;</span><br><span class="line">    &#125;</span><br><span class="line">    pointer   <span class="keyword">operator</span>-&gt;() <span class="keyword">const</span></span><br><span class="line">    &#123;</span><br><span class="line">        return &amp;(operator*());</span><br><span class="line">    &#125;</span><br><span class="line">    iterator&amp; <span class="keyword">operator</span>++();</span><br><span class="line">    iterator  <span class="keyword">operator</span>++(<span class="keyword">int</span>);</span><br><span class="line">    <span class="keyword">bool</span> <span class="keyword">operator</span>==(const iterator&amp; it) <span class="keyword">const</span></span><br><span class="line">    &#123;</span><br><span class="line">        return cur == it.cur;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">bool</span> <span class="keyword">operator</span>!=(const iterator&amp; it) <span class="keyword">const</span></span><br><span class="line">    &#123;</span><br><span class="line">        return cur != it.cur;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>详情请看<a href="https://github.com/aluenkinglee/stuff/blob/master/cplusplus/stl/hashtable#L127" title="__hashtable_iterator" target="_blank" rel="external">__hashtable_iterator</a></p>
-<p>#####hashtable的数据结构</p>
+<h3>hashtable的数据结构</h3>
 <p>由于采用开链的冲突解决方法，由此看来只需要一个vector代替桶，链表来装载桶内的元素即可。</p>
 <p>需要注意的是hash函数，提取函数，等于函数的成员。另外需要buckets，还有元素数目的成员，有了这些基本就够了。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//hashtable的数据结构</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> Value, <span class="keyword">class</span> Key,</span><br><span class="line">         <span class="keyword">class</span> HashFcn, <span class="keyword">class</span> ExtractKey,</span><br><span class="line">         <span class="keyword">class</span> EqualKey, <span class="keyword">class</span> Alloc&gt;</span><br><span class="line"><span class="keyword">class</span> hashtable</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">typedef</span> Value value_type;</span><br><span class="line">    <span class="keyword">typedef</span> value_type* pointer;</span><br><span class="line">    <span class="keyword">typedef</span> <span class="keyword">const</span> pointer const_pointer;</span><br><span class="line">    <span class="keyword">typedef</span> value_type&amp; reference;</span><br><span class="line">    <span class="keyword">typedef</span> <span class="keyword">const</span> reference const_reference;</span><br><span class="line">    <span class="keyword">typedef</span> Key key_type;</span><br><span class="line">    <span class="keyword">typedef</span> HashFcn hasher;</span><br><span class="line">    <span class="keyword">typedef</span> EqualKey key_equal;</span><br><span class="line">    <span class="keyword">typedef</span> <span class="keyword">size_t</span> size_type;</span><br><span class="line">    <span class="keyword">typedef</span> __hashtable_iterator&lt;Value, Key, HashFcn, ExtractKey, EqualKey, Alloc&gt; iterator;</span><br><span class="line">    <span class="keyword">typedef</span> <span class="keyword">typename</span> __hashtable_iterator&lt;Value, Key, HashFcn, ExtractKey, EqualKey, Alloc&gt;::const_iterator const_iterator;</span><br><span class="line"><span class="comment">//constructor</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    hashtable(size_type n,</span><br><span class="line">              <span class="keyword">const</span> HashFcn &amp;hf,</span><br><span class="line">              <span class="keyword">const</span> EqualKey &amp;eql,</span><br><span class="line">              <span class="keyword">const</span> ExtractKey &amp;ext)</span><br><span class="line">        :hash(hf),equals(eql),get_key(ext),num_elements(<span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        initialize_buckets(n);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    hashtable(size_type n,</span><br><span class="line">              <span class="keyword">const</span> HashFcn &amp;hf,</span><br><span class="line">              <span class="keyword">const</span> EqualKey &amp;eql)</span><br><span class="line">        :hash(hf),equals(eql),get_key(ExtractKey()),num_elements(<span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        initialize_buckets(n);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    hashtable(<span class="keyword">const</span> hashtable &amp;ht)</span><br><span class="line">        :hash(ht.hash),equals(ht.equals),get_key(ht.get_key),num_elements(<span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        copy_from(&amp;ht);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ~hashtable()</span><br><span class="line">    &#123;</span><br><span class="line">        clear();</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    hashtable&amp; <span class="keyword">operator</span>= (const hashtable &amp;ht)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (&amp;ht != this)</span><br><span class="line">        &#123;</span><br><span class="line">            clear();</span><br><span class="line">            hash = ht.hash;</span><br><span class="line">            equals = ht.equals;</span><br><span class="line">            get_key = ht.get_key;</span><br><span class="line">            copy_from(&amp;ht);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    hasher hash;</span><br><span class="line">    key_equal equals;</span><br><span class="line">    ExtractKey get_key;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">typedef</span> __hashtable_nodes&lt;Value&gt; node;</span><br><span class="line">    <span class="keyword">typedef</span> simple_alloc&lt;node, Alloc&gt; node_allocator;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//std::vector&lt;node*, Alloc&gt; buckets;</span></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;node*&gt; buckets;</span><br><span class="line">    size_type num_elements;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;node*&gt; getBuckets() &#123; return buckets;&#125;</span><br><span class="line">    <span class="comment">//返回bucket vector大小</span></span><br><span class="line">    <span class="function">size_type <span class="title">bucket_count</span><span class="params">()</span> <span class="keyword">const</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        return buckets.size();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//返回bucket vector可能的最大值</span></span><br><span class="line">    <span class="function">size_type <span class="title">max_bucket_count</span><span class="params">()</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        return __stl_prime_list[__stl_num_primes - <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//返回元素个数</span></span><br><span class="line">    <span class="function">size_type <span class="title">size</span><span class="params">()</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        return num_elements;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//找到起始节点</span></span><br><span class="line">    <span class="function">iterator <span class="title">begin</span><span class="params">()</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        size_type bucketIndex = <span class="number">0</span>;</span><br><span class="line">        node* first;</span><br><span class="line">        <span class="keyword">for</span> (first = buckets[bucketIndex];</span><br><span class="line">                !first &amp;&amp; ++bucketIndex &lt; buckets.size();</span><br><span class="line">                first = buckets[bucketIndex]) &#123;&#125;</span><br><span class="line">        return iterator(first, this);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//插入元素，不允许重复</span></span><br><span class="line">    <span class="built_in">std</span>::pair&lt;iterator, <span class="keyword">bool</span>&gt; insert_unique(<span class="keyword">const</span> Value&amp; obj)</span><br><span class="line">    &#123;</span><br><span class="line">        resize(num_elements + <span class="number">1</span>);</span><br><span class="line">        return insert_unique_noresize(obj);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//插入元素，允许重复</span></span><br><span class="line">    <span class="function">iterator <span class="title">insert_equal</span><span class="params">(<span class="keyword">const</span> Value&amp; obj)</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        resize(num_elements + <span class="number">1</span>);</span><br><span class="line">        return insert_equal_noresize(obj);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//查找某一键值的节点</span></span><br><span class="line">    <span class="function">iterator <span class="title">find</span><span class="params">(<span class="keyword">const</span> Key&amp; key)</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        size_type bucketIndex = bkt_num_key(key);</span><br><span class="line">        node* first;</span><br><span class="line">        <span class="keyword">for</span> ( first = buckets[bucketIndex];</span><br><span class="line">                first &amp;&amp; !equals(get_key(first-&gt;val), key);</span><br><span class="line">                first = first-&gt;next) &#123;&#125;</span><br><span class="line">        return iterator(first, this);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//判断某一值出现的次数</span></span><br><span class="line">    <span class="function">size_type <span class="title">count</span><span class="params">(<span class="keyword">const</span> Key&amp; key)</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">const</span> size_type bucketIndex = bkt_num_key(key);</span><br><span class="line">        size_type result = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">const</span> node* cur = buckets[bucketIndex];</span><br><span class="line">                cur;</span><br><span class="line">                cur = cur-&gt;next)</span><br><span class="line">            <span class="keyword">if</span> (equals(get_key(cur-&gt;val), key))</span><br><span class="line">                ++result;</span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//判断元素落在哪个bucket</span></span><br><span class="line">    <span class="comment">//提供两个版本</span></span><br><span class="line">    <span class="comment">//版本一：只接受实值</span></span><br><span class="line">    <span class="function">size_type <span class="title">bkt_num</span><span class="params">(<span class="keyword">const</span> Value&amp; obj)</span> <span class="keyword">const</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        return bkt_num_key(get_key(obj));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//版本二：接受实值和buckets个数</span></span><br><span class="line">    <span class="function">size_type <span class="title">bkt_num</span><span class="params">(<span class="keyword">const</span> Value&amp; obj,size_type n)</span> <span class="keyword">const</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        return bkt_num_key(get_key(obj),n);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//返回在index处的节点个数</span></span><br><span class="line">    <span class="function">size_type <span class="title">elems_in_bucket</span><span class="params">(size_type bucketIndex)</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        size_type n = <span class="number">0</span>;</span><br><span class="line">        node* tempNode = buckets[bucketIndex];</span><br><span class="line">        <span class="keyword">while</span>(tempNode &amp;&amp; ++n) tempNode = tempNode-&gt;next;</span><br><span class="line">        return n;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//整体删除</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">clear</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="comment">//复制hash表</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">copy_from</span><span class="params">(<span class="keyword">const</span> hashtable&amp; ht)</span></span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">//初始化buckets vector</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">initialize_buckets</span><span class="params">(size_type n)</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">const</span> size_type n_buckets = next_size(n);</span><br><span class="line">        buckets.reserve(n_buckets);</span><br><span class="line">        buckets.insert(buckets.end(), n_buckets, (node*) <span class="number">0</span>);</span><br><span class="line">        num_elements = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//节点配置和释放函数</span></span><br><span class="line">    <span class="function">node* <span class="title">new_node</span><span class="params">(<span class="keyword">const</span> Value&amp; obj)</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="comment">//node *tempNode = node_allocator::allocate();</span></span><br><span class="line">        node* tempNode = new node;</span><br><span class="line">        tempNode-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">        <span class="keyword">try</span></span><br><span class="line">        &#123;</span><br><span class="line">            construct(&amp;tempNode-&gt;val,obj);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">catch</span> (...)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">//node_allocator::deallocate(tempNode);</span></span><br><span class="line">            <span class="keyword">delete</span> tempNode;</span><br><span class="line">            return <span class="literal">NULL</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        return tempNode;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">delete_node</span><span class="params">(node *n)</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        destroy(&amp;n-&gt;val);</span><br><span class="line">        <span class="keyword">delete</span> n;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//返回最接近n并大于等于n的质数</span></span><br><span class="line">    <span class="function">size_type <span class="title">next_size</span><span class="params">(size_type n)</span><span class="keyword">const</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        return __get_next_prime(n);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//版本一：只接受键值</span></span><br><span class="line">    <span class="function">size_type <span class="title">bkt_num_key</span><span class="params">(<span class="keyword">const</span> Key&amp; key)</span> <span class="keyword">const</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        return hash(key) % (buckets.size());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//版本二：接受键值和buckets个数</span></span><br><span class="line">    <span class="function">size_type <span class="title">bkt_num_key</span><span class="params">(<span class="keyword">const</span> Key&amp; key,size_type n)</span> <span class="keyword">const</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        return hash(key) % n;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//判断是否需要扩充buckets vector，如有需要则进行扩充</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">resize</span><span class="params">(size_type num_elements_hint)</span></span>;</span><br><span class="line">    <span class="comment">//在不需要重新分配bucket vector的情况下插入元素，元素不允许重复</span></span><br><span class="line">    <span class="built_in">std</span>::pair&lt;iterator, <span class="keyword">bool</span>&gt; insert_unique_noresize(<span class="keyword">const</span> Value &amp;obj);</span><br><span class="line">    <span class="comment">//在不需要重新分配bucket vector的情况下插入元素，元素不允许重复</span></span><br><span class="line">    <span class="function">iterator <span class="title">insert_equal_noresize</span><span class="params">(<span class="keyword">const</span> Value &amp;obj)</span></span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
@@ -1750,14 +1736,14 @@ windows是win7 + mingw）</p>
 类问题。</p>
 <p>接下来的文章，大概是对Andrew Ng视频的一个简单的总结，会结合变成实例（octave和C++）来插叙。</p>
 <a id="more"></a>
-<p>###线性回归</p>
+<h3>线性回归</h3>
 <p>好吧，先从一个简单的例子讲起，假设我们要为一个房子售价做个数学模型，价格和什么有关系？当然因素很多，比如房间的大小，离商业区的距离，嗯，房子几坪，奥，看起来不是
 个简单事儿～，那好吧，遵循我们先从最简单做起的原则，现假设相同尺寸的房子价格和城市人口多少有关系，其他的先抛到一边去，我喜欢做甩手掌柜==
 ，你看这很合理！北京上海的房子价格能和三四线城市的比么=。=</p>
 <p>那么好，我们会看到下面这个图！图先不上！！！假设你装了octave，并执行ex1的话就会看到它的！！</p>
 <p><img src="https://github.com/aluenkinglee/aluenkinglee.github.io/blob/source/source/images/2014-01-05-machine-learning-linear-regression/linear_regression_f1.png?raw=true" alt="价格-人口关系图" title="价格-人口关系图"></p>
 <p>在那之前，先让我们约定几个问题，恩恩：</p>
-<p>#####注释</p>
+<h3>注释</h3>
 <ul>
 <li>$m$ ：是训练实例的个数</li>
 <li>$x$ ：是输入的特征向量,很有可能是这样子：$x=(x_1,...,x_k)$</li>
@@ -1797,7 +1783,7 @@ $$</p>
 E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95)在此就不罗嗦了。Andrew
 Ng在视频中讲的很形象，只要我们沿着山最陡的方向向下走，就会有可能找到最小值，翻译成数学语言就是沿着梯度相反的方向$- \nabla F(x)$,
 就可以下降最快。（我们不是要找最小值么，当然是水往低处流！所以就是负值了）</p>
-<p>####梯度下降法</p>
+<h3>梯度下降法</h3>
 <p>选定了回归模型，那就要确定参数$\Theta$了，$\Theta$只有在$J{(\Theta)}
 $最小的情况下才能确定，所以问题归结为了求极小值的问题，梯度下降法是个不错的选择。当然，它会遇到找到的值只是个局部最小值。</p>
 <p>这是示意图：</p>
@@ -2018,8 +2004,8 @@ $$</p>
 </blockquote>
 </blockquote>
 <p>然后，就不是很清楚了。大概看了看 其实也差不多...好吧是差很多。编程的过程中出现了一些问题。在这里记录下来&gt;.&lt; 真实忘不了了！</p>
-<p>#####复制构造函数
-它是一个特殊的构造函数，而且形参常用const Type&amp; 来修饰(如果凶残点，用指针也不是不行，但一定得是这两种！想想是为什么？)</p>
+<h5>复制构造函数</h5>
+<p>它是一个特殊的构造函数，而且形参常用const Type&amp; 来修饰(如果凶残点，用指针也不是不行，但一定得是这两种！想想是为什么？)</p>
 <a id="more"></a>
 <p>有两种情况会调用它：</p>
 <ol>
@@ -2032,15 +2018,15 @@ $$</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> book = <span class="string">"ISBN-2323-23234"</span>;</span><br></pre></td></tr></table></figure>
 <p>创建book对象时，编译器首先会接受一个C语言风格形参的string构造函数，创建一个临时对象，然后调用string的复制构造函数将book初始化那个临时对象的副本。（但是我感觉更像是'临时对象-&gt;赋值操作'..这里需要编码测试一下）</p>
 <p>和java，python创建对象的方法来比,C++方法真心多...</p>
-<p>#####合成的复制构造函数
-就是自个没写编译器默认提供的复制构造函数，完成的功能很简单，数据成员逐个初始化，（<code>static</code>成员例外！！因为他们是属于类的！！）</p>
-<p>#####关于explicit的复制构造函数
-(以后加上，真心没写过，只知道IO类型的复制构造函数都是explicit的)</p>
-<p>#####赋值重载
-=是个二元运算符，所以有两个形参，分别对应左操作数和右操作数(const引用),当为成员函数时就是左操作数默认绑定到this指针上了。返回值为同一类型的引用。</p>
-<p>#####关于析构函数
-析构函数就是用来回收那些申请的系统资源的。所以自个度量何时该自己写给类的析构函数吧。</p>
-<p>#####关于何时调用析构函数</p>
+<h5>合成的复制构造函数</h5>
+<p>就是自个没写编译器默认提供的复制构造函数，完成的功能很简单，数据成员逐个初始化，（<code>static</code>成员例外！！因为他们是属于类的！！）</p>
+<h5>关于explicit的复制构造函数</h5>
+<p>(以后加上，真心没写过，只知道IO类型的复制构造函数都是explicit的)</p>
+<h5>赋值重载</h5>
+<p>=是个二元运算符，所以有两个形参，分别对应左操作数和右操作数(const引用),当为成员函数时就是左操作数默认绑定到this指针上了。返回值为同一类型的引用。</p>
+<h5>关于析构函数</h5>
+<p>析构函数就是用来回收那些申请的系统资源的。所以自个度量何时该自己写给类的析构函数吧。</p>
+<h5>关于何时调用析构函数</h5>
 <ol>
 <li>撤销类的对象自动调用</li>
 <li>动态分配的对象只有在删除指向该指针时，才会运行析构函数！！否则会导致内存泄漏，小心啦。</li>
@@ -2315,7 +2301,7 @@ ip 与本机VirtualBox Host-Only Network的网卡ip在同一网段内（默认19
 <p>这是我机器上的测试结果，A没有显示地址??怎么回事，两个实例都有自己的地址:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">__main__.A &lt;__main__.A instance at 0x01262AD0&gt; &lt;__main__.A instance at 0x013091C0&gt;</span><br><span class="line">0 0 0</span><br><span class="line">0 10 0</span><br><span class="line">5 10 5</span><br><span class="line">5 10 10</span><br></pre></td></tr></table></figure>
 <p>前两行的结果都很好理解，但是第三行，之前o2的值一直没有改变，o1的值改变，在A的值改变之后o2也随之改变了，这个时候….看上去，o2还是在引用A的值，但是在o2自己的值改变之后就不在去引用类的值了。</p>
-<p>#####由此可见：</p>
+<h5>由此可见：</h5>
 <ul>
 <li>
 <p>由类派生出来的实例在未操作之前，都是简单的引用类的那些值</p>
@@ -2341,7 +2327,7 @@ ip 与本机VirtualBox Host-Only Network的网卡ip在同一网段内（默认19
 <p>关于unicode的一些说明，encode(),unicode()那些往
 <a href="http://docs.python.org/2/tutorial/introduction.html#unicode-strings" target="_blank" rel="external">这里看</a></p>
 <p>python中一些iterable types（具体术语不知道怎么称呼）是分成可以<code>immutable</code>和<code>mutable</code>的：</p>
-<p>#####可更改的（<code>mutable</code>）:</p>
+<h5>可更改的（<code>mutable</code>）:</h5>
 <ul>
 <li>
 <p>字典型(dictionary)</p>
@@ -2350,7 +2336,7 @@ ip 与本机VirtualBox Host-Only Network的网卡ip在同一网段内（默认19
 <p>列表型(list)</p>
 </li>
 </ul>
-<p>#####不可更改（mutable）：</p>
+<h5>不可更改（mutable）：</h5>
 <ul>
 <li>
 <p>元组（tuple)</p>
@@ -2431,7 +2417,7 @@ ip 与本机VirtualBox Host-Only Network的网卡ip在同一网段内（默认19
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install git git-core</span><br><span class="line">ssh-keygen</span><br></pre></td></tr></table></figure>
 <p>然后系统提示输入文件保存位置等信息，连续敲三次回车即可，生成的SSH key文件保存在中～/.ssh/id_rsa.publickey</p>
 <p>接着拷贝.ssh/id_rsa.pub文件内的所以内容，将它粘帖到github帐号管理中的添加SSH key界面中。</p>
-<p>######打开github帐号管理中的添加SSH key界面的步骤如下</p>
+<h6>打开github帐号管理中的添加SSH key界面的步骤如下</h6>
 <ul>
 <li>
 <p>登录github</p>
@@ -2448,7 +2434,7 @@ ip 与本机VirtualBox Host-Only Network的网卡ip在同一网段内（默认19
 </ul>
 <p>在出现的界面中填写SSH key的名称，填一个你自己喜欢的名称即可，然后将上面拷贝的~/.ssh/id_rsa.pub文件内容粘帖到key一栏，
 在点击“add key”按钮就可以了。添加过程github会提示你输入一次你的github密码。</p>
-<p>###git 配置</p>
+<h3>git 配置</h3>
 <p>git有三个配置文件，分别是<code>repo/.git/config</code>,<code>$HOME/.gitconfig</code>,<code>/etc/gitconfig</code>.</p>
 <ol>
 <li>
@@ -2465,14 +2451,12 @@ ip 与本机VirtualBox Host-Only Network的网卡ip在同一网段内（默认19
 <p>如果已经配置了，则会看到user.name 和 user.email的配置信息</p>
 <p>如果没有,一般情况下在git提交时会使用机器名，诸如：unknown dev@xxx-PC.(none) 等类型的Author信息，肯定不方便了。</p>
 <p>建议都配置明确的user.name 和 user.email信息。</p>
-<p>#####可以通过下面的命令进行配置</p>
+<p>可以通过下面的命令进行配置</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config user.name xxx</span><br><span class="line">git config user.email xxx@xxx.com</span><br></pre></td></tr></table></figure>
 <p>配置完成后可以通过 git config –list 查看到.</p>
 <p>这个准备工作算是完成了，其他的，就参考别人写得。在这不再写了。</p>
 <blockquote>
-<blockquote>
 <p>参考</p>
-</blockquote>
 </blockquote>
 <ol>
 <li>

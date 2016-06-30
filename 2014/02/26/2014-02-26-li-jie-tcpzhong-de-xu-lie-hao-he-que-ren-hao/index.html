@@ -21,7 +21,7 @@
 <meta property="og:image" content="https://github.com/aluenkinglee/aluenkinglee.github.io/blob/source/source/images/2014-02-26-li-jie-tcpzhong-de-xu-lie-hao-he-que-ren-hao/tcp3.png?raw=true">
 <meta property="og:image" content="https://github.com/aluenkinglee/aluenkinglee.github.io/blob/source/source/images/2014-02-26-li-jie-tcpzhong-de-xu-lie-hao-he-que-ren-hao/tcp4.png?raw=true">
 <meta property="og:image" content="https://github.com/aluenkinglee/aluenkinglee.github.io/blob/source/source/images/2014-02-26-li-jie-tcpzhong-de-xu-lie-hao-he-que-ren-hao/tcp5.png?raw=true">
-<meta property="og:updated_time" content="2015-07-26T12:33:50.000Z">
+<meta property="og:updated_time" content="2016-06-30T09:39:32.640Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="理解TCP中的序列号和确认号">
 <meta name="twitter:description" content="之所以写这么一篇文章是因为被wireshark的序列号搞晕了，我不知道你们是否这样，当你读这篇article时，肯定你已经熟悉了TCP那个三次握手，
@@ -151,7 +151,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Annotation/" style="font-size: 10px;">Annotation</a> <a href="/tags/ThreadPool/" style="font-size: 10px;">ThreadPool</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/hotload/" style="font-size: 10px;">hotload</a> <a href="/tags/idea/" style="font-size: 10px;">idea</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/java内存模型/" style="font-size: 10px;">java内存模型</a> <a href="/tags/java线程池/" style="font-size: 10px;">java线程池</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/math-example/" style="font-size: 10px;">math example</a> <a href="/tags/reflect/" style="font-size: 10px;">reflect</a> <a href="/tags/反射/" style="font-size: 10px;">反射</a> <a href="/tags/来自陈年佳酿的笔记/" style="font-size: 10px;">来自陈年佳酿的笔记</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/热加载/" style="font-size: 10px;">热加载</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a>
+						<a href="/tags/Annotation/" style="font-size: 10px;">Annotation</a> <a href="/tags/Armadillo/" style="font-size: 11.67px;">Armadillo</a> <a href="/tags/C/" style="font-size: 16.67px;">C++</a> <a href="/tags/CS/" style="font-size: 10px;">CS</a> <a href="/tags/KMP/" style="font-size: 10px;">KMP</a> <a href="/tags/LaTex/" style="font-size: 10px;">LaTex</a> <a href="/tags/Machine-Learning/" style="font-size: 20px;">Machine Learning</a> <a href="/tags/Octopress/" style="font-size: 11.67px;">Octopress</a> <a href="/tags/SDB/" style="font-size: 10px;">SDB</a> <a href="/tags/SDN/" style="font-size: 10px;">SDN</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/SVM/" style="font-size: 11.67px;">SVM</a> <a href="/tags/TCP/" style="font-size: 10px;">TCP</a> <a href="/tags/ThreadPool/" style="font-size: 10px;">ThreadPool</a> <a href="/tags/armadillo链接错误/" style="font-size: 10px;">armadillo链接错误</a> <a href="/tags/co-write/" style="font-size: 10px;">co-write</a> <a href="/tags/feature-selection/" style="font-size: 11.67px;">feature selection</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/hotload/" style="font-size: 10px;">hotload</a> <a href="/tags/idea/" style="font-size: 10px;">idea</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/java内存模型/" style="font-size: 10px;">java内存模型</a> <a href="/tags/java线程池/" style="font-size: 10px;">java线程池</a> <a href="/tags/jsoup/" style="font-size: 10px;">jsoup</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/lapack/" style="font-size: 10px;">lapack</a> <a href="/tags/libpcap/" style="font-size: 11.67px;">libpcap</a> <a href="/tags/libsvm/" style="font-size: 10px;">libsvm</a> <a href="/tags/linear-regression/" style="font-size: 10px;">linear-regression</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/list/" style="font-size: 10px;">list</a> <a href="/tags/map-reduce/" style="font-size: 10px;">map-reduce</a> <a href="/tags/math-example/" style="font-size: 10px;">math example</a> <a href="/tags/mongodb/" style="font-size: 10px;">mongodb</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/new/" style="font-size: 10px;">new[]</a> <a href="/tags/nox/" style="font-size: 10px;">nox</a> <a href="/tags/octave/" style="font-size: 10px;">octave</a> <a href="/tags/openblas/" style="font-size: 10px;">openblas</a> <a href="/tags/predeclaration/" style="font-size: 10px;">predeclaration</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/reflect/" style="font-size: 10px;">reflect</a> <a href="/tags/virtualbox/" style="font-size: 10px;">virtualbox</a> <a href="/tags/wireshark/" style="font-size: 10px;">wireshark</a> <a href="/tags/三次握手/" style="font-size: 10px;">三次握手</a> <a href="/tags/信息增益算法/" style="font-size: 10px;">信息增益算法</a> <a href="/tags/内存覆盖/" style="font-size: 10px;">内存覆盖</a> <a href="/tags/动态规划/" style="font-size: 11.67px;">动态规划</a> <a href="/tags/协同写作/" style="font-size: 10px;">协同写作</a> <a href="/tags/反射/" style="font-size: 10px;">反射</a> <a href="/tags/四次握手/" style="font-size: 10px;">四次握手</a> <a href="/tags/复制/" style="font-size: 10px;">复制</a> <a href="/tags/复制控制/" style="font-size: 10px;">复制控制</a> <a href="/tags/层次聚类/" style="font-size: 10px;">层次聚类</a> <a href="/tags/常用命令/" style="font-size: 10px;">常用命令</a> <a href="/tags/微博标签/" style="font-size: 10px;">微博标签</a> <a href="/tags/总结/" style="font-size: 13.33px;">总结</a> <a href="/tags/拉格朗日对偶/" style="font-size: 10px;">拉格朗日对偶</a> <a href="/tags/数据挖掘/" style="font-size: 10px;">数据挖掘</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/整理/" style="font-size: 11.67px;">整理</a> <a href="/tags/文本分类/" style="font-size: 10px;">文本分类</a> <a href="/tags/时间格式/" style="font-size: 10px;">时间格式</a> <a href="/tags/朴素贝叶斯/" style="font-size: 10px;">朴素贝叶斯</a> <a href="/tags/机器学习/" style="font-size: 18.33px;">机器学习</a> <a href="/tags/来自陈年佳酿的笔记/" style="font-size: 10px;">来自陈年佳酿的笔记</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/热加载/" style="font-size: 10px;">热加载</a> <a href="/tags/特征选择/" style="font-size: 11.67px;">特征选择</a> <a href="/tags/生成学习/" style="font-size: 10px;">生成学习</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/线程/" style="font-size: 11.67px;">线程</a> <a href="/tags/网页分析/" style="font-size: 10px;">网页分析</a> <a href="/tags/赋值/" style="font-size: 10px;">赋值</a> <a href="/tags/进程/" style="font-size: 11.67px;">进程</a> <a href="/tags/金融信用/" style="font-size: 10px;">金融信用</a> <a href="/tags/链表/" style="font-size: 11.67px;">链表</a> <a href="/tags/面试/" style="font-size: 11.67px;">面试</a>
 					</div>
 				</section>
 				
@@ -246,6 +246,10 @@
       
       <div class="article-info article-info-post">
         
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TCP/">TCP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/libpcap/">libpcap</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wireshark/">wireshark</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/三次握手/">三次握手</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/四次握手/">四次握手</a></li></ul>
+	</div>
+
 
 <div class="counter-tag counter">
     <span id="/2014/02/26/2014-02-26-li-jie-tcpzhong-de-xu-lie-hao-he-que-ren-hao/" class="leancloud_visitors post-title-link"
@@ -257,10 +261,6 @@
 </div>
 
         
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/TCP-libpcap-wireshark-三次握手-C-四次握手/">TCP libpcap wireshark 三次握手 C 四次握手</a>
-	</div>
-
 
         <div class="clearfix"></div>
       </div>
@@ -276,7 +276,7 @@
 <p><a href="https://github.com/aluenkinglee/stuff/blob/master/cplusplus/traffic_parser/b.pcap?raw=true" title="pcap文件" target="_blank" rel="external">这里</a>是个已经准备好的pcap文件，本文结合这个文件对此进行描述。</p>
 <p>这个文件分析的是微信在单一环境中的网络行为，所以比较简单。打开这个文件，找到开始的几个右键单击选择<code>Follow TCP Stream</code>，或者在filter那里输入<code>tcp.stream eq 1</code>可以看到这里。</p>
 <p><img src="https://github.com/aluenkinglee/aluenkinglee.github.io/blob/source/source/images/2014-02-26-li-jie-tcpzhong-de-xu-lie-hao-he-que-ren-hao/tcp1.png?raw=true" alt="Follow TCP Stream" title="Follow TCP Stream"></p>
-<p>####三次握手</p>
+<h4>三次握手</h4>
 <p>TCP利用了8个标志位，在头部位置，以此来控制链接的状态，对我们最有用的就是SYN，ACK，FIN了。</p>
 <ul>
 <li>SYN - (Synchronize) Initiates a connection</li>
@@ -284,14 +284,14 @@
 <li>ACK - Acknowledges received data</li>
 </ul>
 <p>下面将会看到，一个packet包含了多个flag set。</p>
-<p>######对于这个流的第一个，注意Flags里面出了SYN位是1之外，其它都是0。</p>
+<h6>对于这个流的第一个，注意Flags里面出了SYN位是1之外，其它都是0。</h6>
 <p><img src="https://github.com/aluenkinglee/aluenkinglee.github.io/blob/source/source/images/2014-02-26-li-jie-tcpzhong-de-xu-lie-hao-he-que-ren-hao/tcp2.png?raw=true" alt="第一次握手" title="第一次握手"></p>
-<p>######接下来在看第二个，注意它有两个标志位被设置为1，分别是SYN和ACK。</p>
+<h6>接下来在看第二个，注意它有两个标志位被设置为1，分别是SYN和ACK。</h6>
 <p><img src="https://github.com/aluenkinglee/aluenkinglee.github.io/blob/source/source/images/2014-02-26-li-jie-tcpzhong-de-xu-lie-hao-he-que-ren-hao/tcp3.png?raw=true" alt="第二次握手" title="第二次握手"></p>
-<p>######对于第三个packet，就只有ACK设置了。</p>
+<h6>对于第三个packet，就只有ACK设置了。</h6>
 <p><img src="https://github.com/aluenkinglee/aluenkinglee.github.io/blob/source/source/images/2014-02-26-li-jie-tcpzhong-de-xu-lie-hao-he-que-ren-hao/tcp4.png?raw=true" alt="第三次握手" title="第三次握手"></p>
 <p>这就是最初的TCP三次握手。</p>
-<p>####序列号和应答号（SEQ和ACK）</p>
+<h4>序列号和应答号（SEQ和ACK）</h4>
 <p>假设客户端为A，服务器为B，双方都为护着一个32bit的序列号，用来追踪传输了多少数据。。这个号包括了之前所传输的负载的
 大小，由另一端的应答号来应答“你传的数据我都收到了。。”</p>
 <p>当一个机器开始初始TCP序列号时，它是随机的！！不然会出现序列号攻击。。（我忘记了，在用那个wireshark后成功被它的相对序列号迷惑了==）,是一个0～ $2^{32}-1$的数。相对序列号是给人看的，所以像wireshark之辈使用它是为了人们方便阅读理解的。
@@ -299,29 +299,31 @@
 <p>接下来让我们结合下图来看这个流的行为。在<code>Statistics &gt; Flow Graph...</code>选择<code>TCP flow</code>。</p>
 <p><img src="https://github.com/aluenkinglee/aluenkinglee.github.io/blob/source/source/images/2014-02-26-li-jie-tcpzhong-de-xu-lie-hao-he-que-ren-hao/tcp5.png?raw=true" alt="流图" title="流图"></p>
 <p>这张图很容易理解就不说了。使用这张流图可以很方便的帮助我们理解他们是怎么工作的。</p>
-<p>######packet #1</p>
+<h6>packet #1</h6>
 <p>A向B发了一个请求，我们可以在frame的tcp中分析出来，SYN=1而ACK=0，这意味这是一个流的起始包。这里使用的是相对序列号，所以为0.</p>
-<p>######packet #2</p>
+<h6>packet #2</h6>
 <p>B收到了响应，恩，因为这是会话的开始，所以B这边也生成了一个随机的序列号，只不过在这里也显示为0了。SYN置为1。另外ACK也置为1，表明收到了A的响应。
 (注意！虽然A没有发送任何负载payload，B仍然把ACK置为1，是因为收到的SYN或者FIN触发了这个增1行为。这儿不会涉及到任何负载长度的计算，因为带有这样信号的包不会携带负载的。)</p>
-<p>######packet #3</p>
+<h6>packet #3</h6>
 <p>和#2一样，A回应了B的响应（SEQ=0，ACK=1）所以ACK为1.自己的SEQ因为收到的包中有SYN所以变为1。此时，双方的SEQ都是1，这种现象在所有TCP开始建立连接时候都是一样的。</p>
-<p>######packet #4</p>
+<h6>packet #4</h6>
 <p>A这个包此时带有负载，这里的SEQ是1，因为上个包（#3）没有传输任何数据，ACK也是1，因为A没有传输任何数据。注意！packet的长度是341，但是我们计算的是传输层的数据长度--负载的长度，所以是ACK — LEN = LEN（#4）-LEN（#3） = 341 - 66 = 275。</p>
-<p>######packet #5</p>
+<h6>packet #5</h6>
 <p>这个包是B（#5）对A（#4）发送数据的响应，此时B的ACK加上负载的长度是275变为276，表示我B收到了你A传输的数据payload（#4）. B此时的SEQ仍为1.</p>
-<p>######packet #6</p>
+<h6>packet #6</h6>
 <p>这个包是B对A放送的HTTP响应，因为之前它（B）所有的包都没有负载，所以SEQ仍然为1，而ACK还是276.负载长度为627.</p>
-<p>######packet #7</p>
+<h6>packet #7</h6>
 <p>好吧，这个例子有点特殊，到这里为止B的数据就发送完了。。。所以FIN置为1，表明你（A）要得我（B）都给完了，没我的事儿了，SEQ加上我发送的数据长度为628，你那边确认之后应该和我一样才对。ACK还是之前你给我发送的那些数据，还是这些276.</p>
-<p>######packet #8</p>
+<h6>packet #8</h6>
 <p>A:收到了所有的数据，我先确认给你我数据我收到了，ACK加上627变为628。我之前发送的数据截止到目前是276，没错，我们对上了。</p>
-<p>######packet #9</p>
+<h6>packet #9</h6>
 <p>A:既然我都要到了，那么我们就分手吧~~ 同意，FIN置为1，因为从B收到了带有FIN的报文（#7），所以ACK+1，变为629。因为上个数据包#8 没有发送任何数据，所以这里的SEQ不变,</p>
-<p>######packet #10</p>
+<h6>packet #10</h6>
 <p>因为#9带有FIN，所以SEQ自增1.ACK不变。</p>
 <p>关于代码，请看下篇。</p>
-<h2>参考</h2>
+<blockquote>
+<p>参考</p>
+</blockquote>
 <ol>
 <li>
 <p><a href="http://stackoverflow.com/questions/2672734/tcp-sequence-number-question" target="_blank" rel="external">TCP sequence number question</a></p>
