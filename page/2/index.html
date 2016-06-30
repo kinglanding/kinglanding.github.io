@@ -210,10 +210,10 @@
 
         <div class="body-wrap">
   
-    <article id="post-testlatex" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-2016-04-27-think-about-difference-of-exception-between-thread-and-pool" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/04/27/testlatex/" class="article-date">
+      <a href="/2016/04/27/2016-04-27-think-about-difference-of-exception-between-thread-and-pool/" class="article-date">
   	<time datetime="2016-04-27T05:09:21.000Z" itemprop="datePublished">2016-04-27</time>
 </a>
     </div>
@@ -227,7 +227,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/27/testlatex/">Latex on hexo</a>
+      <a class="article-title" href="/2016/04/27/2016-04-27-think-about-difference-of-exception-between-thread-and-pool/">关于异常在线程与线程池不同表现的一个思考</a>
     </h1>
   
 
@@ -236,42 +236,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>\begin{aligned}
-\phi(x,y) = \phi \left(\sum_{i=1}^n x_ie_i, \sum_{j=1}^n y_je_j \right)
-= \sum_{i=1}^n \sum_{j=1}^n x_i y_j \phi(e_i, e_j)
-\end{aligned}</p>
-<p>$$\frac{\partial u}{\partial t}
-= h^2 \left( \frac{\partial^2 u}{\partial x^2} +
-\frac{\partial^2 u}{\partial y^2} +
-\frac{\partial^2 u}{\partial z^2}\right)$$</p>
-<span>$$\begin{aligned}
-\dot{x} &amp; = \sigma(y-x) \\
-\dot{y} &amp; = \rho x - y - xz \\
-\dot{z} &amp; = -\beta z + xy
-\end{aligned}$$</span><!-- Has MathJax -->
-<p>\begin{aligned}
-\dot{x} &amp; = \sigma(y-x) \
-\dot{y} &amp; = \rho x - y - xz \
-\dot{z} &amp; = -\beta z + xy
-\end{aligned}</p>
-<p>Simple inline $a = b + c$.</p>
-<span>$$f(x1, x2) = \frac{ 1 }{2\pi \sigma1\sigma2\sqrt{1-r^2}}e^{-\frac{1}{2(1-r^2)} 
-[\frac{(x1-\mu\_{x1})^2}{\sigma\_{x1}^2} - \frac{2r(x1-\mu\_{x1})(x2-\mu\_{x2})}{\sigma\_{x1} \sigma\_{x2}} + \frac{(x2-\mu\_{x2})^2}{\sigma\_{x2}^2}]}$$</span><!-- Has MathJax -->
-<span>$$\begin{aligned}
-  &amp; \phi(x,y) = \phi \left(\sum_{i=1}^n x_ie_i, \sum_{j=1}^n y_je_j \right)
-  = \sum_{i=1}^n \sum_{j=1}^n x_i y_j \phi(e_i, e_j) = \\
-  &amp; (x_1, \ldots, x_n) \left( \begin{array}{ccc}
-      \phi(e_1, e_1) &amp; \cdots &amp; \phi(e_1, e_n) \\
-      \vdots &amp; \ddots &amp; \vdots \\
-      \phi(e_n, e_1) &amp; \cdots &amp; \phi(e_n, e_n)
-    \end{array} \right)
-  \left( \begin{array}{c}
-      y_1 \\
-      \vdots \\
-      y_n
-    \end{array} \right)
-\end{aligned}$$</span><!-- Has MathJax -->
-<span>$$\min { \quad \frac { 1 }{ 2 } \left\| w \right\| ^{ 2 }+c\sum _{ i=1 }^{ l }{ { \xi }_{ i } } } \\ st.\quad y_{ i }(\omega ^{ T }\phi (x_i)-b)\ge 1-\xi _{ i },\left( \xi _{ i }&gt;0 \right)$$</span><!-- Has MathJax -->  
+        <p>如果一个线程在执行的过程中，遇到了某种异常，中断异常啊、空指针异常啊、算数异常，并且程序本身没有捕获异常，会发送什么？你可能会说，程序直接挂掉呗~然后日志里有异常日志。</p>
+<p>但实际上，要看这个线程是在什么地方。如果是在线程池外面，这个程序确实就直接挂掉了；</p>
       
     </div>
     
@@ -279,13 +245,13 @@
       
       
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/math-example/">math example</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ThreadPool/">ThreadPool</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java线程池/">java线程池</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/线程/">线程</a></li></ul>
 	</div>
 
 
 <div class="counter-tag counter">
-    <span id="/2016/04/27/testlatex/" class="leancloud_visitors"
-          style="font-size: 12px" data-flag-title="Latex on hexo">
+    <span id="/2016/04/27/2016-04-27-think-about-difference-of-exception-between-thread-and-pool/" class="leancloud_visitors post-title-link"
+          style="font-size: 12px" data-flag-title="关于异常在线程与线程池不同表现的一个思考">
          &nbsp;
     <!-- 这里给出浏览数-->
         Hits
@@ -294,6 +260,10 @@
 
       
 
+      
+        <p class="article-more-link">
+          <a  href="/2016/04/27/2016-04-27-think-about-difference-of-exception-between-thread-and-pool/#more">more >></a>
+        </p>
       
       <div class="clearfix"></div>
     </div>
@@ -353,7 +323,7 @@
       
 
 <div class="counter-tag counter">
-    <span id="/2015/01/14/2015-01-15-use-mongo-map-reduce-statistic-word-occurrence/" class="leancloud_visitors"
+    <span id="/2015/01/14/2015-01-15-use-mongo-map-reduce-statistic-word-occurrence/" class="leancloud_visitors post-title-link"
           style="font-size: 12px" data-flag-title="使用mongodb内置的mapreduce聚合函数统计词频">
          &nbsp;
     <!-- 这里给出浏览数-->
@@ -441,7 +411,7 @@
       
 
 <div class="counter-tag counter">
-    <span id="/2014/09/02/2014-09-02-qian-tan-wei-bo-biao-qian-ju-he/" class="leancloud_visitors"
+    <span id="/2014/09/02/2014-09-02-qian-tan-wei-bo-biao-qian-ju-he/" class="leancloud_visitors post-title-link"
           style="font-size: 12px" data-flag-title="浅谈微博标签聚合">
          &nbsp;
     <!-- 这里给出浏览数-->
@@ -512,7 +482,7 @@
       
 
 <div class="counter-tag counter">
-    <span id="/2014/07/12/2014-07-12-use-svm-to-classify-whether-a-person-is-good-or-bad-on-credit-using-sns-data/" class="leancloud_visitors"
+    <span id="/2014/07/12/2014-07-12-use-svm-to-classify-whether-a-person-is-good-or-bad-on-credit-using-sns-data/" class="leancloud_visitors post-title-link"
           style="font-size: 12px" data-flag-title="use svm to classify whether a person is good or bad on credit using sns data">
          &nbsp;
     <!-- 这里给出浏览数-->
@@ -586,7 +556,7 @@
       
 
 <div class="counter-tag counter">
-    <span id="/2014/07/09/2014-07-09-wei-pi-pei/" class="leancloud_visitors"
+    <span id="/2014/07/09/2014-07-09-wei-pi-pei/" class="leancloud_visitors post-title-link"
           style="font-size: 12px" data-flag-title="伪匹配">
          &nbsp;
     <!-- 这里给出浏览数-->
