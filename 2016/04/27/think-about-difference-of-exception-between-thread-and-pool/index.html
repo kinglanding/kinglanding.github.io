@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>关于异常在线程与线程池不同表现的一个思考 | 曾经渐行远，未免心戚戚</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="如果一个线程在执行的过程中，遇到了某种异常，中断异常啊、空指针异常啊、算数异常，并且程序本身没有捕获异常，会发送什么？你可能会说，程序直接挂掉呗~然后日志里有异常日志。
+但实际上，要看这个线程是在什么地方。如果是在线程池外面，这个程序确实就直接挂掉了；">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于异常在线程与线程池不同表现的一个思考">
+<meta property="og:url" content="http://kinglanding.github.io/2016/04/27/think-about-difference-of-exception-between-thread-and-pool/index.html">
+<meta property="og:site_name" content="曾经渐行远，未免心戚戚">
+<meta property="og:description" content="如果一个线程在执行的过程中，遇到了某种异常，中断异常啊、空指针异常啊、算数异常，并且程序本身没有捕获异常，会发送什么？你可能会说，程序直接挂掉呗~然后日志里有异常日志。
+但实际上，要看这个线程是在什么地方。如果是在线程池外面，这个程序确实就直接挂掉了；">
+<meta property="og:updated_time" content="2016-04-29T03:41:28.873Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="关于异常在线程与线程池不同表现的一个思考">
+<meta name="twitter:description" content="如果一个线程在执行的过程中，遇到了某种异常，中断异常啊、空指针异常啊、算数异常，并且程序本身没有捕获异常，会发送什么？你可能会说，程序直接挂掉呗~然后日志里有异常日志。
+但实际上，要看这个线程是在什么地方。如果是在线程池外面，这个程序确实就直接挂掉了；">
+  
+    <link rel="alternative" href="/atom.xml" title="曾经渐行远，未免心戚戚" type="application/atom+xml">
+  
+  
+    <link href="/favicon.ico" rel="icon" type="image/x-ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+
+    <!-- 增加点击次数插件-->
+    
+        <!-- jQuery文件-->
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<!--<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>-->
+<script src="/js/av-core-mini-0.6.1.js"></script>
+<script>AV.initialize("ULm4LbKU9FYj6CxYtKYnvaeB-gzGzoHsz", "TypHFu5f7mXg4U1N9RjFRo52");</script>
+<script src="/js/Counter.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+</head>
+
+<body>
+
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><!--加载jquery-->
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<!--start 加载search_path函数 -->
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+        search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+</script>
+<!--end of  加载search_path函数 -->
+
+<div id="container">
+    <div class="left-col">
+        <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/img/tusiki.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">Aluen King Lee</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>Menu</li>
+						<li>Tags</li>
+						
+						
+						<li>Über</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/tags/随笔">随笔</a></li>
+				        
+							<li><a href="/search">搜索</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="#" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="#" title="rss">rss</a>
+					        
+								<a class="zhihu" target="_blank" href="#" title="zhihu">zhihu</a>
+					        
+								<a class="douban" target="_blank" href="#" title="douban">douban</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Algorithm/" style="font-size: 10px;">Algorithm</a> <a href="/tags/Annotation/" style="font-size: 10px;">Annotation</a> <a href="/tags/Armadillo/" style="font-size: 11.67px;">Armadillo</a> <a href="/tags/C/" style="font-size: 16.67px;">C++</a> <a href="/tags/CS/" style="font-size: 10px;">CS</a> <a href="/tags/Consensus/" style="font-size: 10px;">Consensus</a> <a href="/tags/KMP/" style="font-size: 10px;">KMP</a> <a href="/tags/LaTex/" style="font-size: 10px;">LaTex</a> <a href="/tags/Machine-Learning/" style="font-size: 20px;">Machine Learning</a> <a href="/tags/Octopress/" style="font-size: 11.67px;">Octopress</a> <a href="/tags/Raft/" style="font-size: 10px;">Raft</a> <a href="/tags/SDB/" style="font-size: 10px;">SDB</a> <a href="/tags/SDN/" style="font-size: 10px;">SDN</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/SVM/" style="font-size: 11.67px;">SVM</a> <a href="/tags/TCP/" style="font-size: 10px;">TCP</a> <a href="/tags/ThreadPool/" style="font-size: 10px;">ThreadPool</a> <a href="/tags/armadillo链接错误/" style="font-size: 10px;">armadillo链接错误</a> <a href="/tags/co-write/" style="font-size: 10px;">co-write</a> <a href="/tags/feature-selection/" style="font-size: 11.67px;">feature selection</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 11.67px;">hexo</a> <a href="/tags/hotload/" style="font-size: 10px;">hotload</a> <a href="/tags/idea/" style="font-size: 10px;">idea</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/java内存模型/" style="font-size: 10px;">java内存模型</a> <a href="/tags/java线程池/" style="font-size: 10px;">java线程池</a> <a href="/tags/jsoup/" style="font-size: 10px;">jsoup</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/lapack/" style="font-size: 10px;">lapack</a> <a href="/tags/libpcap/" style="font-size: 11.67px;">libpcap</a> <a href="/tags/libsvm/" style="font-size: 10px;">libsvm</a> <a href="/tags/linear-regression/" style="font-size: 10px;">linear-regression</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/list/" style="font-size: 10px;">list</a> <a href="/tags/map-reduce/" style="font-size: 10px;">map-reduce</a> <a href="/tags/math-example/" style="font-size: 10px;">math example</a> <a href="/tags/mongodb/" style="font-size: 10px;">mongodb</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/new/" style="font-size: 10px;">new[]</a> <a href="/tags/nox/" style="font-size: 10px;">nox</a> <a href="/tags/octave/" style="font-size: 10px;">octave</a> <a href="/tags/openblas/" style="font-size: 10px;">openblas</a> <a href="/tags/predeclaration/" style="font-size: 10px;">predeclaration</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/reflect/" style="font-size: 10px;">reflect</a> <a href="/tags/virtualbox/" style="font-size: 10px;">virtualbox</a> <a href="/tags/wireshark/" style="font-size: 10px;">wireshark</a> <a href="/tags/yilia/" style="font-size: 10px;">yilia</a> <a href="/tags/三次握手/" style="font-size: 10px;">三次握手</a> <a href="/tags/信息增益算法/" style="font-size: 10px;">信息增益算法</a> <a href="/tags/内存覆盖/" style="font-size: 10px;">内存覆盖</a> <a href="/tags/动态规划/" style="font-size: 11.67px;">动态规划</a> <a href="/tags/协同写作/" style="font-size: 10px;">协同写作</a> <a href="/tags/反射/" style="font-size: 10px;">反射</a> <a href="/tags/四次握手/" style="font-size: 10px;">四次握手</a> <a href="/tags/复制/" style="font-size: 10px;">复制</a> <a href="/tags/复制控制/" style="font-size: 10px;">复制控制</a> <a href="/tags/层次聚类/" style="font-size: 10px;">层次聚类</a> <a href="/tags/常用命令/" style="font-size: 10px;">常用命令</a> <a href="/tags/微博标签/" style="font-size: 10px;">微博标签</a> <a href="/tags/总结/" style="font-size: 13.33px;">总结</a> <a href="/tags/拉格朗日对偶/" style="font-size: 10px;">拉格朗日对偶</a> <a href="/tags/数据挖掘/" style="font-size: 10px;">数据挖掘</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/整理/" style="font-size: 11.67px;">整理</a> <a href="/tags/文本分类/" style="font-size: 10px;">文本分类</a> <a href="/tags/时间格式/" style="font-size: 10px;">时间格式</a> <a href="/tags/朴素贝叶斯/" style="font-size: 10px;">朴素贝叶斯</a> <a href="/tags/机器学习/" style="font-size: 18.33px;">机器学习</a> <a href="/tags/来自陈年佳酿的笔记/" style="font-size: 10px;">来自陈年佳酿的笔记</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/热加载/" style="font-size: 10px;">热加载</a> <a href="/tags/特征选择/" style="font-size: 11.67px;">特征选择</a> <a href="/tags/生成学习/" style="font-size: 10px;">生成学习</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/线程/" style="font-size: 11.67px;">线程</a> <a href="/tags/网页分析/" style="font-size: 10px;">网页分析</a> <a href="/tags/赋值/" style="font-size: 10px;">赋值</a> <a href="/tags/进程/" style="font-size: 11.67px;">进程</a> <a href="/tags/金融信用/" style="font-size: 10px;">金融信用</a> <a href="/tags/链表/" style="font-size: 11.67px;">链表</a> <a href="/tags/面试/" style="font-size: 11.67px;">面试</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">有梦想就要去实现</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+        <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Aluen King Lee</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="/img/tusiki.jpg" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">Aluen King Lee</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/tags/随笔">随笔</a></li>
+		        
+					<li><a href="/search">搜索</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="#" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="#" title="rss">rss</a>
+			        
+						<a class="zhihu" target="_blank" href="#" title="zhihu">zhihu</a>
+			        
+						<a class="douban" target="_blank" href="#" title="douban">douban</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+        <div class="body-wrap"><article id="post-think-about-difference-of-exception-between-thread-and-pool" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/04/27/think-about-difference-of-exception-between-thread-and-pool/" class="article-date">
+  	<time datetime="2016-04-27T05:09:21.000Z" itemprop="datePublished">2016-04-27</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      关于异常在线程与线程池不同表现的一个思考
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ThreadPool/">ThreadPool</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java线程池/">java线程池</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/线程/">线程</a></li></ul>
+	</div>
+
+
+<div class="counter-tag counter">
+    <span id="/2016/04/27/think-about-difference-of-exception-between-thread-and-pool/" class="leancloud_visitors post-title-link"
+          style="font-size: 12px" data-flag-title="关于异常在线程与线程池不同表现的一个思考">
+         &nbsp;
+    <!-- 这里给出浏览数-->
+        Hits
+    </span>
+</div>
+
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>如果一个线程在执行的过程中，遇到了某种异常，中断异常啊、空指针异常啊、算数异常，并且程序本身没有捕获异常，会发送什么？你可能会说，程序直接挂掉呗~然后日志里有异常日志。</p>
+<p>但实际上，要看这个线程是在什么地方。如果是在线程池外面，这个程序确实就直接挂掉了；</p>
+<a id="more"></a> 
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    testThreadFeatures();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testThreadFeatures</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Thread thread = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">char</span>[] ast = <span class="keyword">null</span>;</span><br><span class="line">            String str = <span class="keyword">new</span> String(ast);</span><br><span class="line"></span><br><span class="line">            System.out.println(Thread.currentThread().getName() + <span class="string">" ： can you see me :&gt;...."</span>);</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;, <span class="string">"thread1"</span>);</span><br><span class="line"></span><br><span class="line">    thread.run();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>结果，毫无意外的显示为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Exception in thread &quot;main&quot; java.lang.NullPointerException</span><br><span class="line"> 	at java.lang.String.&lt;init&gt;(String.java:168)</span><br><span class="line"> 	at thread.ThreadRunAndHang$1.run(ThreadRunAndHang.java:51)</span><br><span class="line"> 	at java.lang.Thread.run(Thread.java:744)</span><br><span class="line"> 	at thread.ThreadRunAndHang.testThreadFeatures(ThreadRunAndHang.java:58)</span><br><span class="line"> 	at thread.ThreadRunAndHang.main(ThreadRunAndHang.java:42)</span><br><span class="line"> 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)</span><br><span class="line"> 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)</span><br><span class="line"> 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)</span><br><span class="line"> 	at java.lang.reflect.Method.invoke(Method.java:606)</span><br><span class="line"> 	at com.intellij.rt.execution.application.AppMain.main(AppMain.java:140)</span><br></pre></td></tr></table></figure>
+<p>如果是在线程池中呢？线程池怎么捕捉线程出现的异常？例如 一个线程因为某个RuntimeException导致线程挂了。如何处理呢？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testThreadPoolFeatures</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       ExecutorService service = <span class="keyword">new</span> ThreadPoolExecutor(<span class="number">10</span>, <span class="number">10</span>, <span class="number">100</span>, TimeUnit.MILLISECONDS, </span><br><span class="line">       <span class="keyword">new</span> LinkedBlockingDeque&lt;Runnable&gt;(), </span><br><span class="line">       <span class="keyword">new</span> DefaultThreadFactory());</span><br><span class="line"></span><br><span class="line">       Thread thread = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">           <span class="meta">@Override</span></span><br><span class="line">           <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">               System.out.println(Thread.currentThread().getName() + </span><br><span class="line">                   <span class="string">" ： hello i am running...."</span>);</span><br><span class="line">               <span class="keyword">try</span> &#123;</span><br><span class="line">                   TimeUnit.SECONDS.sleep(<span class="number">30</span>);</span><br><span class="line">               &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                   e.printStackTrace();</span><br><span class="line">               &#125;</span><br><span class="line">               System.out.println(Thread.currentThread().getName() + </span><br><span class="line">                   <span class="string">" : now i begin to make something different...."</span>);</span><br><span class="line"></span><br><span class="line">               <span class="keyword">char</span>[] ast = <span class="keyword">null</span>;</span><br><span class="line">               String str = <span class="keyword">new</span> String(ast);</span><br><span class="line"></span><br><span class="line">               System.out.println(Thread.currentThread().getName() + </span><br><span class="line">                   <span class="string">" ： can you see me :&gt;...."</span>);</span><br><span class="line"></span><br><span class="line">           &#125;</span><br><span class="line">       &#125;, <span class="string">"thread1"</span>); <span class="comment">// 这里给线程命名其实是不管用的哈！因为有ThreadFactory，那里面对线程重新命名了=。=</span></span><br><span class="line">       </span><br><span class="line">       Thread thread2 = <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">           <span class="meta">@Override</span></span><br><span class="line">           <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">               System.out.println(Thread.currentThread().getName() + </span><br><span class="line">                   <span class="string">" ： hello i am running...."</span>);</span><br><span class="line">               <span class="keyword">try</span> &#123;</span><br><span class="line">                   TimeUnit.SECONDS.sleep(<span class="number">1</span>);</span><br><span class="line">               &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                   e.printStackTrace();</span><br><span class="line">               &#125;</span><br><span class="line">               System.out.println(Thread.currentThread().getName() + </span><br><span class="line">                   <span class="string">" ： now i begin to make something different...."</span>);</span><br><span class="line"></span><br><span class="line">               System.out.println(Thread.currentThread().getName() + </span><br><span class="line">                   <span class="string">" ： can you see me :&gt;...."</span>);</span><br><span class="line">               <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">                   ;</span><br><span class="line">               &#125;</span><br><span class="line"></span><br><span class="line">           &#125;</span><br><span class="line">       &#125;, <span class="string">"thread2"</span>);</span><br><span class="line">       service.submit(thread);</span><br><span class="line">       service.submit(thread2);</span><br><span class="line">       System.out.println(<span class="string">"running...."</span>);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>结果显示,但是程序本身并没有终止运行。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> running....</span><br><span class="line"><span class="built_in">test</span>-1-thread-2 ： hello i am running....</span><br><span class="line"><span class="built_in">test</span>-1-thread-1 ： hello i am running....</span><br><span class="line"><span class="built_in">test</span>-1-thread-2 ： now i begin to make something different....</span><br><span class="line"><span class="built_in">test</span>-1-thread-2 ： can you see me :&gt;....</span><br><span class="line"><span class="built_in">test</span>-1-thread-1 : now i begin to make something different....</span><br></pre></td></tr></table></figure>
+<p>感兴趣的话可以查看下程序栈，会发现线程test-1-thread-1是处于WAITING状态的！尝试从queue队列中取新的任务。所以是WAITING状态</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"test-1-thread-2"</span> prio=6 tid=0x000000000c42b800 nid=0x2e9c waiting on condition [0x000000000d10f000]</span><br><span class="line">   java.lang.Thread.State: WAITING (parking)</span><br><span class="line">	at sun.misc.Unsafe.park(Native Method)</span><br><span class="line">	- parking to <span class="built_in">wait</span> <span class="keyword">for</span>  &lt;0x00000007d6088290&gt; (a java.util.concurrent.locks.AbstractQueuedSynchronizer<span class="variable">$ConditionObject</span>)</span><br><span class="line">	at java.util.concurrent.locks.LockSupport.park(LockSupport.java:186)</span><br><span class="line">	at java.util.concurrent.locks.AbstractQueuedSynchronizer<span class="variable">$ConditionObject</span>.await(AbstractQueuedSynchronizer.java:2043)</span><br><span class="line">	at java.util.concurrent.LinkedBlockingDeque.takeFirst(LinkedBlockingDeque.java:489)</span><br><span class="line">	at java.util.concurrent.LinkedBlockingDeque.take(LinkedBlockingDeque.java:678)</span><br><span class="line">	at java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1068)</span><br><span class="line">	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)</span><br><span class="line">	at java.util.concurrent.ThreadPoolExecutor<span class="variable">$Worker</span>.run(ThreadPoolExecutor.java:615)</span><br><span class="line">	at java.lang.Thread.run(Thread.java:744)</span><br><span class="line"></span><br><span class="line">   Locked ownable synchronizers:</span><br><span class="line">	- None</span><br><span class="line"></span><br><span class="line"><span class="string">"test-1-thread-1"</span> prio=6 tid=0x000000000c42b000 nid=0x3a0 waiting on condition [0x000000000cf2f000]</span><br><span class="line">   java.lang.Thread.State: WAITING (parking)</span><br><span class="line">	at sun.misc.Unsafe.park(Native Method)</span><br><span class="line">	- parking to <span class="built_in">wait</span> <span class="keyword">for</span>  &lt;0x00000007d6088290&gt; (a java.util.concurrent.locks.AbstractQueuedSynchronizer<span class="variable">$ConditionObject</span>)</span><br><span class="line">	at java.util.concurrent.locks.LockSupport.park(LockSupport.java:186)</span><br><span class="line">	at java.util.concurrent.locks.AbstractQueuedSynchronizer<span class="variable">$ConditionObject</span>.await(AbstractQueuedSynchronizer.java:2043)</span><br><span class="line">	at java.util.concurrent.LinkedBlockingDeque.takeFirst(LinkedBlockingDeque.java:489)</span><br><span class="line">	at java.util.concurrent.LinkedBlockingDeque.take(LinkedBlockingDeque.java:678)</span><br><span class="line">	at java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1068)</span><br><span class="line">	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)</span><br><span class="line">	at java.util.concurrent.ThreadPoolExecutor<span class="variable">$Worker</span>.run(ThreadPoolExecutor.java:615)</span><br><span class="line">	at java.lang.Thread.run(Thread.java:744)</span><br><span class="line"></span><br><span class="line">   Locked ownable synchronizers:</span><br><span class="line">	- None</span><br></pre></td></tr></table></figure>
+<p>看接口Runnable的定义，及其简洁</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * When an object implementing interface &lt;code&gt;Runnable&lt;/code&gt; is used</span><br><span class="line">     * to create a thread, starting the thread causes the object's</span><br><span class="line">     * &lt;code&gt;run&lt;/code&gt; method to be called in that separately executing</span><br><span class="line">     * thread.</span><br><span class="line">     * &lt;p&gt;</span><br><span class="line">     * The general contract of the method &lt;code&gt;run&lt;/code&gt; is that it may</span><br><span class="line">     * take any action whatsoever.</span><br><span class="line">     *</span><br><span class="line">     * <span class="doctag">@see</span>     java.lang.Thread#run()</span><br><span class="line">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是定义成这样，就意味着我们没有办法在run()方法的实现中抛出异常，啊哈哈，没有办法抛出Checked异常啦。要处理checked exception，简单的一个try/catch块就可以了。但是万一程序里不小心抛出一个RuntimeException，又该咋办捏？</p>
+<p>还是看Thread源码，已经规定了这么一个玩意儿，<code>UncaughtExceptionHandler</code>这个接口的实现可以用来处理那些线程未捕获的异常。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UncaughtExceptionHandler</span> </span>&#123;</span><br><span class="line">        <span class="comment">/**</span><br><span class="line">         * Method invoked when the given thread terminates due to the</span><br><span class="line">         * given uncaught exception.</span><br><span class="line">         * &lt;p&gt;Any exception thrown by this method will be ignored by the</span><br><span class="line">         * Java Virtual Machine.</span><br><span class="line">         * <span class="doctag">@param</span> t the thread</span><br><span class="line">         * <span class="doctag">@param</span> e the exception</span><br><span class="line">         */</span></span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">uncaughtException</span><span class="params">(Thread t, Throwable e)</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// null unless explicitly set</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> UncaughtExceptionHandler uncaughtExceptionHandler;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// null unless explicitly set</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> UncaughtExceptionHandler defaultUncaughtExceptionHandler;</span><br></pre></td></tr></table></figure>
+<p>但是默认这类handler是没有设置的（<code>null unless explicitly set</code>）！这好办！自个儿写个UncaughtExceptionHandler接口的实现。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> Thread.UncaughtExceptionHandler exceptionHandler = <span class="keyword">new</span> Thread.UncaughtExceptionHandler() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">uncaughtException</span><span class="params">(Thread t, Throwable e)</span> </span>&#123;</span><br><span class="line">        System.out.println(t.getName() + <span class="string">"有麻烦了，详情是："</span> + e.toString());</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">        System.out.println(<span class="string">"线程的状态是："</span> + t.getState());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">thread.setDefaultUncaughtExceptionHandler(exceptionHandler);</span><br></pre></td></tr></table></figure>
+<p>这么一来，运行结果就是这样啦。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">main有麻烦了，详情是：java.lang.NullPointerException</span><br><span class="line">[Ljava.lang.StackTraceElement;@<span class="number">14</span>c4b664</span><br><span class="line">java.lang.NullPointerException</span><br><span class="line">	at java.lang.String.&lt;init&gt;(String.java:<span class="number">168</span>)</span><br><span class="line">	at thread.ThreadRunAndHang$<span class="number">1</span>.run(ThreadRunAndHang.java:<span class="number">51</span>)</span><br><span class="line">	at java.lang.Thread.run(Thread.java:<span class="number">744</span>)</span><br><span class="line">	at thread.ThreadRunAndHang.testThreadFeatures(ThreadRunAndHang.java:<span class="number">66</span>)</span><br><span class="line">	at thread.ThreadRunAndHang.main(ThreadRunAndHang.java:<span class="number">42</span>)</span><br><span class="line">	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)</span><br><span class="line">	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:<span class="number">57</span>)</span><br><span class="line">	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:<span class="number">43</span>)</span><br><span class="line">	at java.lang.reflect.Method.invoke(Method.java:<span class="number">606</span>)</span><br><span class="line">	at com.intellij.rt.execution.application.AppMain.main(AppMain.java:<span class="number">140</span>)</span><br></pre></td></tr></table></figure>
+<p>这部分的输出正好就是UncaughtExceptionHandler接口的实现。对于unchecked exception，可以采用类似事件注册的机制做一定程度的处理。程序也不会崩溃啦~~</p>
+<h4>阶段性总结</h4>
+<p>Java thread里面关于异常的部分比较奇特。接口的定义意味着不能直接在一个线程中抛出异常。一般在线程里碰到checked exception，标准的做法是采用try/catch块来处理。而对于unchecked exception，比较合理的方式是注册一个实现 UncaughtExceptionHandler 接口的对象实例来处理。</p>
+<p>在回到线程池的问题中...</p>
+<p>为啥线程池没有打印处理这些UncaughtException呢？(低声:因为你没有set线程池中线程的 UncaughtExceptionHandler 啊...)=。=好吧！在DefaultThreadFactory的newThread方法中加上线程的UncaughtExceptionHandler嘛~。运行，一脸黑线，TMD的什么鬼，还是木有！！！</p>
+<p>翻看了下 ThreadPoolExecutor 的代码，找到了这个关键点！！！看 runWorker 这个方法的注释哈！原文描述的第4点和第5点很重要~ 不贴代码了，可以看下<code>jdk1.7.0_51#ThreadPoolExecutor#runWorker#1081~1165</code></p>
+<blockquote>
+<p>假设 <code>beforeExecute</code> 运行没问题， 就开始执行<code>task</code>了，注意是调用 <code>task.ran</code> 当做普通方法调用的！！然后收集任何抛出的异常，扔给 <code>afterExecute （默认是空实现哈，所以异常没有被处理）</code>因为 <code>Runnable.run</code> 方法不能抛出 Throwables ，所以就打包扔了出去，其实是扔给线程的 UncaughtExceptionHandler 了。保险起见，任何抛出的异常都会导致线程挂掉。执行完 task.run 方法之后，就开始调用 <code>afterExecute</code> 了。 这个方法也可能会抛出异常，此时同样会导致线程挂掉。</p>
+</blockquote>
+<p>这个时候又看了下 <code>afterExecute</code> 的注释，重载或者重写该方法就好了，咱们直接这么用就好啦~ ExecutorService 对象的创建方法变一变，覆盖原来的方法.接下来就是见证奇迹的时刻~~</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">ExecutorService service = <span class="keyword">new</span> ThreadPoolExecutor(<span class="number">10</span>, <span class="number">10</span>, <span class="number">100</span>, TimeUnit.MILLISECONDS,</span><br><span class="line">        <span class="keyword">new</span> LinkedBlockingDeque&lt;Runnable&gt;(),</span><br><span class="line">        <span class="keyword">new</span> DefaultThreadFactory())</span><br><span class="line">        <span class="comment">// 覆盖ThreadPoolExecutor中的afterExecute方法！</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">afterExecute</span><span class="params">(Runnable r, Throwable t)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.afterExecute(r, t);</span><br><span class="line">        System.out.println(Thread.currentThread().getName() + <span class="string">"有麻烦了，详情是："</span> + t.toString());</span><br><span class="line">        t.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>运行一下,见证下奇迹,你妹的,千呼万唤始出来啊</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">test-1-thread-2 ： hello i am running....</span><br><span class="line">test-1-thread-1 ： hello i am running....</span><br><span class="line">test-1-thread-2 ： now i begin to make something different....</span><br><span class="line">test-1-thread-2 ： can you see me :&gt;....</span><br><span class="line">java.lang.NullPointerException</span><br><span class="line">	at thread.ThreadRunAndHang$3.afterExecute(ThreadRunAndHang.java:82)</span><br><span class="line">	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1153)</span><br><span class="line">	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)</span><br><span class="line">	at java.lang.Thread.run(Thread.java:744)</span><br><span class="line">test-1-thread-1 : now i begin to make something different....</span><br><span class="line">Thread-2</span><br><span class="line">test-1-thread-1有麻烦了，详情是：java.lang.NullPointerException</span><br><span class="line">线程的状态是：RUNNABLE</span><br></pre></td></tr></table></figure>
+<h4>阶段性总结</h4>
+<p>线程池如果想要处理unchecked exception :</p>
+<ol>
+<li>要重新实现线程工厂的newThread方法，需要为线上加上 UncaughtExceptionHandler。</li>
+<li>实现  UncaughtExceptionHandler 接口，定义个性化的需求。</li>
+<li>覆盖ThreadPoolExecutor.afterExecute 方法。
+以上，就能捕获线程池中线程的异常了。</li>
+</ol>
+<blockquote>
+<p>Reference</p>
+</blockquote>
+<ol>
+<li>http://www.blogjava.net/xylz/archive/2013/08/05/402405.html</li>
+<li>http://stackoverflow.com/questions/1838923/why-is-uncaughtexceptionhandler-not-called-by-executorservice</li>
+</ol>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/04/27/testlatex/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Latex on hexo
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/01/14/use-mongo-map-reduce-statistic-word-occurrence/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">使用mongodb内置的mapreduce聚合函数统计词频</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="think-about-difference-of-exception-between-thread-and-pool" data-title="关于异常在线程与线程池不同表现的一个思考" data-url="http://kinglanding.github.io/2016/04/27/think-about-difference-of-exception-between-thread-and-pool/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+        <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 Aluen King Lee
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+
+<!--统计Aluenkinglee.github.io-->
+<!--<script type="text/javascript" id="clustrmaps" src="//cdn.clustrmaps.com/map_v2.js?u=Ak87&d=RfrOeulSXrf1uWSg4T_1STgF7iU2vDrBtJLdE3MJdQY"></script>-->
+<!--统计Aluenkinglee.com-->
+<!--<script type="text/javascript" id="clustrmaps" src="//cdn.clustrmaps.com/map_v2.js?u=Ak87&d=fWyzUb5ADRAwJb5b2EdCj25FWOlzy8vwVQmK9vxSAYY"></script>-->
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+<!--
+-->
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
+          MathJax.InputJax.TeX.prefilterHooks.Add(function (data) {
+                  data.math = data.math.replace(/^\s*<!\[CDATA\[\s*((?:\n|.)*)\s*\]\]>\s*$/m,"$1");
+                    });
+          });
+
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+
+</script>
+
+<script type="text/javascript"
+        src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+</div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>

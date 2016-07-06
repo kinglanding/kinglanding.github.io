@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>C++前置声明和复制控制 | 曾经渐行远，未免心戚戚</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="突然有兴致想起了看会C++，因为最近一直是python，java，python的节奏...在这样下去，C++水平恐怕就停留在了只会编算法的地儿了...
+随手一翻，看到了复制控制。对于这章，印象里的记忆是：
+
+
+如果一个类它有形如指针或者申请了其他的系统资源成员，这个时候就得注意了，如申请资源，如何释放资源，复制的时候应该注意这些成员的行为是怎么样的。
+
+
+然后，就不是很清楚了。大概看了看 其实也差">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++前置声明和复制控制">
+<meta property="og:url" content="http://kinglanding.github.io/2013/10/24/c-plus-plus-forward-declaration-and-copy-control/index.html">
+<meta property="og:site_name" content="曾经渐行远，未免心戚戚">
+<meta property="og:description" content="突然有兴致想起了看会C++，因为最近一直是python，java，python的节奏...在这样下去，C++水平恐怕就停留在了只会编算法的地儿了...
+随手一翻，看到了复制控制。对于这章，印象里的记忆是：
+
+
+如果一个类它有形如指针或者申请了其他的系统资源成员，这个时候就得注意了，如申请资源，如何释放资源，复制的时候应该注意这些成员的行为是怎么样的。
+
+
+然后，就不是很清楚了。大概看了看 其实也差">
+<meta property="og:updated_time" content="2016-06-30T09:19:30.890Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++前置声明和复制控制">
+<meta name="twitter:description" content="突然有兴致想起了看会C++，因为最近一直是python，java，python的节奏...在这样下去，C++水平恐怕就停留在了只会编算法的地儿了...
+随手一翻，看到了复制控制。对于这章，印象里的记忆是：
+
+
+如果一个类它有形如指针或者申请了其他的系统资源成员，这个时候就得注意了，如申请资源，如何释放资源，复制的时候应该注意这些成员的行为是怎么样的。
+
+
+然后，就不是很清楚了。大概看了看 其实也差">
+  
+    <link rel="alternative" href="/atom.xml" title="曾经渐行远，未免心戚戚" type="application/atom+xml">
+  
+  
+    <link href="/favicon.ico" rel="icon" type="image/x-ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+
+    <!-- 增加点击次数插件-->
+    
+        <!-- jQuery文件-->
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<!--<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>-->
+<script src="/js/av-core-mini-0.6.1.js"></script>
+<script>AV.initialize("ULm4LbKU9FYj6CxYtKYnvaeB-gzGzoHsz", "TypHFu5f7mXg4U1N9RjFRo52");</script>
+<script src="/js/Counter.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+</head>
+
+<body>
+
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><!--加载jquery-->
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<!--start 加载search_path函数 -->
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+        search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+</script>
+<!--end of  加载search_path函数 -->
+
+<div id="container">
+    <div class="left-col">
+        <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/img/tusiki.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">Aluen King Lee</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>Menu</li>
+						<li>Tags</li>
+						
+						
+						<li>Über</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/tags/随笔">随笔</a></li>
+				        
+							<li><a href="/search">搜索</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="#" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="#" title="rss">rss</a>
+					        
+								<a class="zhihu" target="_blank" href="#" title="zhihu">zhihu</a>
+					        
+								<a class="douban" target="_blank" href="#" title="douban">douban</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Algorithm/" style="font-size: 10px;">Algorithm</a> <a href="/tags/Annotation/" style="font-size: 10px;">Annotation</a> <a href="/tags/Armadillo/" style="font-size: 11.67px;">Armadillo</a> <a href="/tags/C/" style="font-size: 16.67px;">C++</a> <a href="/tags/CS/" style="font-size: 10px;">CS</a> <a href="/tags/Consensus/" style="font-size: 10px;">Consensus</a> <a href="/tags/KMP/" style="font-size: 10px;">KMP</a> <a href="/tags/LaTex/" style="font-size: 10px;">LaTex</a> <a href="/tags/Machine-Learning/" style="font-size: 20px;">Machine Learning</a> <a href="/tags/Octopress/" style="font-size: 11.67px;">Octopress</a> <a href="/tags/Raft/" style="font-size: 10px;">Raft</a> <a href="/tags/SDB/" style="font-size: 10px;">SDB</a> <a href="/tags/SDN/" style="font-size: 10px;">SDN</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/SVM/" style="font-size: 11.67px;">SVM</a> <a href="/tags/TCP/" style="font-size: 10px;">TCP</a> <a href="/tags/ThreadPool/" style="font-size: 10px;">ThreadPool</a> <a href="/tags/armadillo链接错误/" style="font-size: 10px;">armadillo链接错误</a> <a href="/tags/co-write/" style="font-size: 10px;">co-write</a> <a href="/tags/feature-selection/" style="font-size: 11.67px;">feature selection</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 11.67px;">hexo</a> <a href="/tags/hotload/" style="font-size: 10px;">hotload</a> <a href="/tags/idea/" style="font-size: 10px;">idea</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/java内存模型/" style="font-size: 10px;">java内存模型</a> <a href="/tags/java线程池/" style="font-size: 10px;">java线程池</a> <a href="/tags/jsoup/" style="font-size: 10px;">jsoup</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/lapack/" style="font-size: 10px;">lapack</a> <a href="/tags/libpcap/" style="font-size: 11.67px;">libpcap</a> <a href="/tags/libsvm/" style="font-size: 10px;">libsvm</a> <a href="/tags/linear-regression/" style="font-size: 10px;">linear-regression</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/list/" style="font-size: 10px;">list</a> <a href="/tags/map-reduce/" style="font-size: 10px;">map-reduce</a> <a href="/tags/math-example/" style="font-size: 10px;">math example</a> <a href="/tags/mongodb/" style="font-size: 10px;">mongodb</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/new/" style="font-size: 10px;">new[]</a> <a href="/tags/nox/" style="font-size: 10px;">nox</a> <a href="/tags/octave/" style="font-size: 10px;">octave</a> <a href="/tags/openblas/" style="font-size: 10px;">openblas</a> <a href="/tags/predeclaration/" style="font-size: 10px;">predeclaration</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/reflect/" style="font-size: 10px;">reflect</a> <a href="/tags/virtualbox/" style="font-size: 10px;">virtualbox</a> <a href="/tags/wireshark/" style="font-size: 10px;">wireshark</a> <a href="/tags/yilia/" style="font-size: 10px;">yilia</a> <a href="/tags/三次握手/" style="font-size: 10px;">三次握手</a> <a href="/tags/信息增益算法/" style="font-size: 10px;">信息增益算法</a> <a href="/tags/内存覆盖/" style="font-size: 10px;">内存覆盖</a> <a href="/tags/动态规划/" style="font-size: 11.67px;">动态规划</a> <a href="/tags/协同写作/" style="font-size: 10px;">协同写作</a> <a href="/tags/反射/" style="font-size: 10px;">反射</a> <a href="/tags/四次握手/" style="font-size: 10px;">四次握手</a> <a href="/tags/复制/" style="font-size: 10px;">复制</a> <a href="/tags/复制控制/" style="font-size: 10px;">复制控制</a> <a href="/tags/层次聚类/" style="font-size: 10px;">层次聚类</a> <a href="/tags/常用命令/" style="font-size: 10px;">常用命令</a> <a href="/tags/微博标签/" style="font-size: 10px;">微博标签</a> <a href="/tags/总结/" style="font-size: 13.33px;">总结</a> <a href="/tags/拉格朗日对偶/" style="font-size: 10px;">拉格朗日对偶</a> <a href="/tags/数据挖掘/" style="font-size: 10px;">数据挖掘</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/整理/" style="font-size: 11.67px;">整理</a> <a href="/tags/文本分类/" style="font-size: 10px;">文本分类</a> <a href="/tags/时间格式/" style="font-size: 10px;">时间格式</a> <a href="/tags/朴素贝叶斯/" style="font-size: 10px;">朴素贝叶斯</a> <a href="/tags/机器学习/" style="font-size: 18.33px;">机器学习</a> <a href="/tags/来自陈年佳酿的笔记/" style="font-size: 10px;">来自陈年佳酿的笔记</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/热加载/" style="font-size: 10px;">热加载</a> <a href="/tags/特征选择/" style="font-size: 11.67px;">特征选择</a> <a href="/tags/生成学习/" style="font-size: 10px;">生成学习</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/线程/" style="font-size: 11.67px;">线程</a> <a href="/tags/网页分析/" style="font-size: 10px;">网页分析</a> <a href="/tags/赋值/" style="font-size: 10px;">赋值</a> <a href="/tags/进程/" style="font-size: 11.67px;">进程</a> <a href="/tags/金融信用/" style="font-size: 10px;">金融信用</a> <a href="/tags/链表/" style="font-size: 11.67px;">链表</a> <a href="/tags/面试/" style="font-size: 11.67px;">面试</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">有梦想就要去实现</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+        <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Aluen King Lee</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="/img/tusiki.jpg" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">Aluen King Lee</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/tags/随笔">随笔</a></li>
+		        
+					<li><a href="/search">搜索</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="#" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="#" title="rss">rss</a>
+			        
+						<a class="zhihu" target="_blank" href="#" title="zhihu">zhihu</a>
+			        
+						<a class="douban" target="_blank" href="#" title="douban">douban</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+        <div class="body-wrap"><article id="post-c-plus-plus-forward-declaration-and-copy-control" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2013/10/24/c-plus-plus-forward-declaration-and-copy-control/" class="article-date">
+  	<time datetime="2013-10-23T20:33:00.000Z" itemprop="datePublished">2013-10-24</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      C++前置声明和复制控制
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/predeclaration/">predeclaration</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/复制/">复制</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/复制控制/">复制控制</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/赋值/">赋值</a></li></ul>
+	</div>
+
+
+<div class="counter-tag counter">
+    <span id="/2013/10/24/c-plus-plus-forward-declaration-and-copy-control/" class="leancloud_visitors post-title-link"
+          style="font-size: 12px" data-flag-title="C++前置声明和复制控制">
+         &nbsp;
+    <!-- 这里给出浏览数-->
+        Hits
+    </span>
+</div>
+
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>突然有兴致想起了看会C++，因为最近一直是python，java，python的节奏...在这样下去，C++水平恐怕就停留在了只会编算法的地儿了...</p>
+<p>随手一翻，看到了复制控制。对于这章，印象里的记忆是：</p>
+<blockquote>
+<blockquote>
+<p>如果一个类它有形如指针或者申请了其他的系统资源成员，这个时候就得注意了，如申请资源，如何释放资源，复制的时候应该注意这些成员的行为是怎么样的。</p>
+</blockquote>
+</blockquote>
+<p>然后，就不是很清楚了。大概看了看 其实也差不多...好吧是差很多。编程的过程中出现了一些问题。在这里记录下来&gt;.&lt; 真实忘不了了！</p>
+<h5>复制构造函数</h5>
+<p>它是一个特殊的构造函数，而且形参常用const Type&amp; 来修饰(如果凶残点，用指针也不是不行，但一定得是这两种！想想是为什么？)</p>
+<a id="more"></a>
+<p>有两种情况会调用它：</p>
+<ol>
+<li>定义一个新对象，并用一个同类型的对象对它初始化，就像这样 <code>string fileDesp(filename);</code>此处的filename是已经定义好的对象。'显示调用'</li>
+<li>复制一个对象，并把它作为实参传给一个函数。'隐式调用'</li>
+<li>从函数返回时复制一个对象。'隐式调用'</li>
+<li>初始化顺序容器中的元素。'隐式调用'</li>
+<li>根据元素初始化列表初始化数组元素。'隐式调用'</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> book = <span class="string">"ISBN-2323-23234"</span>;</span><br></pre></td></tr></table></figure>
+<p>创建book对象时，编译器首先会接受一个C语言风格形参的string构造函数，创建一个临时对象，然后调用string的复制构造函数将book初始化那个临时对象的副本。（但是我感觉更像是'临时对象-&gt;赋值操作'..这里需要编码测试一下）</p>
+<p>和java，python创建对象的方法来比,C++方法真心多...</p>
+<h5>合成的复制构造函数</h5>
+<p>就是自个没写编译器默认提供的复制构造函数，完成的功能很简单，数据成员逐个初始化，（<code>static</code>成员例外！！因为他们是属于类的！！）</p>
+<h5>关于explicit的复制构造函数</h5>
+<p>(以后加上，真心没写过，只知道IO类型的复制构造函数都是explicit的)</p>
+<h5>赋值重载</h5>
+<p>=是个二元运算符，所以有两个形参，分别对应左操作数和右操作数(const引用),当为成员函数时就是左操作数默认绑定到this指针上了。返回值为同一类型的引用。</p>
+<h5>关于析构函数</h5>
+<p>析构函数就是用来回收那些申请的系统资源的。所以自个度量何时该自己写给类的析构函数吧。</p>
+<h5>关于何时调用析构函数</h5>
+<ol>
+<li>撤销类的对象自动调用</li>
+<li>动态分配的对象只有在删除指向该指针时，才会运行析构函数！！否则会导致内存泄漏，小心啦。</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> filename * p = new <span class="built_in">string</span>();</span><br><span class="line"><span class="keyword">delete</span> p;</span><br></pre></td></tr></table></figure>
+<p>上述删除的行为不会销毁属于类的成员对象——static成员！其实挺好理解的啊。</p>
+<p>下面是个例子。现在先在这里贴下代码，以后放到github里面去。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;set&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">string</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">set</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"><span class="comment">//predeclaration of Message</span></span><br><span class="line"><span class="keyword">class</span> Message;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> Folder</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    Folder()&#123;</span><br><span class="line">    	<span class="built_in">cout</span> &lt;&lt; <span class="string">"Folder"</span> &lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    Folder(<span class="keyword">const</span> Folder&amp;);</span><br><span class="line">    Folder&amp; <span class="keyword">operator</span>=(const Folder &amp;);</span><br><span class="line">    ~Folder();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">save</span><span class="params">(Message&amp;)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">remove</span><span class="params">(Message&amp;)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">addMsg</span><span class="params">(Message*)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">remMsg</span><span class="params">(Message*)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">set</span>&lt;Message*&gt; messages;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">put_Folder_in_Message</span><span class="params">(<span class="keyword">const</span> <span class="built_in">set</span>&lt;Message*&gt;&amp;)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">remove_Folder_from_Message</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> Message</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    Message(<span class="keyword">const</span> <span class="built_in">string</span> &amp; str=<span class="string">""</span>):</span><br><span class="line">        contents(str)</span><br><span class="line">        &#123;&#125;</span><br><span class="line">    Message(<span class="keyword">const</span> Message&amp;);</span><br><span class="line">    Message&amp; <span class="keyword">operator</span>=(const Message &amp;);</span><br><span class="line">    ~Message();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">save</span><span class="params">(Folder&amp;)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">remove</span><span class="params">(Folder&amp;)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">addFldr</span><span class="params">(Folder*)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">remFldr</span><span class="params">(Folder*)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">string</span> contents;</span><br><span class="line">    <span class="built_in">set</span>&lt;Folder*&gt; folders;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">put_Msg_in_Folders</span><span class="params">(<span class="keyword">const</span> <span class="built_in">set</span>&lt;Folder*&gt;&amp;)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">remove_Msg_from_Folders</span><span class="params">()</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Folder::Folder(<span class="keyword">const</span> Folder&amp; f):</span><br><span class="line">    messages(f.messages)</span><br><span class="line">&#123;</span><br><span class="line">    put_Folder_in_Message(messages);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> Folder::put_Folder_in_Message(<span class="keyword">const</span> <span class="built_in">set</span>&lt;Message*&gt; &amp; msg)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">set</span>&lt;Message*&gt;::const_iterator beg = msg.begin();</span><br><span class="line">            beg != msg.end();</span><br><span class="line">            ++beg)</span><br><span class="line">    &#123;</span><br><span class="line">        (*beg)-&gt;addFldr(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Folder&amp; Folder::<span class="keyword">operator</span>=(const Folder &amp; f)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (&amp;f != this)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//先把自己的给清除掉，在加上要赋值的，要不然肯定不一样。。</span></span><br><span class="line">        <span class="comment">//因为Messages不一样。。</span></span><br><span class="line">        remove_Folder_from_Message();</span><br><span class="line">        messages = f.messages;</span><br><span class="line">        put_Folder_in_Message(messages);</span><br><span class="line">    &#125;</span><br><span class="line">    return *<span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> Folder::remove_Folder_from_Message()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="built_in">set</span>&lt;Message*&gt;::const_iterator beg = <span class="keyword">this</span>-&gt;messages.begin();</span><br><span class="line">            beg != messages.end();</span><br><span class="line">            ++beg)</span><br><span class="line">    &#123;</span><br><span class="line">        (*beg)-&gt;remFldr(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Folder::~Folder()</span><br><span class="line">&#123;</span><br><span class="line">    remove_Folder_from_Message();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> Folder::save(Message &amp; msg)</span><br><span class="line">&#123;</span><br><span class="line">    addMsg(&amp;msg);</span><br><span class="line">    msg.addFldr(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> Folder::remove(Message&amp; msg)</span><br><span class="line">&#123;</span><br><span class="line">    remMsg(&amp;msg);</span><br><span class="line">    msg.remFldr(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> Folder::addMsg(Message* msg)</span><br><span class="line">&#123;</span><br><span class="line">    messages.insert(msg);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> Folder::remMsg(Message* msg)</span><br><span class="line">&#123;</span><br><span class="line">    messages.erase(msg);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//copy construction ,put the new message into the folders where the msg is pointed.</span></span><br><span class="line"><span class="keyword">inline</span> Message::Message(<span class="keyword">const</span> Message&amp; m):</span><br><span class="line">    contents(m.contents), folders(m.folders)</span><br><span class="line">&#123;</span><br><span class="line">    put_Msg_in_Folders(folders);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> Message::put_Msg_in_Folders(<span class="keyword">const</span> <span class="built_in">set</span>&lt;Folder*&gt; &amp;folders)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="built_in">set</span>&lt;Folder*&gt;::const_iterator beg = folders.begin();</span><br><span class="line">            beg != folders.end();</span><br><span class="line">            ++ beg)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//beg is a pointer to Folder*</span></span><br><span class="line">        (*beg)-&gt;addMsg(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">inline</span> Message&amp; Message::<span class="keyword">operator</span>=(const Message&amp; msg)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(&amp;msg != this) &#123;</span><br><span class="line">        <span class="comment">//首先把自己指向的那些folder都给取消掉</span></span><br><span class="line">        remove_Msg_from_Folders();</span><br><span class="line">        <span class="comment">//消息的内容copy过来</span></span><br><span class="line">        contents = msg.contents;</span><br><span class="line">        folders = msg.folders;</span><br><span class="line">        put_Msg_in_Folders(folders);</span><br><span class="line">    &#125;</span><br><span class="line">    return *<span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> Message::remove_Msg_from_Folders()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="built_in">set</span>&lt;Folder*&gt;::const_iterator beg = folders.begin();</span><br><span class="line">            beg != folders.end();</span><br><span class="line">            ++beg)</span><br><span class="line">    &#123;</span><br><span class="line">        (*beg)-&gt;remMsg(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">inline</span> Message::~Message()</span><br><span class="line">&#123;</span><br><span class="line">    remove_Msg_from_Folders();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> Message::save(Folder&amp; folder)</span><br><span class="line">&#123;</span><br><span class="line">    addFldr(&amp;folder);</span><br><span class="line">    folder.addMsg(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> Message::addFldr(Folder* pfolder)</span><br><span class="line">&#123;</span><br><span class="line">    folders.insert(pfolder);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> Message::remove(Folder&amp; folder)</span><br><span class="line">&#123;</span><br><span class="line">    remFldr(&amp;folder);</span><br><span class="line">    folder.remMsg(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> Message::remFldr(Folder* pfolder)</span><br><span class="line">&#123;</span><br><span class="line">    folders.erase(pfolder);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="function">Message <span class="title">m</span><span class="params">(<span class="string">"dsfasdf"</span>)</span></span>;</span><br><span class="line">	Folder f = Folder();</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"asdf"</span>&lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	return <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以运行，但是不是想要的。</p>
+<p>正确的应该分开写</p>
+<p><code>Folder.h</code></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;set&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> __Folder__</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __Folder__</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">string</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">set</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="string">"Message.h"</span></span></span><br><span class="line"><span class="comment">//predeclaration of Message</span></span><br><span class="line"><span class="keyword">class</span> Message;</span><br><span class="line"><span class="comment">// Message is a incomplete type.It can be used in limited ways only.</span></span><br><span class="line"><span class="comment">// 1.can not define object of this type.</span></span><br><span class="line"><span class="comment">// 2.only used as a pointer or ref.</span></span><br><span class="line"><span class="comment">// 3.declare it as the formal parameter of a function or return type of a function.</span></span><br><span class="line"><span class="keyword">class</span> Folder</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    Folder()&#123;&#125;</span><br><span class="line">    Folder(<span class="keyword">const</span> Folder&amp;);</span><br><span class="line">    Folder&amp; <span class="keyword">operator</span>=(const Folder&amp;);</span><br><span class="line">    ~Folder();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Message is used as the formal parameter.</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">save</span><span class="params">(Message&amp;)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">remove</span><span class="params">(Message&amp;)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">addMsg</span><span class="params">(Message*)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">remMsg</span><span class="params">(Message*)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">// Message is used as the typename of the template.</span></span><br><span class="line">    <span class="built_in">set</span>&lt;Message*&gt; messages;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">put_Folder_in_Message</span><span class="params">(<span class="keyword">const</span> <span class="built_in">set</span>&lt;Message*&gt;&amp;)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">remove_Folder_from_Message</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<p><code>Message.h</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;set&gt;</span><br><span class="line"></span><br><span class="line">#ifndef __Message__</span><br><span class="line">#define __Message__</span><br><span class="line"></span><br><span class="line">using std::string;</span><br><span class="line">using std::set;</span><br><span class="line"></span><br><span class="line">#include &quot;Folder.h&quot;</span><br><span class="line">//predeclaration of Folder</span><br><span class="line">class Folder;</span><br><span class="line">// Folder is a incomplete type.It only can be used in limited ways.</span><br><span class="line">// 1.can not define object of this type.</span><br><span class="line">// 2.only used as a pointer or ref.</span><br><span class="line">// 3.declare it as the formal parameter of a function or return type of a function.</span><br><span class="line"></span><br><span class="line">class Message</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    Message(const string &amp; str=&quot;&quot;):</span><br><span class="line">        contents(str) &#123;&#125;</span><br><span class="line">    Message(const Message&amp;);</span><br><span class="line">    Message&amp; operator=(const Message &amp;);</span><br><span class="line">    ~Message();</span><br><span class="line"></span><br><span class="line">    // Folder is used as the formal parameter.</span><br><span class="line">    void save(Folder&amp;);</span><br><span class="line">    void remove(Folder&amp;);</span><br><span class="line">    void addFldr(Folder*);</span><br><span class="line">    void remFldr(Folder*);</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    string contents;</span><br><span class="line">    set&lt;Folder*&gt; folders;</span><br><span class="line"></span><br><span class="line">    // Folder is used as the typename of the template.</span><br><span class="line">    void put_Msg_in_Folders(const set&lt;Folder*&gt;&amp;);</span><br><span class="line">    void remove_Msg_from_Folders();</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">#endif</span><br></pre></td></tr></table></figure>
+<p>一个简单的例子，就是来测试一下<code>class A=B</code>时究竟会不会同时调用赋值构造函数和拷贝构造函数。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> object</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">int</span> data;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    object(<span class="keyword">int</span> d = <span class="number">0</span>):</span><br><span class="line">        data(d)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"default constructor"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    object(<span class="keyword">const</span> object&amp; other):</span><br><span class="line">        data(other.data)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"copy constructor"</span> &lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    object&amp; <span class="keyword">operator</span>=(const object&amp; other)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(&amp;other != this)</span><br><span class="line">        &#123;</span><br><span class="line">            data = other.data;</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; <span class="string">"assignment constructor"</span> &lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        return *<span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">behavior1</span><span class="params">(object other)</span>	<span class="comment">//形参调用copy constructor</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"test behavior1"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">behavior2</span><span class="params">(object&amp; other)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"test behavior2"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    object A;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="function">object <span class="title">B</span><span class="params">(A)</span></span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    object C = A;  <span class="comment">//这个情况仍然只是调用copy constructor</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    C=B;	   <span class="comment">//只有这种情况下才会调用assignment constructor</span></span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    behavior1(A);</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    behavior2(A);</span><br><span class="line">    return <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>测试结果显示如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">default constructor</span><br><span class="line"></span><br><span class="line">copy constructor</span><br><span class="line"></span><br><span class="line">copy constructor</span><br><span class="line"></span><br><span class="line">assignment constructor</span><br><span class="line"></span><br><span class="line">copy constructor</span><br><span class="line">test behavior1</span><br><span class="line"></span><br><span class="line">test behavior2</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2013/11/13/use-mathjax-in-octopress-to-write-beautiful-latex/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Use MathJax in Octopress to Write beautiful LaTex
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2013/10/20/virtualbox-network-environment-and-login/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">virtualbox网络环境和登录</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="c-plus-plus-forward-declaration-and-copy-control" data-title="C++前置声明和复制控制" data-url="http://kinglanding.github.io/2013/10/24/c-plus-plus-forward-declaration-and-copy-control/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+        <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 Aluen King Lee
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+
+<!--统计Aluenkinglee.github.io-->
+<!--<script type="text/javascript" id="clustrmaps" src="//cdn.clustrmaps.com/map_v2.js?u=Ak87&d=RfrOeulSXrf1uWSg4T_1STgF7iU2vDrBtJLdE3MJdQY"></script>-->
+<!--统计Aluenkinglee.com-->
+<!--<script type="text/javascript" id="clustrmaps" src="//cdn.clustrmaps.com/map_v2.js?u=Ak87&d=fWyzUb5ADRAwJb5b2EdCj25FWOlzy8vwVQmK9vxSAYY"></script>-->
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+<!--
+-->
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
+          MathJax.InputJax.TeX.prefilterHooks.Add(function (data) {
+                  data.math = data.math.replace(/^\s*<!\[CDATA\[\s*((?:\n|.)*)\s*\]\]>\s*$/m,"$1");
+                    });
+          });
+
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+
+</script>
+
+<script type="text/javascript"
+        src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+</div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>

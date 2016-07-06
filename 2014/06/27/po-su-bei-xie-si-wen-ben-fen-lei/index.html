@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>朴素贝叶斯文本分类 | 曾经渐行远，未免心戚戚</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="回顾朴素贝叶斯(NB)分类器:
+$$p(y_k|x)=\frac{p(y_k)p(x|y_k)}{p(x)}\propto p(y_k)p(x|y_k)=p(y_k)\prod_{i=1}^{d}{p(x_i|y_k)}$$
+对于文本分类任务,即对一篇文章进行分类,是 NLP 中最常见的机器学习任务。一般情况下,类别从几个到几十不等,或者更多。使用朴素贝叶斯文分类器进行文本分类,我们需要首先考虑特">
+<meta property="og:type" content="article">
+<meta property="og:title" content="朴素贝叶斯文本分类">
+<meta property="og:url" content="http://kinglanding.github.io/2014/06/27/po-su-bei-xie-si-wen-ben-fen-lei/index.html">
+<meta property="og:site_name" content="曾经渐行远，未免心戚戚">
+<meta property="og:description" content="回顾朴素贝叶斯(NB)分类器:
+$$p(y_k|x)=\frac{p(y_k)p(x|y_k)}{p(x)}\propto p(y_k)p(x|y_k)=p(y_k)\prod_{i=1}^{d}{p(x_i|y_k)}$$
+对于文本分类任务,即对一篇文章进行分类,是 NLP 中最常见的机器学习任务。一般情况下,类别从几个到几十不等,或者更多。使用朴素贝叶斯文分类器进行文本分类,我们需要首先考虑特">
+<meta property="og:updated_time" content="2016-06-30T09:45:44.951Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="朴素贝叶斯文本分类">
+<meta name="twitter:description" content="回顾朴素贝叶斯(NB)分类器:
+$$p(y_k|x)=\frac{p(y_k)p(x|y_k)}{p(x)}\propto p(y_k)p(x|y_k)=p(y_k)\prod_{i=1}^{d}{p(x_i|y_k)}$$
+对于文本分类任务,即对一篇文章进行分类,是 NLP 中最常见的机器学习任务。一般情况下,类别从几个到几十不等,或者更多。使用朴素贝叶斯文分类器进行文本分类,我们需要首先考虑特">
+  
+    <link rel="alternative" href="/atom.xml" title="曾经渐行远，未免心戚戚" type="application/atom+xml">
+  
+  
+    <link href="/favicon.ico" rel="icon" type="image/x-ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+
+    <!-- 增加点击次数插件-->
+    
+        <!-- jQuery文件-->
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<!--<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>-->
+<script src="/js/av-core-mini-0.6.1.js"></script>
+<script>AV.initialize("ULm4LbKU9FYj6CxYtKYnvaeB-gzGzoHsz", "TypHFu5f7mXg4U1N9RjFRo52");</script>
+<script src="/js/Counter.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+</head>
+
+<body>
+
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><!--加载jquery-->
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<!--start 加载search_path函数 -->
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+        search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+</script>
+<!--end of  加载search_path函数 -->
+
+<div id="container">
+    <div class="left-col">
+        <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/img/tusiki.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">Aluen King Lee</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>Menu</li>
+						<li>Tags</li>
+						
+						
+						<li>Über</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/tags/随笔">随笔</a></li>
+				        
+							<li><a href="/search">搜索</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="#" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="#" title="rss">rss</a>
+					        
+								<a class="zhihu" target="_blank" href="#" title="zhihu">zhihu</a>
+					        
+								<a class="douban" target="_blank" href="#" title="douban">douban</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Algorithm/" style="font-size: 10px;">Algorithm</a> <a href="/tags/Annotation/" style="font-size: 10px;">Annotation</a> <a href="/tags/Armadillo/" style="font-size: 11.67px;">Armadillo</a> <a href="/tags/C/" style="font-size: 16.67px;">C++</a> <a href="/tags/CS/" style="font-size: 10px;">CS</a> <a href="/tags/Consensus/" style="font-size: 10px;">Consensus</a> <a href="/tags/KMP/" style="font-size: 10px;">KMP</a> <a href="/tags/LaTex/" style="font-size: 10px;">LaTex</a> <a href="/tags/Machine-Learning/" style="font-size: 20px;">Machine Learning</a> <a href="/tags/Octopress/" style="font-size: 11.67px;">Octopress</a> <a href="/tags/Raft/" style="font-size: 10px;">Raft</a> <a href="/tags/SDB/" style="font-size: 10px;">SDB</a> <a href="/tags/SDN/" style="font-size: 10px;">SDN</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/SVM/" style="font-size: 11.67px;">SVM</a> <a href="/tags/TCP/" style="font-size: 10px;">TCP</a> <a href="/tags/ThreadPool/" style="font-size: 10px;">ThreadPool</a> <a href="/tags/armadillo链接错误/" style="font-size: 10px;">armadillo链接错误</a> <a href="/tags/co-write/" style="font-size: 10px;">co-write</a> <a href="/tags/feature-selection/" style="font-size: 11.67px;">feature selection</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 11.67px;">hexo</a> <a href="/tags/hotload/" style="font-size: 10px;">hotload</a> <a href="/tags/idea/" style="font-size: 10px;">idea</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/java内存模型/" style="font-size: 10px;">java内存模型</a> <a href="/tags/java线程池/" style="font-size: 10px;">java线程池</a> <a href="/tags/jsoup/" style="font-size: 10px;">jsoup</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/lapack/" style="font-size: 10px;">lapack</a> <a href="/tags/libpcap/" style="font-size: 11.67px;">libpcap</a> <a href="/tags/libsvm/" style="font-size: 10px;">libsvm</a> <a href="/tags/linear-regression/" style="font-size: 10px;">linear-regression</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/list/" style="font-size: 10px;">list</a> <a href="/tags/map-reduce/" style="font-size: 10px;">map-reduce</a> <a href="/tags/math-example/" style="font-size: 10px;">math example</a> <a href="/tags/mongodb/" style="font-size: 10px;">mongodb</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/new/" style="font-size: 10px;">new[]</a> <a href="/tags/nox/" style="font-size: 10px;">nox</a> <a href="/tags/octave/" style="font-size: 10px;">octave</a> <a href="/tags/openblas/" style="font-size: 10px;">openblas</a> <a href="/tags/predeclaration/" style="font-size: 10px;">predeclaration</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/reflect/" style="font-size: 10px;">reflect</a> <a href="/tags/virtualbox/" style="font-size: 10px;">virtualbox</a> <a href="/tags/wireshark/" style="font-size: 10px;">wireshark</a> <a href="/tags/yilia/" style="font-size: 10px;">yilia</a> <a href="/tags/三次握手/" style="font-size: 10px;">三次握手</a> <a href="/tags/信息增益算法/" style="font-size: 10px;">信息增益算法</a> <a href="/tags/内存覆盖/" style="font-size: 10px;">内存覆盖</a> <a href="/tags/动态规划/" style="font-size: 11.67px;">动态规划</a> <a href="/tags/协同写作/" style="font-size: 10px;">协同写作</a> <a href="/tags/反射/" style="font-size: 10px;">反射</a> <a href="/tags/四次握手/" style="font-size: 10px;">四次握手</a> <a href="/tags/复制/" style="font-size: 10px;">复制</a> <a href="/tags/复制控制/" style="font-size: 10px;">复制控制</a> <a href="/tags/层次聚类/" style="font-size: 10px;">层次聚类</a> <a href="/tags/常用命令/" style="font-size: 10px;">常用命令</a> <a href="/tags/微博标签/" style="font-size: 10px;">微博标签</a> <a href="/tags/总结/" style="font-size: 13.33px;">总结</a> <a href="/tags/拉格朗日对偶/" style="font-size: 10px;">拉格朗日对偶</a> <a href="/tags/数据挖掘/" style="font-size: 10px;">数据挖掘</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/整理/" style="font-size: 11.67px;">整理</a> <a href="/tags/文本分类/" style="font-size: 10px;">文本分类</a> <a href="/tags/时间格式/" style="font-size: 10px;">时间格式</a> <a href="/tags/朴素贝叶斯/" style="font-size: 10px;">朴素贝叶斯</a> <a href="/tags/机器学习/" style="font-size: 18.33px;">机器学习</a> <a href="/tags/来自陈年佳酿的笔记/" style="font-size: 10px;">来自陈年佳酿的笔记</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/热加载/" style="font-size: 10px;">热加载</a> <a href="/tags/特征选择/" style="font-size: 11.67px;">特征选择</a> <a href="/tags/生成学习/" style="font-size: 10px;">生成学习</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/线程/" style="font-size: 11.67px;">线程</a> <a href="/tags/网页分析/" style="font-size: 10px;">网页分析</a> <a href="/tags/赋值/" style="font-size: 10px;">赋值</a> <a href="/tags/进程/" style="font-size: 11.67px;">进程</a> <a href="/tags/金融信用/" style="font-size: 10px;">金融信用</a> <a href="/tags/链表/" style="font-size: 11.67px;">链表</a> <a href="/tags/面试/" style="font-size: 11.67px;">面试</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">有梦想就要去实现</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+        <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Aluen King Lee</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="/img/tusiki.jpg" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">Aluen King Lee</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/tags/随笔">随笔</a></li>
+		        
+					<li><a href="/search">搜索</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="#" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="#" title="rss">rss</a>
+			        
+						<a class="zhihu" target="_blank" href="#" title="zhihu">zhihu</a>
+			        
+						<a class="douban" target="_blank" href="#" title="douban">douban</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+        <div class="body-wrap"><article id="post-po-su-bei-xie-si-wen-ben-fen-lei" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2014/06/27/po-su-bei-xie-si-wen-ben-fen-lei/" class="article-date">
+  	<time datetime="2014-06-27T04:11:00.000Z" itemprop="datePublished">2014-06-27</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      朴素贝叶斯文本分类
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Machine-Learning/">Machine Learning</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/文本分类/">文本分类</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/朴素贝叶斯/">朴素贝叶斯</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li></ul>
+	</div>
+
+
+<div class="counter-tag counter">
+    <span id="/2014/06/27/po-su-bei-xie-si-wen-ben-fen-lei/" class="leancloud_visitors post-title-link"
+          style="font-size: 12px" data-flag-title="朴素贝叶斯文本分类">
+         &nbsp;
+    <!-- 这里给出浏览数-->
+        Hits
+    </span>
+</div>
+
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>回顾朴素贝叶斯(NB)分类器:</p>
+<span>$$p(y_k|x)=\frac{p(y_k)p(x|y_k)}{p(x)}\propto p(y_k)p(x|y_k)=p(y_k)\prod_{i=1}^{d}{p(x_i|y_k)}$$</span><!-- Has MathJax -->
+<p>对于文本分类任务,即对一篇文章进行分类,是 NLP 中最常见的机器学习任务。一般情况下,类别从几个到几十不等,或者更多。使用朴素贝叶斯文分类器进行文本分类,我们需要首先考虑特征是什么,即x如何表示;$p(x_i|y_k )$的物理意义是什么,如何计算。对于特征方面,文本分类常规都是使用 bag-of-words 的特征,即以文章中出现的词作为特征,而不考虑词语出现的顺序。朴素贝叶斯文分类器也一般使用这种形式。那么特征空间的大小,就取决于词表(vocabulary)的大小,即语料集合中不重复词的个数。对于汉语来说,一般几万到百万不等。</p>
+<p>在 bag-of-words 的特征体系下,特征空间是确定了的,但是具体$x_i$的取值以及对应的$p(x_i |y_k )$的物理意义却可以有不同的考虑,对应着不同的参数计算公式及分类器训练和预测的实现。这取决于我们是否考虑词语在文章中出现的频次。</p>
+<a id="more"></a>
+<h4>伯努力(Bernoulli)NB</h4>
+<p>先看不考虑词频的情况。即只看某词语在某文章中是否出现,而不管出现了具体是多少次。这种假设下,每维特征的取值为 0-1,此时对应的 NB 分类器又被称为伯努力(Bernoulli)NB 分类器。
+比如,如果词表是{2014、年、巴西、世界杯、足球赛、举行、是、第、20、届、球队},某文档是“2014 年巴西世界杯足球赛是第 20 届世界杯足球赛 ”,那么特征空间是 11,该文档特征向量是:</p>
+<p>$$
+x = (1,1,1,1,1,0,1,1,1,1,0)
+$$</p>
+<p>此时,$p(x_i|y_k)$的物理意义可认为是:若文章为 k 类别,则第 i 特征(词表第 i 个词)出现或者不出现的概率。那么:
+$$
+p(x_i = 0|y_k ) = 1 − p(x_i = 1|y_k)
+$$</p>
+<p>习惯的,我们经常用$p(x_i |y_k )$来作为$p(x_i = 1|y_k)$同等含义的一种表示。那此时,原NB模型的表达式可以写为:</p>
+<span>$$p\left( { { y }_{ k } }|{ x } \right) \propto 
+p\left( { y }_{ k } \right) \prod _{ i=1 }^{ d }{ \left\{ { \alpha  }_{ i }p\left( { { x }_{ i } }|{ { y }_{ k } } \right) 
++\left( 1-{ \alpha  }_{ i } \right) \left( 1-p\left( { { x }_{ i } }|{ { y }_{ k } } \right)  \right)  \right\}  }$$</span><!-- Has MathJax -->
+<p>$\alpha_i$ 表示第 i 个词在该文档中出现了,没出现则为0.此时要非常注意,计算文章属于某个类别的得分的时候,不只要考虑该文章的 word,还要考虑在词表中的但是在该文章中没出现的 word!这类词对得分的贡献是$1 − p(x_i |y_k )$。因此伯努力 NB 下,分类的时间复杂度是 $O(Cd)$,C 是类别数,d 是词表大小。</p>
+<p>那么伯努力 NB 下,p的参数估计表达式是多少呢?假设根据如上定义,及最大似然估计,可以得到:</p>
+<span>$$p\left( { { x }_{ i } }|{ { y }_{ k } } \right) 
+=\frac { \sum _{ t=1 }^{ n }{ I\left\{ y_{ k }={ y }_{t } \right\} I\{ x_{ i }\quad in\quad y_{ t }\}  }  }{ \sum _{ t=1 }^{ t }{ I\left\{ y_{ k }={ y }_{ t } \right\}  }  }
+=\frac { 特征词i在第k类文章中出现的文章数 }{ 第k类文章数 }$$</span><!-- Has MathJax -->
+<p>其中函数I是指示函数，若x出现则值为1。可见,对于高频词,对应的这种条件概率是非常高的。 比如“的”(假设没去除停用词),其对应的条件概率值很可能会接近于 1.</p>
+<p>再重复强调一下,此时的概率意义约束是: $p(x_i = 1|y_k) + p(x_i = 0|y_k ) = 1$</p>
+<p>看一下伯努力 NB 下参数平滑的问题。使用加 1 平滑,即拉普拉斯平滑,此时在保证概率意义下,其平滑公式应该为:</p>
+<p>$$
+p(x_i |y_k ) = \frac{第 k 类文章中出现过第 i 词的文章数 + 1}{第k类文章数 + 2}
+$$</p>
+<p>提醒一下,此处分母加的值是 2,而不是词表大小。注意,平滑一定要使得平滑之后仍满足概率意义。</p>
+<h4>多项式(Multinomial)NB</h4>
+<p>当我们考虑文章内词语的频次,而不只是考虑出现或未出现,此时特征的取值不再是 0-1,不过总的特征空间大小仍未变化。拿前面的例子来做对照,词表是{2014、年、巴西、世界杯、足球赛、举行、是、第、20、届、球队},某文档是“2014 年巴西世界杯足球赛是第 20 届世界杯足球赛”,此时该文章的特征向量为:</p>
+<p>$$
+x = (1,1,1,2,2,0,1,1,1,1,0)
+$$</p>
+<p>此时对应的 NB 一般称为多项式 NB。设 m 为文章内的总词频数,对应的模型表达式应该如下:</p>
+<span>$$p(y_k|x)&prop;p(y_k)p(x|y_k)=p(y_k)
+\frac{m!}{\prod_{i=1}^{d} x_i!}
+\prod_{i=1}^{d}p(w_i|y_k)^{x_i}
+&prop;p(y_k)\prod_{i=1}^{d}p(w_i|y_k)^{x_i}$$</span><!-- Has MathJax -->
+<p>之所以可以省掉这个多项式系数,是因为它是和类别$y_k$无关的。而此时,第 k 类别的所有文章中第 i 词的分布概率:</p>
+<span>$$p\left( { { w }_{ i } }|{ { y }_{ k } } \right)
+ =\frac { \sum _{ t=1 }^{ n }{ I\left\{ y_{ k }={ y }_{ t } \right\} x_{ i }^{ t } }  }
+{ \sum _{ j=1 }^{ d }{ \sum _{ t=1 }^{ n }{ I\left\{ y_{ k }={ y }_{ t } \right\} x_{ i }^{ t } }  }  } 
+=\frac { 特征词i在第k类文章中出现的总词频数 }{ 第k文章总词频数 }$$</span><!-- Has MathJax -->
+<p>在多项式NB下,即使极高频词,其$p(w_i|y_k)$也很难接近于 1,另外其在模型中作用的时候是:$p(w_i|y_k)^{x_i}$.这时候的概率约束是:</p>
+<span>$\sum_{i=1}^{d}p(w_i|y_k)=1$</span><!-- Has MathJax -->
+<p>因此对应的加 1 平滑为:</p>
+<span>$$p\left( { { w }_{ i } }|{ { y }_{ k } } \right) =\frac { \sum _{ t=1 }^{ n }{ I\left\{ y_{ k }={ y }_{ t } \right\} x_{ i }^{ t } } +1 }
+{ \sum _{ j=1 }^{ d }{ \sum _{ t=1 }^{ n }{ I\left\{ y_{ k }={ y }_{ t } \right\} x_{ i }^{ t } }  }  +d}$$</span><!-- Has MathJax -->
+<p>注意事项：</p>
+<ul>
+<li>
+<p>训练时候对于词语平铺的文本,应该要做词的聚合,即行程 bag-of-words 的形式比较有利于后续统计计算,特别是对于伯努利 NB 必须做去重。当然,对于多项式 NB,也可以顺次扫描累加。</p>
+</li>
+<li>
+<p>预测时候的概率连乘,为了防止精度损失,可以改用取 log 相加。</p>
+</li>
+<li>
+<p>对于短一些的文本,伯努利 NB 即可;对于长文本,考虑词频的多项式 NB 即可。当然也可以使用 tf-idf 等特征值,仿照多项式 NB 的形式。</p>
+</li>
+<li>
+<p>预测时候,对于词表中出现但是本文章未出现的词语,伯努利 NB 下对得分有贡献,多项式 NB 下不用考虑;对于在词表中未出现的词,都可以不予以考虑,因为未登录词对各个类别的贡献是一样的。</p>
+</li>
+</ul>
+<h4>实验</h4>
+<p>关于实验数据，可以到<a href="https://github.com/aluenkinglee/mlclass/tree/master/NativeBayes" target="_blank" rel="external">这里</a>下载，训练集和测试集都已经很明白
+总量在4000-的水平，result.dat是训练结果，可以看到测试集在训练数据的结果上准确率达到了100%。。这个是因为类别太少的缘故。只有3个类别，不过这个已经
+可以看到朴素贝叶斯在工业界的应用可以达到较好的性能。</p>
+<p>朴素贝叶斯分类器代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line">     * 训练目录下的样本集合</span><br><span class="line">     * </span><br><span class="line">     * <span class="doctag">@throws</span> IOException</span><br><span class="line">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">trainSamples</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        NaiveBayes classifier = <span class="keyword">new</span> NaiveBayes();</span><br><span class="line">        File flist = <span class="keyword">new</span> File(<span class="string">"./data-trainning-set"</span>);</span><br><span class="line">        <span class="keyword">for</span> (File f : flist.listFiles()) &#123;</span><br><span class="line">            classifier.training(<span class="keyword">new</span> Instance(f));</span><br><span class="line">        &#125;</span><br><span class="line">        classifier.save(<span class="keyword">new</span> File(<span class="string">"result.dat"</span>));</span><br><span class="line">        System.out.println(<span class="string">"Trainning finished"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * specify the training dataset directory, and store result in the outfile</span><br><span class="line">     * </span><br><span class="line">     * <span class="doctag">@param</span> directory</span><br><span class="line">     * <span class="doctag">@param</span> result</span><br><span class="line">     * <span class="doctag">@throws</span> IOException</span><br><span class="line">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">trainSamples</span><span class="params">(String directory, String outfile)</span></span><br><span class="line">            <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        NaiveBayes classifier = <span class="keyword">new</span> NaiveBayes();</span><br><span class="line">        File flist = <span class="keyword">new</span> File(directory);</span><br><span class="line">        <span class="keyword">for</span> (File f : flist.listFiles()) &#123;</span><br><span class="line">            classifier.training(<span class="keyword">new</span> Instance(f));</span><br><span class="line">        &#125;</span><br><span class="line">        classifier.save(<span class="keyword">new</span> File(outfile));</span><br><span class="line">        System.out.println(<span class="string">"Trainning finished"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * 判断该实例所属的类别category</span><br><span class="line">     * </span><br><span class="line">     * <span class="doctag">@param</span> doc</span><br><span class="line">     * <span class="doctag">@return</span></span><br><span class="line">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getCategory</span><span class="params">(Instance doc)</span> </span>&#123;</span><br><span class="line">        Collection&lt;String&gt; categories = VARIABLE.getCategories();</span><br><span class="line">        System.out.println(categories);</span><br><span class="line">        <span class="keyword">double</span> best = Double.NEGATIVE_INFINITY;</span><br><span class="line">        String bestName = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">for</span> (String c : categories) &#123;</span><br><span class="line">            <span class="keyword">double</span> current = getProbability(c, doc);</span><br><span class="line">            System.out.println(c + <span class="string">":"</span> + current);</span><br><span class="line">            <span class="keyword">if</span> (best &lt; current) &#123;</span><br><span class="line">                best = current;</span><br><span class="line">                bestName = c;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> bestName;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * 计算P（C)=该类型文档总数/文档总数，返回的数对数值</span><br><span class="line">     * </span><br><span class="line">     * <span class="doctag">@param</span> category</span><br><span class="line">     * <span class="doctag">@return</span></span><br><span class="line">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getCategoryProbability</span><span class="params">(String category)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Math.log(VARIABLE.getDocCount(category) * <span class="number">1.0f</span></span><br><span class="line">                / VARIABLE.getDocCount());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * 计算P(feature|cateogry),返回的是取对数后的数值</span><br><span class="line">     * </span><br><span class="line">     * <span class="doctag">@param</span> feature</span><br><span class="line">     * <span class="doctag">@param</span> category</span><br><span class="line">     * <span class="doctag">@return</span></span><br><span class="line">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getFeatureProbability</span><span class="params">(String feature, String category)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> m = VARIABLE.getFeatureCount();</span><br><span class="line">        <span class="keyword">return</span> Math.log((VARIABLE.getDocCount(feature, category) + <span class="number">1.0</span>)</span><br><span class="line">                / (VARIABLE.getDocCount(category) + m));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * 计算给定实例文档属于指定类别的概率，返回的是取对数后的数值</span><br><span class="line">     * </span><br><span class="line">     * <span class="doctag">@param</span> category</span><br><span class="line">     * <span class="doctag">@param</span> doc</span><br><span class="line">     * <span class="doctag">@return</span></span><br><span class="line">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getProbability</span><span class="params">(String category, Instance doc)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">double</span> result = getCategoryProbability(category);</span><br><span class="line">        <span class="keyword">for</span> (String feature : doc.getWords()) &#123;</span><br><span class="line">            <span class="keyword">if</span> (VARIABLE.containFeature(feature)) &#123;</span><br><span class="line">                result += getFeatureProbability(feature, category);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * 加载训练结果</span><br><span class="line">     * </span><br><span class="line">     * <span class="doctag">@param</span> file</span><br><span class="line">     * <span class="doctag">@throws</span> IOException</span><br><span class="line">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">load</span><span class="params">(File file)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        DataInputStream in = <span class="keyword">new</span> DataInputStream(<span class="keyword">new</span> FileInputStream(file));</span><br><span class="line">        VARIABLE = Variable.read(in);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * 保存训练结果</span><br><span class="line">     * </span><br><span class="line">     * <span class="doctag">@throws</span> IOException</span><br><span class="line">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">save</span><span class="params">(File file)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        DataOutput out = <span class="keyword">new</span> DataOutputStream(<span class="keyword">new</span> FileOutputStream(file));</span><br><span class="line">        VARIABLE.write(out);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * 训练一篇文档</span><br><span class="line">     * </span><br><span class="line">     * <span class="doctag">@param</span> doc</span><br><span class="line">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">training</span><span class="params">(Instance doc)</span> </span>&#123;</span><br><span class="line">        VARIABLE.addInstance(doc);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>特征词类代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Feature</span> </span>&#123;</span><br><span class="line">    <span class="comment">/** 每个关键词在不同类别中出现的文档数量 */</span></span><br><span class="line">    <span class="keyword">private</span> Map&lt;String, Integer&gt; docCountMap = <span class="keyword">new</span> HashMap&lt;String, Integer&gt;();</span><br><span class="line">    <span class="comment">/** 特征名称 */</span></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">incDocCount</span><span class="params">(String category)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (docCountMap.containsKey(category)) &#123;</span><br><span class="line">            docCountMap.put(category, docCountMap.get(category) + <span class="number">1</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            docCountMap.put(category, <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getDocCount</span><span class="params">(String category)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (docCountMap.containsKey(category)) &#123;</span><br><span class="line">            <span class="keyword">return</span> docCountMap.get(category);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">write</span><span class="params">(DataOutput out)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        out.writeUTF(name == <span class="keyword">null</span> ? <span class="string">""</span> : name);</span><br><span class="line"></span><br><span class="line">        out.writeInt(docCountMap.size());</span><br><span class="line">        <span class="keyword">for</span> (String category : docCountMap.keySet()) &#123;</span><br><span class="line">            out.writeUTF(category);</span><br><span class="line">            out.writeInt(docCountMap.get(category));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">readFields</span><span class="params">(DataInput in)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = in.readUTF();</span><br><span class="line"></span><br><span class="line">        docCountMap = <span class="keyword">new</span> HashMap&lt;String, Integer&gt;();</span><br><span class="line">        <span class="keyword">int</span> size = in.readInt();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; i++) &#123;</span><br><span class="line">            String category = in.readUTF();</span><br><span class="line">            <span class="keyword">int</span> docCount = in.readInt();</span><br><span class="line">            docCountMap.put(category, docCount);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Feature <span class="title">read</span><span class="params">(DataInput in)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        Feature f = <span class="keyword">new</span> Feature();</span><br><span class="line">        f.readFields(in);</span><br><span class="line">        <span class="keyword">return</span> f;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>更多代码请看<a href="https://github.com/aluenkinglee/mlclass/tree/master/NativeBayes/src" target="_blank" rel="external">这里</a></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/07/09/wei-pi-pei/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          伪匹配
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/06/03/lagrange-duality/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">拉格朗日对偶</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="po-su-bei-xie-si-wen-ben-fen-lei" data-title="朴素贝叶斯文本分类" data-url="http://kinglanding.github.io/2014/06/27/po-su-bei-xie-si-wen-ben-fen-lei/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+        <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 Aluen King Lee
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+
+<!--统计Aluenkinglee.github.io-->
+<!--<script type="text/javascript" id="clustrmaps" src="//cdn.clustrmaps.com/map_v2.js?u=Ak87&d=RfrOeulSXrf1uWSg4T_1STgF7iU2vDrBtJLdE3MJdQY"></script>-->
+<!--统计Aluenkinglee.com-->
+<!--<script type="text/javascript" id="clustrmaps" src="//cdn.clustrmaps.com/map_v2.js?u=Ak87&d=fWyzUb5ADRAwJb5b2EdCj25FWOlzy8vwVQmK9vxSAYY"></script>-->
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+<!--
+-->
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
+          MathJax.InputJax.TeX.prefilterHooks.Add(function (data) {
+                  data.math = data.math.replace(/^\s*<!\[CDATA\[\s*((?:\n|.)*)\s*\]\]>\s*$/m,"$1");
+                    });
+          });
+
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+
+</script>
+
+<script type="text/javascript"
+        src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+</div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>

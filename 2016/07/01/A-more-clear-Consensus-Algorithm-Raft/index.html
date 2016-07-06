@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>A more clear Consensus Algorithm : Raft | 曾经渐行远，未免心戚戚</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="序
+写这边文章的最初想法很简单，我想给redis或者codis加个feature，解决redis集群中热点key的问题，思路很简单，将热点key数据同步到集群中所有节点，
+这样就需要集群能够区别什么key是热点key，由这个问题可以引申出，过去一段时间，集群根据抽样访问次数统计分析出哪些key是热点（从这句简单的需求中，
+其实可以做很多优化，但这里还不是最终的设计，完事开头难，先实现功能是最重要的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A more clear Consensus Algorithm : Raft">
+<meta property="og:url" content="http://kinglanding.github.io/2016/07/01/A-more-clear-Consensus-Algorithm-Raft/index.html">
+<meta property="og:site_name" content="曾经渐行远，未免心戚戚">
+<meta property="og:description" content="序
+写这边文章的最初想法很简单，我想给redis或者codis加个feature，解决redis集群中热点key的问题，思路很简单，将热点key数据同步到集群中所有节点，
+这样就需要集群能够区别什么key是热点key，由这个问题可以引申出，过去一段时间，集群根据抽样访问次数统计分析出哪些key是热点（从这句简单的需求中，
+其实可以做很多优化，但这里还不是最终的设计，完事开头难，先实现功能是最重要的">
+<meta property="og:updated_time" content="2016-07-06T02:39:46.964Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="A more clear Consensus Algorithm : Raft">
+<meta name="twitter:description" content="序
+写这边文章的最初想法很简单，我想给redis或者codis加个feature，解决redis集群中热点key的问题，思路很简单，将热点key数据同步到集群中所有节点，
+这样就需要集群能够区别什么key是热点key，由这个问题可以引申出，过去一段时间，集群根据抽样访问次数统计分析出哪些key是热点（从这句简单的需求中，
+其实可以做很多优化，但这里还不是最终的设计，完事开头难，先实现功能是最重要的">
+  
+    <link rel="alternative" href="/atom.xml" title="曾经渐行远，未免心戚戚" type="application/atom+xml">
+  
+  
+    <link href="/favicon.ico" rel="icon" type="image/x-ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+
+    <!-- 增加点击次数插件-->
+    
+        <!-- jQuery文件-->
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<!--<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>-->
+<script src="/js/av-core-mini-0.6.1.js"></script>
+<script>AV.initialize("ULm4LbKU9FYj6CxYtKYnvaeB-gzGzoHsz", "TypHFu5f7mXg4U1N9RjFRo52");</script>
+<script src="/js/Counter.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+</head>
+
+<body>
+
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><!--加载jquery-->
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<!--start 加载search_path函数 -->
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+        search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+</script>
+<!--end of  加载search_path函数 -->
+
+<div id="container">
+    <div class="left-col">
+        <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/img/tusiki.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">Aluen King Lee</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>Menu</li>
+						<li>Tags</li>
+						
+						
+						<li>Über</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/tags/随笔">随笔</a></li>
+				        
+							<li><a href="/search">搜索</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="#" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="#" title="rss">rss</a>
+					        
+								<a class="zhihu" target="_blank" href="#" title="zhihu">zhihu</a>
+					        
+								<a class="douban" target="_blank" href="#" title="douban">douban</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Algorithm/" style="font-size: 10px;">Algorithm</a> <a href="/tags/Annotation/" style="font-size: 10px;">Annotation</a> <a href="/tags/Armadillo/" style="font-size: 11.67px;">Armadillo</a> <a href="/tags/C/" style="font-size: 16.67px;">C++</a> <a href="/tags/CS/" style="font-size: 10px;">CS</a> <a href="/tags/Consensus/" style="font-size: 10px;">Consensus</a> <a href="/tags/KMP/" style="font-size: 10px;">KMP</a> <a href="/tags/LaTex/" style="font-size: 10px;">LaTex</a> <a href="/tags/Machine-Learning/" style="font-size: 20px;">Machine Learning</a> <a href="/tags/Octopress/" style="font-size: 11.67px;">Octopress</a> <a href="/tags/Raft/" style="font-size: 10px;">Raft</a> <a href="/tags/SDB/" style="font-size: 10px;">SDB</a> <a href="/tags/SDN/" style="font-size: 10px;">SDN</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/SVM/" style="font-size: 11.67px;">SVM</a> <a href="/tags/TCP/" style="font-size: 10px;">TCP</a> <a href="/tags/ThreadPool/" style="font-size: 10px;">ThreadPool</a> <a href="/tags/armadillo链接错误/" style="font-size: 10px;">armadillo链接错误</a> <a href="/tags/co-write/" style="font-size: 10px;">co-write</a> <a href="/tags/feature-selection/" style="font-size: 11.67px;">feature selection</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 11.67px;">hexo</a> <a href="/tags/hotload/" style="font-size: 10px;">hotload</a> <a href="/tags/idea/" style="font-size: 10px;">idea</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/java内存模型/" style="font-size: 10px;">java内存模型</a> <a href="/tags/java线程池/" style="font-size: 10px;">java线程池</a> <a href="/tags/jsoup/" style="font-size: 10px;">jsoup</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/lapack/" style="font-size: 10px;">lapack</a> <a href="/tags/libpcap/" style="font-size: 11.67px;">libpcap</a> <a href="/tags/libsvm/" style="font-size: 10px;">libsvm</a> <a href="/tags/linear-regression/" style="font-size: 10px;">linear-regression</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/list/" style="font-size: 10px;">list</a> <a href="/tags/map-reduce/" style="font-size: 10px;">map-reduce</a> <a href="/tags/math-example/" style="font-size: 10px;">math example</a> <a href="/tags/mongodb/" style="font-size: 10px;">mongodb</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/new/" style="font-size: 10px;">new[]</a> <a href="/tags/nox/" style="font-size: 10px;">nox</a> <a href="/tags/octave/" style="font-size: 10px;">octave</a> <a href="/tags/openblas/" style="font-size: 10px;">openblas</a> <a href="/tags/predeclaration/" style="font-size: 10px;">predeclaration</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/reflect/" style="font-size: 10px;">reflect</a> <a href="/tags/virtualbox/" style="font-size: 10px;">virtualbox</a> <a href="/tags/wireshark/" style="font-size: 10px;">wireshark</a> <a href="/tags/yilia/" style="font-size: 10px;">yilia</a> <a href="/tags/三次握手/" style="font-size: 10px;">三次握手</a> <a href="/tags/信息增益算法/" style="font-size: 10px;">信息增益算法</a> <a href="/tags/内存覆盖/" style="font-size: 10px;">内存覆盖</a> <a href="/tags/动态规划/" style="font-size: 11.67px;">动态规划</a> <a href="/tags/协同写作/" style="font-size: 10px;">协同写作</a> <a href="/tags/反射/" style="font-size: 10px;">反射</a> <a href="/tags/四次握手/" style="font-size: 10px;">四次握手</a> <a href="/tags/复制/" style="font-size: 10px;">复制</a> <a href="/tags/复制控制/" style="font-size: 10px;">复制控制</a> <a href="/tags/层次聚类/" style="font-size: 10px;">层次聚类</a> <a href="/tags/常用命令/" style="font-size: 10px;">常用命令</a> <a href="/tags/微博标签/" style="font-size: 10px;">微博标签</a> <a href="/tags/总结/" style="font-size: 13.33px;">总结</a> <a href="/tags/拉格朗日对偶/" style="font-size: 10px;">拉格朗日对偶</a> <a href="/tags/数据挖掘/" style="font-size: 10px;">数据挖掘</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/整理/" style="font-size: 11.67px;">整理</a> <a href="/tags/文本分类/" style="font-size: 10px;">文本分类</a> <a href="/tags/时间格式/" style="font-size: 10px;">时间格式</a> <a href="/tags/朴素贝叶斯/" style="font-size: 10px;">朴素贝叶斯</a> <a href="/tags/机器学习/" style="font-size: 18.33px;">机器学习</a> <a href="/tags/来自陈年佳酿的笔记/" style="font-size: 10px;">来自陈年佳酿的笔记</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/热加载/" style="font-size: 10px;">热加载</a> <a href="/tags/特征选择/" style="font-size: 11.67px;">特征选择</a> <a href="/tags/生成学习/" style="font-size: 10px;">生成学习</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/线程/" style="font-size: 11.67px;">线程</a> <a href="/tags/网页分析/" style="font-size: 10px;">网页分析</a> <a href="/tags/赋值/" style="font-size: 10px;">赋值</a> <a href="/tags/进程/" style="font-size: 11.67px;">进程</a> <a href="/tags/金融信用/" style="font-size: 10px;">金融信用</a> <a href="/tags/链表/" style="font-size: 11.67px;">链表</a> <a href="/tags/面试/" style="font-size: 11.67px;">面试</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">有梦想就要去实现</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+        <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Aluen King Lee</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="/img/tusiki.jpg" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">Aluen King Lee</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/tags/随笔">随笔</a></li>
+		        
+					<li><a href="/search">搜索</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="#" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="#" title="rss">rss</a>
+			        
+						<a class="zhihu" target="_blank" href="#" title="zhihu">zhihu</a>
+			        
+						<a class="douban" target="_blank" href="#" title="douban">douban</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+        <div class="body-wrap"><article id="post-A-more-clear-Consensus-Algorithm-Raft" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/07/01/A-more-clear-Consensus-Algorithm-Raft/" class="article-date">
+  	<time datetime="2016-07-01T02:16:34.000Z" itemprop="datePublished">2016-07-01</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      A more clear Consensus Algorithm : Raft
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Consensus/">Consensus</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Raft/">Raft</a></li></ul>
+	</div>
+
+
+<div class="counter-tag counter">
+    <span id="/2016/07/01/A-more-clear-Consensus-Algorithm-Raft/" class="leancloud_visitors post-title-link"
+          style="font-size: 12px" data-flag-title="A more clear Consensus Algorithm : Raft">
+         &nbsp;
+    <!-- 这里给出浏览数-->
+        Hits
+    </span>
+</div>
+
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2>序</h2>
+<p>写这边文章的最初想法很简单，我想给redis或者codis加个feature，解决redis集群中热点key的问题，思路很简单，将热点key数据同步到集群中所有节点，
+这样就需要集群能够区别什么key是热点key，由这个问题可以引申出，过去一段时间，集群根据抽样访问次数统计分析出哪些key是热点（从这句简单的需求中，
+其实可以做很多优化，但这里还不是最终的设计，完事开头难，先实现功能是最重要的，才能谈下一步的优化）。将热点key同步到集群所有节点（这里需要注意
+数据一致性，首次同步感觉容易出bug），接下来热点key的读随机分配到任意节点，热点key的写所有节点同时写，保证数据强一致性。</p>
+<p>有了这个想法之后，需要找一个类似zookeeper那样的c语言工具，用来管理热点key的问题，技术选型:</p>
+<ol>
+<li>例如google的chubby和chubby的开源实现zookeeper，都是基于<code>paxos</code>这个大名鼎鼎的分布式一致性算法，有好几种
+c语言版本的实现，参见<a href="http://libpaxos.sourceforge.net/" target="_blank" rel="external">libpaxos</a>，论文<a href="http://research.microsoft.com/pubs/64624/tr-2005-112.pdf" target="_blank" rel="external">见这里</a>
+, 这个是简版论文，但即使这样，chubby的作者都没有完全实现论文中的算法..</li>
+</ol>
+<blockquote>
+<p>“There are significant gaps between the description of the Paxos algorithm and the needs of a
+real-world system...the final system will be based on an unproven protocol.”</p>
+</blockquote>
+<p>所以我准备放弃这个。</p>
+<ol start="2">
+<li>接下来就是要谈论的Raft算法了，标称是人人都能看懂的一致性算法，Raft主页<a href="https://raft.github.io/" target="_blank" rel="external">点击</a>，quora的
+<a href="https://www.quora.com/Distributed-Systems-What-is-a-good-open-source-Paxos-implementation#" target="_blank" rel="external">讨论</a>，于是决定使用Raft.</li>
+</ol>
+<p>在继续工作之前，先来看下Raft的论文，基本思想，在谈论下步工作。</p>
+<h2>什么是Raft</h2>
+<p>Raft从设计开始，就定调为人人都懂的分布式一致性算法，容错和性能上等价于Paxos. 不同是，它将问题分解成相对独立的子问题，并清晰说明了所有实际系统
+中面临的主要问题。</p>
+<h2>等等-什么是一致性</h2>
+<p>一致性是高容错分布式系统中的基石。涉及到多服务器对数据达成一致。只要他们对某个值做出决定，那么这个值就确定了。一致性算法的典型应用场景是，当
+集群中的大多数服务器可用时，比如5台机器只有3台可用，服务仍然正常可用。若超过3个，那么服务就会变得不正常，信息的决定有可能会被伪造。
+一致性通常存在于有副本状态机的场景中，一种通用构建容错系统的方式。每台服务器都拥有一个状态机和相应的日志。状态机是我们构建容错系统的组件，
+通常由hash表构成。对于客户端们来说，他们就好像和一个单一可靠的状态机进行交互，即使少数集群中的服务当掉了。每台状态机从日志中获取输入命令。
+在hash表的例子中，日执行可能包括 <code>x=3</code> 的命令，那一致性算法就是用来在各服务器同步日志中的指令的。算法必须保证，如果任意一个状态机的第n条
+指令是<code>x=3</code>,那么不存在一台机器的第n条指令是个不同的。所以，每台状态机处理一样的指令序列，运算得到同样的结果并且每台机器的状态都是一样的。</p>
+<p>Leader Election</p>
+<p>Raft中有两类控制选举的超时设置。</p>
+<ol>
+<li>选举超时，即从节点等待变成候选者的时间，一般而言，选举超时设置为[150ms,300ms]之间的随机值</li>
+</ol>
+<p>最先过了选举超时的节点从follower变成了candidate
+然后开始下一轮选举流程..
+给自己投票..
+然后给其他节点发送<code>投票请求Request Vote</code>消息
+如果接收节点在该阶段还未投票，那就投给candidate...然后重设选举超时时间
+一旦candidate获得大多数投票，他就成为leader啦
+leader家下来就开始发送Append Entries消息给follower们了
+时间传输的间隔成果是<code>heartbeat timeout</code>
+followers然后分别响应Append Entry消息
+这一选举阶段一直持续到一个follower停止接收心跳信息，成为candidate为止</p>
+<p>如果两个节点同时变成了candidate，那就会发生分裂投票。</p>
+<p>split vote
+两个节点同时变成了candidate，并且每个都收到了一个follower及诶到哪的投票...
+这两个节点票数都是2了。。直接进入下一轮选举，重新等待随机时间，重复本段内容
+直到有一个成为了leader</p>
+<ol start="2">
+<li></li>
+</ol>
+<p>Log Replication</p>
+<p>一旦我们有一个leader了，接下来需要把系统所有改动同步给所有（其他？）节点。
+上述过程同样可以使用Append Entries消息解决</p>
+<p>Strong Leader: raft采取了更强硬的Leader关系。比如，log日志只能从leader流向followers。简化了复制日志的管理难度。
+Leader选举： Raft使用随机定时器选择leader。比起其他一致性算法，只增加了一点点的机制，但是降低了选举冲突。
+成员变化：使用<code>joint consensus</code>方法。</p>
+<p>复制状态机
+一致性算法一般使用复制状态机。在这种方法中，集群中状态机计算状态完全一致的副本；即使几个服务器挂了也毫无影响。。。（这个章节先不翻译了。）</p>
+<p>Raft一致性算法</p>
+<p>Raft实际上是一种管理<code>Replicated log</code>的算法。</p>
+<p>首先，raft实现了一致性的第一步是先选举一个leader，leader负责管理日志。leader接收客户单的log entries，然后将log entries发送给其他服务器，告诉他们合适将
+log加载到状态集中。这样，该leader简化了log的管理。不再需要徐闻其他服务器，leader本省就可以决定将新的entries放置在何处。如果leader挂掉或者失联了，
+可以在重新选举新的leader。</p>
+<p>Raft将一致性算法分解成3个相对独立的部分：
+<strong>leader选举</strong>：新的leader必须只有在现在leader无效时进行选举。</p>
+<p><strong>log复制</strong>：leader必须接受客户端的log entries，并把他们复制到集群中的其他节点，强制其他节点的日志和自己的一致。</p>
+<p><strong>安全</strong>：如果任何一个服务器将特定的log entry应用到自己的状态机中，其他服务器中的状态机在相同索引的命令必须是一样的。</p>
+<h6>状态</h6>
+<p>所有服务器已持久化的状态(在响应RPC前，已经在本地更新了)：</p>
+<p><strong>当前状态</strong>: 本服务器最近看到的阶段（刚启动时是0，单调递增）</p>
+<p><strong>投递给VotedFor</strong>: 当前阶段，投递给候选者的id。若没有则是null。</p>
+<p><strong>log[]</strong>: 即log entries。每条entry都包含：命令（状态机会用到）和Term（leader收到该entry所处的term）。</p>
+<p>所有服务器易变状态：</p>
+<p><strong>commitIndex</strong>: 当前待提交的最大log entry索引。</p>
+<p><strong>lastApplied</strong>: 已经应用到状态机中的最大log entry索引。</p>
+<p>leader易变状态(重新选举后会重新初始化)：</p>
+<p><strong>nextIndex[]</strong>: 对每个服务器，保存那台机器的接下来要发送的log entry索引。（初始值是leader的最近log索引+1）</p>
+<p><strong>matchIndex[]</strong>: 对每台机器，那台服务器待复制的最大log entry索引值。</p>
+<h6>AppendEntries RPC</h6>
+<p>5.3 Log replication</p>
+<p>一旦选举出leader，就开始接受客户端的请求。每个客户单请求都包含一条等待复制状态机执行的指令。</p>
+<p>leader决定何时将一个entry加入到状态机中，提交到状态机的entry称作是commited。</p>
+<p>一条log记录提交，只要大部分服务器复制了该条记录。那么leader就可以将该日志记录放到状态机中。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/06/30/hexo-add-post-hits/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">hexo yilia主题增加文章阅读数</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="A-more-clear-Consensus-Algorithm-Raft" data-title="A more clear Consensus Algorithm : Raft" data-url="http://kinglanding.github.io/2016/07/01/A-more-clear-Consensus-Algorithm-Raft/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+        <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 Aluen King Lee
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+
+<!--统计Aluenkinglee.github.io-->
+<!--<script type="text/javascript" id="clustrmaps" src="//cdn.clustrmaps.com/map_v2.js?u=Ak87&d=RfrOeulSXrf1uWSg4T_1STgF7iU2vDrBtJLdE3MJdQY"></script>-->
+<!--统计Aluenkinglee.com-->
+<!--<script type="text/javascript" id="clustrmaps" src="//cdn.clustrmaps.com/map_v2.js?u=Ak87&d=fWyzUb5ADRAwJb5b2EdCj25FWOlzy8vwVQmK9vxSAYY"></script>-->
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+<!--
+-->
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
+          MathJax.InputJax.TeX.prefilterHooks.Add(function (data) {
+                  data.math = data.math.replace(/^\s*<!\[CDATA\[\s*((?:\n|.)*)\s*\]\]>\s*$/m,"$1");
+                    });
+          });
+
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+
+</script>
+
+<script type="text/javascript"
+        src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+</div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>

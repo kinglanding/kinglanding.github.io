@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>JSR-133 FAQ | 曾经渐行远，未免心戚戚</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="内存模型究竟是个啥玩意儿？
+在多处理器的架构中，处理器一般拥有一到几层缓存，缓存是个好东西，它既可以用来提供获取数据的速度（缓存嘛~离处理器更近！），又可以减少
+竞争共享内存总线的次数（因为很多内存数据的操作可以在缓存中完事儿~）。缓存可以惊人地提高性能，但同时也引入的新的挑战。如：
+
+如果两个处理器同时访问同一块内存区域，应该如何处理？
+在什么条件下，保证他们看到同样的值？
+
+内存模型定义了在处">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JSR-133 FAQ">
+<meta property="og:url" content="http://kinglanding.github.io/2016/05/16/JSR-133-FAQ/index.html">
+<meta property="og:site_name" content="曾经渐行远，未免心戚戚">
+<meta property="og:description" content="内存模型究竟是个啥玩意儿？
+在多处理器的架构中，处理器一般拥有一到几层缓存，缓存是个好东西，它既可以用来提供获取数据的速度（缓存嘛~离处理器更近！），又可以减少
+竞争共享内存总线的次数（因为很多内存数据的操作可以在缓存中完事儿~）。缓存可以惊人地提高性能，但同时也引入的新的挑战。如：
+
+如果两个处理器同时访问同一块内存区域，应该如何处理？
+在什么条件下，保证他们看到同样的值？
+
+内存模型定义了在处">
+<meta property="og:updated_time" content="2016-06-17T03:41:16.363Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JSR-133 FAQ">
+<meta name="twitter:description" content="内存模型究竟是个啥玩意儿？
+在多处理器的架构中，处理器一般拥有一到几层缓存，缓存是个好东西，它既可以用来提供获取数据的速度（缓存嘛~离处理器更近！），又可以减少
+竞争共享内存总线的次数（因为很多内存数据的操作可以在缓存中完事儿~）。缓存可以惊人地提高性能，但同时也引入的新的挑战。如：
+
+如果两个处理器同时访问同一块内存区域，应该如何处理？
+在什么条件下，保证他们看到同样的值？
+
+内存模型定义了在处">
+  
+    <link rel="alternative" href="/atom.xml" title="曾经渐行远，未免心戚戚" type="application/atom+xml">
+  
+  
+    <link href="/favicon.ico" rel="icon" type="image/x-ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+
+    <!-- 增加点击次数插件-->
+    
+        <!-- jQuery文件-->
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<!--<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>-->
+<script src="/js/av-core-mini-0.6.1.js"></script>
+<script>AV.initialize("ULm4LbKU9FYj6CxYtKYnvaeB-gzGzoHsz", "TypHFu5f7mXg4U1N9RjFRo52");</script>
+<script src="/js/Counter.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+</head>
+
+<body>
+
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><!--加载jquery-->
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<!--start 加载search_path函数 -->
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+        search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+</script>
+<!--end of  加载search_path函数 -->
+
+<div id="container">
+    <div class="left-col">
+        <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/img/tusiki.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">Aluen King Lee</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>Menu</li>
+						<li>Tags</li>
+						
+						
+						<li>Über</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/tags/随笔">随笔</a></li>
+				        
+							<li><a href="/search">搜索</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="#" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="#" title="rss">rss</a>
+					        
+								<a class="zhihu" target="_blank" href="#" title="zhihu">zhihu</a>
+					        
+								<a class="douban" target="_blank" href="#" title="douban">douban</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Algorithm/" style="font-size: 10px;">Algorithm</a> <a href="/tags/Annotation/" style="font-size: 10px;">Annotation</a> <a href="/tags/Armadillo/" style="font-size: 11.67px;">Armadillo</a> <a href="/tags/C/" style="font-size: 16.67px;">C++</a> <a href="/tags/CS/" style="font-size: 10px;">CS</a> <a href="/tags/Consensus/" style="font-size: 10px;">Consensus</a> <a href="/tags/KMP/" style="font-size: 10px;">KMP</a> <a href="/tags/LaTex/" style="font-size: 10px;">LaTex</a> <a href="/tags/Machine-Learning/" style="font-size: 20px;">Machine Learning</a> <a href="/tags/Octopress/" style="font-size: 11.67px;">Octopress</a> <a href="/tags/Raft/" style="font-size: 10px;">Raft</a> <a href="/tags/SDB/" style="font-size: 10px;">SDB</a> <a href="/tags/SDN/" style="font-size: 10px;">SDN</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/SVM/" style="font-size: 11.67px;">SVM</a> <a href="/tags/TCP/" style="font-size: 10px;">TCP</a> <a href="/tags/ThreadPool/" style="font-size: 10px;">ThreadPool</a> <a href="/tags/armadillo链接错误/" style="font-size: 10px;">armadillo链接错误</a> <a href="/tags/co-write/" style="font-size: 10px;">co-write</a> <a href="/tags/feature-selection/" style="font-size: 11.67px;">feature selection</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 11.67px;">hexo</a> <a href="/tags/hotload/" style="font-size: 10px;">hotload</a> <a href="/tags/idea/" style="font-size: 10px;">idea</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/java内存模型/" style="font-size: 10px;">java内存模型</a> <a href="/tags/java线程池/" style="font-size: 10px;">java线程池</a> <a href="/tags/jsoup/" style="font-size: 10px;">jsoup</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/lapack/" style="font-size: 10px;">lapack</a> <a href="/tags/libpcap/" style="font-size: 11.67px;">libpcap</a> <a href="/tags/libsvm/" style="font-size: 10px;">libsvm</a> <a href="/tags/linear-regression/" style="font-size: 10px;">linear-regression</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/list/" style="font-size: 10px;">list</a> <a href="/tags/map-reduce/" style="font-size: 10px;">map-reduce</a> <a href="/tags/math-example/" style="font-size: 10px;">math example</a> <a href="/tags/mongodb/" style="font-size: 10px;">mongodb</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/new/" style="font-size: 10px;">new[]</a> <a href="/tags/nox/" style="font-size: 10px;">nox</a> <a href="/tags/octave/" style="font-size: 10px;">octave</a> <a href="/tags/openblas/" style="font-size: 10px;">openblas</a> <a href="/tags/predeclaration/" style="font-size: 10px;">predeclaration</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/reflect/" style="font-size: 10px;">reflect</a> <a href="/tags/virtualbox/" style="font-size: 10px;">virtualbox</a> <a href="/tags/wireshark/" style="font-size: 10px;">wireshark</a> <a href="/tags/yilia/" style="font-size: 10px;">yilia</a> <a href="/tags/三次握手/" style="font-size: 10px;">三次握手</a> <a href="/tags/信息增益算法/" style="font-size: 10px;">信息增益算法</a> <a href="/tags/内存覆盖/" style="font-size: 10px;">内存覆盖</a> <a href="/tags/动态规划/" style="font-size: 11.67px;">动态规划</a> <a href="/tags/协同写作/" style="font-size: 10px;">协同写作</a> <a href="/tags/反射/" style="font-size: 10px;">反射</a> <a href="/tags/四次握手/" style="font-size: 10px;">四次握手</a> <a href="/tags/复制/" style="font-size: 10px;">复制</a> <a href="/tags/复制控制/" style="font-size: 10px;">复制控制</a> <a href="/tags/层次聚类/" style="font-size: 10px;">层次聚类</a> <a href="/tags/常用命令/" style="font-size: 10px;">常用命令</a> <a href="/tags/微博标签/" style="font-size: 10px;">微博标签</a> <a href="/tags/总结/" style="font-size: 13.33px;">总结</a> <a href="/tags/拉格朗日对偶/" style="font-size: 10px;">拉格朗日对偶</a> <a href="/tags/数据挖掘/" style="font-size: 10px;">数据挖掘</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/整理/" style="font-size: 11.67px;">整理</a> <a href="/tags/文本分类/" style="font-size: 10px;">文本分类</a> <a href="/tags/时间格式/" style="font-size: 10px;">时间格式</a> <a href="/tags/朴素贝叶斯/" style="font-size: 10px;">朴素贝叶斯</a> <a href="/tags/机器学习/" style="font-size: 18.33px;">机器学习</a> <a href="/tags/来自陈年佳酿的笔记/" style="font-size: 10px;">来自陈年佳酿的笔记</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/热加载/" style="font-size: 10px;">热加载</a> <a href="/tags/特征选择/" style="font-size: 11.67px;">特征选择</a> <a href="/tags/生成学习/" style="font-size: 10px;">生成学习</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/线程/" style="font-size: 11.67px;">线程</a> <a href="/tags/网页分析/" style="font-size: 10px;">网页分析</a> <a href="/tags/赋值/" style="font-size: 10px;">赋值</a> <a href="/tags/进程/" style="font-size: 11.67px;">进程</a> <a href="/tags/金融信用/" style="font-size: 10px;">金融信用</a> <a href="/tags/链表/" style="font-size: 11.67px;">链表</a> <a href="/tags/面试/" style="font-size: 11.67px;">面试</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">有梦想就要去实现</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+        <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Aluen King Lee</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="/img/tusiki.jpg" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">Aluen King Lee</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/tags/随笔">随笔</a></li>
+		        
+					<li><a href="/search">搜索</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="#" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="#" title="rss">rss</a>
+			        
+						<a class="zhihu" target="_blank" href="#" title="zhihu">zhihu</a>
+			        
+						<a class="douban" target="_blank" href="#" title="douban">douban</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+        <div class="body-wrap"><article id="post-JSR-133-FAQ" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/05/16/JSR-133-FAQ/" class="article-date">
+  	<time datetime="2016-05-16T07:18:24.000Z" itemprop="datePublished">2016-05-16</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      JSR-133 FAQ
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java内存模型/">java内存模型</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jvm/">jvm</a></li></ul>
+	</div>
+
+
+<div class="counter-tag counter">
+    <span id="/2016/05/16/JSR-133-FAQ/" class="leancloud_visitors post-title-link"
+          style="font-size: 12px" data-flag-title="JSR-133 FAQ">
+         &nbsp;
+    <!-- 这里给出浏览数-->
+        Hits
+    </span>
+</div>
+
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1>内存模型究竟是个啥玩意儿？</h1>
+<p>在多处理器的架构中，处理器一般拥有一到几层缓存，缓存是个好东西，它既可以用来提供获取数据的速度（缓存嘛~离处理器更近！），又可以减少
+竞争共享内存总线的次数（因为很多内存数据的操作可以在缓存中完事儿~）。缓存可以惊人地提高性能，但同时也引入的新的挑战。如：</p>
+<ol>
+<li>如果两个处理器同时访问同一块内存区域，应该如何处理？</li>
+<li>在什么条件下，保证他们看到同样的值？</li>
+</ol>
+<p>内存模型定义了在处理器层面上的重要条件：1. 其他处理器的写操作对当前处理可见；2. 当前处理的写操作对其他处理器可见。一些处理器（exhibit）
+定义了<strong>强内存模型</strong>: 任何时间，任意处理器访问统一内存区域，读取的值都是一样的。还有一些处理器exhibit）实现了<em>若内存模型</em>：这种内存模型定义
+了一种特殊指定，叫做<strong>内存屏障(memory barriers)</strong>, 这种指令会将本处理器缓存中数据清除或者置为无效，以此保证其他处理器的写操作对其可见；或者
+本身的写操作对其他处理器可见。内存屏障一般随加锁，释放锁的操作一起执行。对高级语言来说，他们是不见的。</p>
+<a id="more"></a>
+<p>编写强内存模型的程序有时会更简单一些，因为减少了内存屏障这类指令的使用。但是，即使对于一些最强的内存模型，内存屏障也是必要的：他们所处的位置也是违反
+直觉的。最新的处理器设计趋势是故事使用若内存模型，在多核处理和更大的内存量上，缓存一致性的松弛会带来更高的扩展性。</p>
+<p>写操作对另外的线程何时可见取决于编译器对代码的重排序：例如，如果编译器或许会决定将一个写操作滞后会提高程序性能，只要代码移动不会改变程序的语义，当然可以
+这么做。如果编译器延迟一个操作，另外一个线程只有在操作执行滞后才会看到：这反映了缓存的效果。</p>
+<p>另外，写内存的操作也可以提前：这样场景下，其它线程很可能会在写操作实际<strong>发生前</strong>就看到它(例如volatile的内存语义)。这种灵活性都是提前设计好的。将这种灵活的操作
+给与编译器，运行时，和硬件，形成代码的最有执行顺序，在内存模型的约束下，我们可以达到更高的性能。</p>
+<p>参考以下简单的代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Class Reordering &#123;</span><br><span class="line">  <span class="keyword">int</span> x = <span class="number">0</span>, y = <span class="number">0</span>;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">writer</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    x = <span class="number">1</span>;</span><br><span class="line">    y = <span class="number">2</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">reader</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> r1 = y;</span><br><span class="line">    <span class="keyword">int</span> r2 = x;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>假设现在有两个线程并行执行,并且读取y的值是2.因为y的写操作在x之后，你可能会认为x的值一定是1。但是，由于写操作有可能会重排序。如果这样，有可能代码的重排序
+结果是这样的。先写y的值，然后在读取y和x，最后在写x。这种场景下r1的值就是2，r2的值就是0.</p>
+<p>java内存模型了描述了并发场景下的合法行为，线程是如何和内存交互的。它描述了从内存、寄存器中存取变量的底层细节。这种模型可以使用各种硬件和各种各样的编译器优化正确的实现。</p>
+<p>java包含一些语言关键字，比如<strong>volatile</strong>,<strong>final</strong>,和<strong>synchronized</strong>,这些关键词帮助程序员编写并发程序。JMM定义了volatile和synchronized的行为，最重要的是
+，保证了正确的同步程序可以无误的跑在所有的处理器架构上。</p>
+<h1>其他语言，比如C++，有内存模型吗？</h1>
+<p>大多数程序编程语言，比如C和C++，并没有直接对多线程编程提供支持。所以这类语言的重排序的保证严重依赖于编译器和架构的保证，例如线程库，所使用的编译器，和目标运行平台。</p>
+<h1>JSR 133描述了什么</h1>
+<p>从1997以来，原有的JMM发现了几个缺陷，这些瑕疵会导致令人困惑的行为（常量字段的值被观测到变化了），破坏编译器执行通用优化点能力。</p>
+<p>Java Memory Model是一个雄心勃勃的进击：首次提出了编程规范，用可提供一致性语义的内存模型解决跨平台并发问题。不幸的是，定义一个一致性并且符合直觉的内存模型
+被证明比预想的难。JSR 133模型定义了一个新的内存模型，修复了早期内存模型的缺陷。为了达到这一目的，<strong>final</strong>和<strong>volatile</strong>的语义需要做下改变。</p>
+<p>JSR 133的目标:</p>
+<ol>
+<li>保存现有的安全保证，例如类型安全。加强其它方面。比如，变量值不能凭空产生：每个线程读到的变量值必须是某个线程合理赋值的。</li>
+<li>正确的同步程序语义必须尽简洁明了直观。</li>
+<li>不正确的同步程序语义应该制定清楚，最小化潜在的安全危害</li>
+<li>程序员可以自信地解释出多线程程序时如何和内存交互的</li>
+<li>尽可能在广大流行架构上设计跨平台、正确、高性能的JVM实现</li>
+<li><strong>安全初始化</strong>保证。如果一个对象被正确的构建（意味着对象构建期间，引用不会提前溢出或者对外发布），所有引用这个对象的线程都可以看到对象的final字段的值（在构建函数中
+设置的值），并且不需要同步。</li>
+<li>对现有代码影响最小化。</li>
+</ol>
+<h1>重排序意味什么</h1>
+<p>有许多诸如访问变量的场景（对象的字段，类静态字段、数组元素），会按照看起来和代码写的顺序不一样的操作顺序执行。编译器会以最优化的名义自由重排序指令。
+处理器可能会乱序执行指令。数据在集群器、缓存及内存中的移动顺序有可能和程序中指定的不一样。</p>
+<p>比如，一个线程给a赋值，再给b赋值，并且a和b的操作无依赖，那么，编译器可以自由重排序这些操作。缓存可以把b写到内存中。编译器，JIT，缓存中都会做出重排序的操作。</p>
+<p>编译器，运行时和影响可以协力创建看起来像串行执行的假象，对于一个单线程来说，重排序对他来说没有任何影响。但是重排序有可能导致多线程的执行结果异常。一个
+线程观察到其他线程的影响；或者在正常的语义中，一些线程本不应该提前访问某个变量的值。</p>
+<p>大多数时间，线程不需要关系其他线程做什么操作。但是有些时候，例如共享内存的场景，那么就需要进行同步操作了。</p>
+<h1>旧的内存模型存在的问题</h1>
+<p>之前旧的内存模型存在几个严重的问题。例如，不支持重排序。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/06/22/dive-into-annotation/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          dive into annotation
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/04/27/testlatex/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Latex on hexo</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="JSR-133-FAQ" data-title="JSR-133 FAQ" data-url="http://kinglanding.github.io/2016/05/16/JSR-133-FAQ/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+        <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 Aluen King Lee
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+
+<!--统计Aluenkinglee.github.io-->
+<!--<script type="text/javascript" id="clustrmaps" src="//cdn.clustrmaps.com/map_v2.js?u=Ak87&d=RfrOeulSXrf1uWSg4T_1STgF7iU2vDrBtJLdE3MJdQY"></script>-->
+<!--统计Aluenkinglee.com-->
+<!--<script type="text/javascript" id="clustrmaps" src="//cdn.clustrmaps.com/map_v2.js?u=Ak87&d=fWyzUb5ADRAwJb5b2EdCj25FWOlzy8vwVQmK9vxSAYY"></script>-->
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+<!--
+-->
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
+          MathJax.InputJax.TeX.prefilterHooks.Add(function (data) {
+                  data.math = data.math.replace(/^\s*<!\[CDATA\[\s*((?:\n|.)*)\s*\]\]>\s*$/m,"$1");
+                    });
+          });
+
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+
+</script>
+
+<script type="text/javascript"
+        src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+</div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>

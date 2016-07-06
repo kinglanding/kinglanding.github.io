@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>dynamic programming | 曾经渐行远，未免心戚戚</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="好几年了，没有特意去做与ACM相关的算法题了，时至今日，也确实忘得差不多了，不过，现在也到了该拾起来的时候了。
+动态规划">
+<meta property="og:type" content="article">
+<meta property="og:title" content="dynamic programming">
+<meta property="og:url" content="http://kinglanding.github.io/2014/04/29/dynamic-programming/index.html">
+<meta property="og:site_name" content="曾经渐行远，未免心戚戚">
+<meta property="og:description" content="好几年了，没有特意去做与ACM相关的算法题了，时至今日，也确实忘得差不多了，不过，现在也到了该拾起来的时候了。
+动态规划">
+<meta property="og:updated_time" content="2016-06-30T09:41:37.836Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="dynamic programming">
+<meta name="twitter:description" content="好几年了，没有特意去做与ACM相关的算法题了，时至今日，也确实忘得差不多了，不过，现在也到了该拾起来的时候了。
+动态规划">
+  
+    <link rel="alternative" href="/atom.xml" title="曾经渐行远，未免心戚戚" type="application/atom+xml">
+  
+  
+    <link href="/favicon.ico" rel="icon" type="image/x-ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+
+    <!-- 增加点击次数插件-->
+    
+        <!-- jQuery文件-->
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<!--<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>-->
+<script src="/js/av-core-mini-0.6.1.js"></script>
+<script>AV.initialize("ULm4LbKU9FYj6CxYtKYnvaeB-gzGzoHsz", "TypHFu5f7mXg4U1N9RjFRo52");</script>
+<script src="/js/Counter.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+</head>
+
+<body>
+
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><!--加载jquery-->
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<!--start 加载search_path函数 -->
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+        search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+</script>
+<!--end of  加载search_path函数 -->
+
+<div id="container">
+    <div class="left-col">
+        <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/img/tusiki.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">Aluen King Lee</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>Menu</li>
+						<li>Tags</li>
+						
+						
+						<li>Über</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/tags/随笔">随笔</a></li>
+				        
+							<li><a href="/search">搜索</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="#" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="#" title="rss">rss</a>
+					        
+								<a class="zhihu" target="_blank" href="#" title="zhihu">zhihu</a>
+					        
+								<a class="douban" target="_blank" href="#" title="douban">douban</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Algorithm/" style="font-size: 10px;">Algorithm</a> <a href="/tags/Annotation/" style="font-size: 10px;">Annotation</a> <a href="/tags/Armadillo/" style="font-size: 11.67px;">Armadillo</a> <a href="/tags/C/" style="font-size: 16.67px;">C++</a> <a href="/tags/CS/" style="font-size: 10px;">CS</a> <a href="/tags/Consensus/" style="font-size: 10px;">Consensus</a> <a href="/tags/KMP/" style="font-size: 10px;">KMP</a> <a href="/tags/LaTex/" style="font-size: 10px;">LaTex</a> <a href="/tags/Machine-Learning/" style="font-size: 20px;">Machine Learning</a> <a href="/tags/Octopress/" style="font-size: 11.67px;">Octopress</a> <a href="/tags/Raft/" style="font-size: 10px;">Raft</a> <a href="/tags/SDB/" style="font-size: 10px;">SDB</a> <a href="/tags/SDN/" style="font-size: 10px;">SDN</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/SVM/" style="font-size: 11.67px;">SVM</a> <a href="/tags/TCP/" style="font-size: 10px;">TCP</a> <a href="/tags/ThreadPool/" style="font-size: 10px;">ThreadPool</a> <a href="/tags/armadillo链接错误/" style="font-size: 10px;">armadillo链接错误</a> <a href="/tags/co-write/" style="font-size: 10px;">co-write</a> <a href="/tags/feature-selection/" style="font-size: 11.67px;">feature selection</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 11.67px;">hexo</a> <a href="/tags/hotload/" style="font-size: 10px;">hotload</a> <a href="/tags/idea/" style="font-size: 10px;">idea</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/java内存模型/" style="font-size: 10px;">java内存模型</a> <a href="/tags/java线程池/" style="font-size: 10px;">java线程池</a> <a href="/tags/jsoup/" style="font-size: 10px;">jsoup</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/lapack/" style="font-size: 10px;">lapack</a> <a href="/tags/libpcap/" style="font-size: 11.67px;">libpcap</a> <a href="/tags/libsvm/" style="font-size: 10px;">libsvm</a> <a href="/tags/linear-regression/" style="font-size: 10px;">linear-regression</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/list/" style="font-size: 10px;">list</a> <a href="/tags/map-reduce/" style="font-size: 10px;">map-reduce</a> <a href="/tags/math-example/" style="font-size: 10px;">math example</a> <a href="/tags/mongodb/" style="font-size: 10px;">mongodb</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/new/" style="font-size: 10px;">new[]</a> <a href="/tags/nox/" style="font-size: 10px;">nox</a> <a href="/tags/octave/" style="font-size: 10px;">octave</a> <a href="/tags/openblas/" style="font-size: 10px;">openblas</a> <a href="/tags/predeclaration/" style="font-size: 10px;">predeclaration</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/reflect/" style="font-size: 10px;">reflect</a> <a href="/tags/virtualbox/" style="font-size: 10px;">virtualbox</a> <a href="/tags/wireshark/" style="font-size: 10px;">wireshark</a> <a href="/tags/yilia/" style="font-size: 10px;">yilia</a> <a href="/tags/三次握手/" style="font-size: 10px;">三次握手</a> <a href="/tags/信息增益算法/" style="font-size: 10px;">信息增益算法</a> <a href="/tags/内存覆盖/" style="font-size: 10px;">内存覆盖</a> <a href="/tags/动态规划/" style="font-size: 11.67px;">动态规划</a> <a href="/tags/协同写作/" style="font-size: 10px;">协同写作</a> <a href="/tags/反射/" style="font-size: 10px;">反射</a> <a href="/tags/四次握手/" style="font-size: 10px;">四次握手</a> <a href="/tags/复制/" style="font-size: 10px;">复制</a> <a href="/tags/复制控制/" style="font-size: 10px;">复制控制</a> <a href="/tags/层次聚类/" style="font-size: 10px;">层次聚类</a> <a href="/tags/常用命令/" style="font-size: 10px;">常用命令</a> <a href="/tags/微博标签/" style="font-size: 10px;">微博标签</a> <a href="/tags/总结/" style="font-size: 13.33px;">总结</a> <a href="/tags/拉格朗日对偶/" style="font-size: 10px;">拉格朗日对偶</a> <a href="/tags/数据挖掘/" style="font-size: 10px;">数据挖掘</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/整理/" style="font-size: 11.67px;">整理</a> <a href="/tags/文本分类/" style="font-size: 10px;">文本分类</a> <a href="/tags/时间格式/" style="font-size: 10px;">时间格式</a> <a href="/tags/朴素贝叶斯/" style="font-size: 10px;">朴素贝叶斯</a> <a href="/tags/机器学习/" style="font-size: 18.33px;">机器学习</a> <a href="/tags/来自陈年佳酿的笔记/" style="font-size: 10px;">来自陈年佳酿的笔记</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/热加载/" style="font-size: 10px;">热加载</a> <a href="/tags/特征选择/" style="font-size: 11.67px;">特征选择</a> <a href="/tags/生成学习/" style="font-size: 10px;">生成学习</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/线程/" style="font-size: 11.67px;">线程</a> <a href="/tags/网页分析/" style="font-size: 10px;">网页分析</a> <a href="/tags/赋值/" style="font-size: 10px;">赋值</a> <a href="/tags/进程/" style="font-size: 11.67px;">进程</a> <a href="/tags/金融信用/" style="font-size: 10px;">金融信用</a> <a href="/tags/链表/" style="font-size: 11.67px;">链表</a> <a href="/tags/面试/" style="font-size: 11.67px;">面试</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">有梦想就要去实现</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+        <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Aluen King Lee</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="/img/tusiki.jpg" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">Aluen King Lee</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/tags/随笔">随笔</a></li>
+		        
+					<li><a href="/search">搜索</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="#" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="#" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="#" title="rss">rss</a>
+			        
+						<a class="zhihu" target="_blank" href="#" title="zhihu">zhihu</a>
+			        
+						<a class="douban" target="_blank" href="#" title="douban">douban</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+        <div class="body-wrap"><article id="post-dynamic-programming" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2014/04/29/dynamic-programming/" class="article-date">
+  	<time datetime="2014-04-29T10:34:00.000Z" itemprop="datePublished">2014-04-29</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      dynamic programming
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/动态规划/">动态规划</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/面试/">面试</a></li></ul>
+	</div>
+
+
+<div class="counter-tag counter">
+    <span id="/2014/04/29/dynamic-programming/" class="leancloud_visitors post-title-link"
+          style="font-size: 12px" data-flag-title="dynamic programming">
+         &nbsp;
+    <!-- 这里给出浏览数-->
+        Hits
+    </span>
+</div>
+
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>好几年了，没有特意去做与ACM相关的算法题了，时至今日，也确实忘得差不多了，不过，现在也到了该拾起来的时候了。</p>
+<h5>动态规划</h5>
+<a id="more"></a>
+<p>动态规划（Dynamic Programming）是用来解决最优化问题的最常用手段,说起定义，网上浩瀚如烟，有很多类型，比如：</p>
+<ul>
+<li>
+<p>背包问题：0-1背包，完全背包，硬币问题，装箱子问题等。</p>
+</li>
+<li>
+<p>最短路径问题：网络流等。</p>
+</li>
+<li>
+<p>树形动规：最优查找树。</p>
+</li>
+</ul>
+<p>等等等等，严格的划分问题类型没有意义，关键是分析问题的本质：阶段，状态，状态转移，全局最优。</p>
+<h5>一些术语</h5>
+<p>首先，先介绍下相关的概念，在结合具体的，例子加深感性和理性上的认识。</p>
+<p>动态规划问题的一个通用特点是具备<code>最优子结构</code>和<code>重叠子问题</code>。当前子问题的解将由上一次子问题的解推出。每一个问题对应一个它的<strong>状态</strong>。<code>重叠子问题</code>的意思，某些问题的计算是有重叠的，若该计算结果记录下来，之后其他子问题遇到重叠的直接查表就可以了，避免重复计算。最优子结构则是我们的全局问题可以分解，按照<strong>阶段</strong>来分解。从而规约到最简的问题。说到这，是不是想到了分治法？，其基本思想也是将待求解问题分解成若干个子问题，先求解子问题，然后从这些子问题的解得到原问题的解。与分治法不同的是，适合于用动态规划求解的问题，经分解得到子问题往往不是互相独立的。若用分治法来解这类问题，则分解得到的子问题数目太多，有些子问题被重复计算了很多次（把它们记录下来嘛！）。而且另外一个思想是，动规有明显的阶段的概念，而分治只是把问题分成不重复的规模较小的没有阶段概念的小问题。</p>
+<p><strong>基本结构</strong></p>
+<p>多阶段决策问题中，各个阶段采取的决策，一般来说是与时间有关的，决策依赖于当前状态，又随即引起状态的转移，一个决策序列就是在变化的状态中产生出来的，故有“动态”的含义，称这种解决多阶段决策最优化问题的方法为动态规划方法。</p>
+<p><strong>什么是动态规划，我们要如何描述它?</strong></p>
+<p>先来看下形式化的描述的吧，在结合例子描述它。</p>
+<p>$$
+f\left( S \right) =\underset { d\in D\left( S \right)  }{ opt } \left{ cos\left( d\vert S \right) \quad \circ \quad f\left( T\left( d|S \right)  \right)  \right}
+$$</p>
+<p>其中，<code>S</code>是代指<code>state</code>，就是状态空间的一个state，动态规划解决的问题是按照状态和该状态可以选择的决策来解决问题的。确切的来说，<code>S</code>代表的就是从开始到当前决策的问题状态；</p>
+<p><code>d</code>代指<code>decision</code>，是一个从<code>S</code>状态所决定的决策空间中$$D\left( S \right) $$做出的决策，不同状态决定的决策空间有可能不同。举例说明，对于硬币问题来讲，假设每个硬币的个数都是无限的，那么对于任何一个状态（目前手里有多少钱），接下来做的决策个数都是一样的，都是从固定的那几枚硬币中挑选；对于不可重复选择的问题，比如拿球，有红黑黄3个球，每个球的权值不同，求一个选球次序使之最优，这下好了，每个阶段的决策空间都是不同的，对于状态1，有红，黑，黄三种状态，接下来，就只能选剩下的球里面的了。所以决策空间会因问题而变化的。还有TSP旅行者问题，在每个节点所对应的状态时从起点到当前状态的最短距离，接下来的选择，得看该节点（状态）的出度是谁了。<strong>所以说，决策依赖当前的状态</strong>。</p>
+<p>$$D\left( S \right) $$是决策空间(decision space)，代表从当前状态转到另一个状态时，或者从另一个状态转到当前状态可以选择的决策<code>d</code>的结合。（之所以使用或者是说了两种考虑的方式）</p>
+<p><code>f</code>是指目标函数(target function)，一个关于状态的函数，往往代表从初始状态到达状态<code>S</code>所做的所有决策中的最优利益（不是最大就是最小）。</p>
+<p>$$cos\left( d\vert S \right) $$可以叫做成本函数(cost function)，很好理解，就是在状态<code>S</code>下，做出选择<code>d</code>的成本，成本函数和目标函数不同，因为它不需要依赖上下文条件，只需一步计算就可以搞定。</p>
+<p>$$cos\left( d\vert S \right) $$代表的是转移函数(transfer function)，就是指从S做一个决策到达另外一个状态$$S'$$.</p>
+<p>$$\circ$$是一个二元操作符，多数是加法或者乘法或者是最大值要不就是最小值。</p>
+<p>除此之外，还需要边界条件。</p>
+<p>最后来看个最简单的例子。</p>
+<h5>例子</h5>
+<p>如果我们有面值为1元、3元和5元的硬币若干枚，如何用最少的硬币凑够11元？有多少种兑换方法？</p>
+<p>思路：这个比较简单，状态就是硬币的价值，有多少钱，决策空间是固定的$$D(S)={1,3,5}$$</p>
+<p>用$$f(i)$$代表凑够i元，得用最少多少硬币。成本函数也是固定的，为1。</p>
+<p>$$
+f(i)=\underset { d\in D\left( {1,3,5} \right)  }{min}{1+f(i-d)},i!=0
+$$</p>
+<p>当然了$$i==0$$时，f(0)=0.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">f(11)=min&#123;1+f(11-1),1+f(11-3),1+f(11-5)&#125;;</span><br><span class="line">f(10)=min&#123;1+f(10-1),1+f(10-3),1+f(10-5)&#125;;</span><br><span class="line">f(9)=min&#123;1+f(9-1),1+f(9-3),1+f(9-5)&#125;;</span><br><span class="line">f(8)=min&#123;1+f(8-1),1+f(8-3),1+f(8-5)&#125;;</span><br><span class="line">f(7)=min&#123;1+f(7-1),1+f(7-3),1+f(7-5)&#125;;</span><br><span class="line">f(6)=min&#123;1+f(6-1),1+f(6-3),1+f(6-5)&#125;;</span><br><span class="line">f(5)=min&#123;1+f(5-1),1+f(5-3),1+f(5-5)&#125;;</span><br><span class="line">f(4)=min&#123;1+f(4-1),1+f(4-3) )&#125;;</span><br><span class="line">f(3)=min&#123;1+f(3-1),1+f(3-3) )&#125;;</span><br><span class="line">f(2)=min&#123;1+f(2-1)&#125;;</span><br><span class="line">f(1)=min&#123;1+f(1-1)&#125;;</span><br><span class="line">f(0)已知=0；</span><br></pre></td></tr></table></figure>
+<p>所以：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">f(1)=min&#123;1+f(1-1)&#125;=1；</span><br><span class="line">f(2)=min&#123;1+f(2-1)&#125;=2；</span><br><span class="line">f(3)=min&#123;1+f(3-1),1+f(3-3) )&#125;=min&#123;3,1&#125;=1;</span><br><span class="line">f(4)=min&#123;1+f(4-1),1+f(4-3) )&#125;=min&#123;2,2&#125;=2;</span><br><span class="line">f(5)=min&#123;1+f(5-1),1+f(5-3),1+f(5-5)&#125;=min&#123;3,3,1&#125;=1;</span><br><span class="line">f(6)=min&#123;1+f(6-1),1+f(6-3),1+f(6-5)&#125;=min&#123;2,2,2&#125;=2;</span><br><span class="line">f(7)=min&#123;1+f(7-1),1+f(7-3),1+f(7-5)&#125;=min&#123;3,3,3&#125;=3;</span><br><span class="line">f(8)=min&#123;1+f(8-1),1+f(8-3),1+f(8-5)&#125;=min&#123;4,2,2&#125;=2;</span><br><span class="line">f(9)=min&#123;1+f(9-1),1+f(9-3),1+f(9-5)&#125;=min&#123;3,3,3&#125;=3;</span><br><span class="line">f(10)=min&#123;1+f(10-1),1+f(10-3),1+f(10-5)&#125;=min&#123;4,4,2&#125;=2;</span><br><span class="line">f(11)=min&#123;1+f(11-1),1+f(11-3),1+f(11-5)&#125;=min&#123;3,3,3&#125;=3;</span><br></pre></td></tr></table></figure>
+<p>从我们的计算过程来看，求解既可以从前往后也可以从后往前。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/04/30/discriminative-model-vs-generative-model/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Discriminative Model Vs. Generative Model
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/04/28/some-commen-list-problems-in-the-interview/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">some commen list problems in the interview</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="dynamic-programming" data-title="dynamic programming" data-url="http://kinglanding.github.io/2014/04/29/dynamic-programming/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+        <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 Aluen King Lee
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+
+<!--统计Aluenkinglee.github.io-->
+<!--<script type="text/javascript" id="clustrmaps" src="//cdn.clustrmaps.com/map_v2.js?u=Ak87&d=RfrOeulSXrf1uWSg4T_1STgF7iU2vDrBtJLdE3MJdQY"></script>-->
+<!--统计Aluenkinglee.com-->
+<!--<script type="text/javascript" id="clustrmaps" src="//cdn.clustrmaps.com/map_v2.js?u=Ak87&d=fWyzUb5ADRAwJb5b2EdCj25FWOlzy8vwVQmK9vxSAYY"></script>-->
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+<!--
+-->
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Register.StartupHook("TeX Jax Ready",function () {
+          MathJax.InputJax.TeX.prefilterHooks.Add(function (data) {
+                  data.math = data.math.replace(/^\s*<!\[CDATA\[\s*((?:\n|.)*)\s*\]\]>\s*$/m,"$1");
+                    });
+          });
+
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+
+</script>
+
+<script type="text/javascript"
+        src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+</div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>
